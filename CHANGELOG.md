@@ -113,16 +113,93 @@
 
 ---
 
+## v2.5 — 网络出版物专属版
+
+**2025-07-05** — AI (Kimi) + 人工 (Han) — 线上PDF电子书优化
+
+### 硬性勘误
+
+| # | 修正项 | 说明 |
+|---|--------|------|
+| 1 | Markdown 粗体语法残留 | 5 处 `**...**` → `\textbf{...}` |
+| 2 | 难度标签位置 | 修复 `marginnote` 左右乱跳 → `oneside` 统一右侧 |
+| 3 | 表格溢出 | 第 37 页坐标系表格、第 36 页线元表格 → 缩小字号 + 简化内容 |
+| 4 | 目录层级修复 | 7.1、8.1、9.1 小节补全 |
+| 5 | 交叉引用 | 空白引用 "见第 3 章？？" → 可点击 `\hyperlink` |
+
+### 符号彩色化
+
+| 符号 | 颜色 | 替换数 | 命令 |
+|------|------|--------|------|
+| 电场 E | 红色 | 395 | `\vecE` = `\textcolor{red}{\vect{E}}` |
+| 磁场 B | 蓝色 | 367 | `\vecB` = `\textcolor{blue}{\vect{B}}` |
+| 波矢 k | 绿色 | 19 | `\vecK` = `\textcolor{green!60!black}{\vect{k}}` |
+| 电流密度 j | 橙色 | 107 | `\vecJ` = `\textcolor{cororange}{\vect{j}}` |
+| 矢势 A | 深蓝 | 424 | `\vecA` = `\textcolor{blue!70!black}{\vect{A}}` |
+
+### 可折叠内容（ocgx2）
+
+| 类型 | 数量 | 功能 |
+|------|------|------|
+| 挑战题折叠 | 6 处 | 点击按钮展开/收起挑战难度例题 |
+| 自测答案折叠 | 10 处 | 点击按钮展开/收起随堂自测答案 |
+| 长推导折叠 | 1 处 | 第 7 章达朗贝尔方程推导可折叠 |
+
+### 超链接系统
+
+| 功能 | 说明 |
+|------|------|
+| 符号说明页 | 16 个符号添加 `\hypertarget` 锚点 |
+| 章节导航 | 每章末尾添加 "上一章/下一章" 导航链接 |
+| 目录核心目标 | 目录后新增快速导航列表，带 `\hyperlink` |
+| 公式交叉引用 | 核心公式统一编号，正文可 `\eqref` 跳转 |
+
+### 新增彩色静态图（TikZ）
+
+| 位置 | 图名 | 内容 |
+|------|------|------|
+| 第 7 章 | 位移电流示意图 | 电容器极板、电场箭头（红）、位移电流（橙虚线） |
+| 第 8 章 | E/B/k 三色图 | 红E、蓝B、绿k，标注清晰 |
+| 第 9 章 | 极坐标角分布 | `sin²θ` 曲线、赤道面最强 |
+| 第 10 章 | 电磁场张量分块 | 4×4 矩阵，红=E、蓝=B，带图例 |
+
+### 配套 HTML 页面（6 个）
+
+| 文件 | 大小 | 功能 |
+|------|------|------|
+| `index.html` | 10.7 KB | 主导航页、三条学习路线、前置知识自检 |
+| `reader.html` | 8.3 KB | 嵌入式PDF阅读器、侧边悬浮导航、彩色图例 |
+| `tools.html` | 18.3 KB | 单位换算计算器、电磁波参数计算器、矢量运算工具 |
+| `roadmap.html` | 18.4 KB | 10章流程图、难度色标、进度追踪 |
+| `appendix-nav.html` | 14.6 KB | 附录搜索、公式速查卡片、可展开/折叠 |
+| `errata.html` | 11.0 KB | 勘误列表、读者提交表单、版本历史 |
+
+### 新增包
+
+- `ocgx2` — 可折叠内容
+- `pdfcomment` — PDF tooltip 注释
+- `insdljs` — PDF JavaScript（暂未使用）
+
+---
+
 ## 项目文件结构
 
 ```
 electrodynamics_textbook/
-├── electrodynamics_textbook_v2.tex   # LaTeX 源文件
-├── electrodynamics_textbook_v2.pdf   # 编译产物（188 页）
-├── review_report.md                   # 专业审查报告
-├── README.md                          # 项目说明
-├── STYLE_GUIDE.md                     # 后期修改规范
-└── CHANGELOG.md                       # 本文件
+├── electrodynamics_textbook_v2.tex    # LaTeX 源文件（8117 行）
+├── electrodynamics_textbook_v2.pdf    # 编译产物（195 页，~1 MB）
+├── review_report.md                    # 专业审查报告
+├── README.md                           # 项目说明（AI 生成声明）
+├── STYLE_GUIDE.md                      # 后期修改规范
+├── CHANGELOG.md                        # 本文件
+├── html/                               # 配套 HTML 页面
+│   ├── index.html                      # 主导航页
+│   ├── reader.html                     # PDF 阅读器
+│   ├── tools.html                      # 工具集
+│   ├── roadmap.html                    # 学习路线图
+│   ├── appendix-nav.html              # 附录导航
+│   └── errata.html                     # 勘误与反馈
+└── .git/                               # Git 仓库
 ```
 
 ---
@@ -139,6 +216,8 @@ electrodynamics_textbook/
 - [ ] 同步辐射简介
 - [ ] Aharonov-Bohm 效应拓展阅读
 - [ ] 有限差分法极简思路
+- [ ] HTML 页面与 PDF 的更深整合（如内嵌 iframe）
+- [ ] 音频辅助（通勤阅读）
 
 ---
 

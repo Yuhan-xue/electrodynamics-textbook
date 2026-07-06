@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电动力学自学教材 — 主页</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: "微软雅黑", "Microsoft YaHei", "Segoe UI", sans-serif; background: #0a0e1a; color: #e0e0e0; min-height: 100vh; overflow-x: hidden; }
+
+/* 背景 */
+.bg-stars {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 20% 10%, #0d1b3a 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, #0a1628 0%, #000000 70%);
+}
+.bg-stars::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+  background-size: 40px 40px; opacity: 0.2;
+}
+
+.container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* 导航栏 */
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.nav-logo { font-size: 1.2rem; font-weight: 700; color: #2962FF; letter-spacing: 1px; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { color: #9ab; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+.nav-links a:hover { color: #2962FF; }
+
+/* Hero */
+.hero { text-align: center; padding: 70px 0 50px; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: #fff; letter-spacing: 2px; text-shadow: 0 0 40px rgba(41,98,255,0.3); }
+.hero .subtitle { margin-top: 14px; font-size: 1.1rem; color: #789; }
+.hero .badge { display: inline-block; margin-top: 18px; padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; background: rgba(41,98,255,0.15); color: #2962FF; border: 1px solid rgba(41,98,255,0.3); }
+
+/* 学习路线卡片 */
+.routes-section { padding: 30px 0 50px; }
+.routes-section h2 { text-align: center; font-size: 1.5rem; color: #fff; margin-bottom: 40px; }
+.routes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.route-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 28px;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; cursor: pointer; text-decoration: none; display: block;
+}
+.route-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); border-color: rgba(41,98,255,0.3); }
+.route-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+.route-card.route-1 .route-icon { background: rgba(41,98,255,0.15); color: #2962FF; }
+.route-card.route-2 .route-icon { background: rgba(46,125,50,0.15); color: #2E7D32; }
+.route-card.route-3 .route-icon { background: rgba(230,81,0,0.15); color: #E65100; }
+.route-card h3 { color: #fff; font-size: 1.15rem; margin-bottom: 8px; }
+.route-card p { color: #89a; font-size: 0.9rem; line-height: 1.6; }
+.route-tag { display: inline-block; margin-top: 14px; padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+.route-card.route-1 .route-tag { background: rgba(41,98,255,0.15); color: #2962FF; }
+.route-card.route-2 .route-tag { background: rgba(46,125,50,0.15); color: #2E7D32; }
+.route-card.route-3 .route-tag { background: rgba(230,81,0,0.15); color: #E65100; }
+
+/* 前置知识自检 */
+.preq-section { padding: 40px 0 60px; }
+.preq-section h2 { text-align: center; font-size: 1.5rem; color: #fff; margin-bottom: 30px; }
+.preq-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 28px 32px; max-width: 700px; margin: 0 auto; }
+.preq-item { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.preq-item:last-child { border-bottom: none; }
+.preq-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: #2962FF; cursor: pointer; flex-shrink: 0; }
+.preq-item label { cursor: pointer; color: #abc; font-size: 0.95rem; flex: 1; }
+.preq-progress { margin-top: 20px; text-align: center; }
+.preq-progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-top: 10px; }
+.preq-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #2962FF, #2E7D32); border-radius: 4px; transition: width 0.5s ease; }
+.preq-progress-text { font-size: 0.85rem; color: #789; margin-top: 8px; }
+
+/* 快速链接 */
+.quick-links { padding: 30px 0 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
+.quick-link {
+  display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 16px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
+  text-decoration: none; color: #ccc; transition: all 0.3s;
+}
+.quick-link:hover { background: rgba(41,98,255,0.08); border-color: rgba(41,98,255,0.25); color: #fff; }
+.quick-link .ql-icon { font-size: 1.6rem; }
+.quick-link .ql-label { font-size: 0.9rem; }
+
+/* Footer */
+.footer { text-align: center; padding: 30px 0; color: #567; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.04); }
+
+/* 响应式 */
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .hero { padding: 40px 0 30px; }
+  .routes-grid { grid-template-columns: 1fr; }
+  .quick-links { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="bg-stars"></div>
+<div class="container">
+
+  <nav class="nav-bar">
+    <div class="nav-logo">⚡ ELECTRODYNAMICS</div>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="reader.html">阅读</a>
+      <a href="tools.html">工具</a>
+      <a href="roadmap.html">路线</a>
+      <a href="appendix-nav.html">附录</a>
+      <a href="errata.html">勘误</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>电动力学自学教材</h1>
+    <p class="subtitle">从麦克斯韦方程到电磁波，从静电场到等离子体 — 一条系统化的进阶之路</p>
+    <span class="badge">📘 配套交互学习平台</span>
+  </header>
+
+  <section class="routes-section">
+    <h2>选择你的学习路线</h2>
+    <div class="routes-grid">
+      <a href="reader.html?route=engineering" class="route-card route-1">
+        <div class="route-icon">🔧</div>
+        <h3>微电子 / 工科路线</h3>
+        <p>聚焦电磁学工程应用，覆盖静电场、静磁场、时变场、传输线、波导与辐射。跳过第10章（等离子体）以压缩学时。</p>
+        <span class="route-tag">第 1–9 章</span>
+      </a>
+      <a href="reader.html?route=physics" class="route-card route-2">
+        <div class="route-icon">🎓</div>
+        <h3>物理本科路线</h3>
+        <p>完整的电动力学理论体系，从矢量分析到规范变换，从偶极辐射到等离子体物理，适合物理专业本科教学。</p>
+        <span class="route-tag">全 10 章</span>
+      </a>
+      <a href="reader.html?route=advanced" class="route-card route-3">
+        <div class="route-icon">🚀</div>
+        <h3>等离子 / 电磁仿真进阶</h3>
+        <p>全章节基础上增加仿真拓展：FDTD 时域差分、PIC 粒子模拟、MOM 矩量法、FEM 有限元入门。</p>
+        <span class="route-tag">全章 + 仿真</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="preq-section">
+    <h2>前置知识自检清单</h2>
+    <div class="preq-box">
+      <div class="preq-item"><input type="checkbox" id="p1"><label for="p1">掌握多元微积分（散度、旋度、梯度、线面积分）</label></div>
+      <div class="preq-item"><input type="checkbox" id="p2"><label for="p2">熟悉线性代数（矩阵、行列式、特征值）</label></div>
+      <div class="preq-item"><input type="checkbox" id="p3"><label for="p3">了解常微分方程与偏微分方程基础</label></div>
+      <div class="preq-item"><input type="checkbox" id="p4"><label for="p4">具备基础力学分析能力（牛顿定律、能量守恒）</label></div>
+      <div class="preq-item"><input type="checkbox" id="p5"><label for="p5">了解初等电磁学（库仑定律、安培定律、法拉第定律）</label></div>
+      <div class="preq-item"><input type="checkbox" id="p6"><label for="p6">熟悉复数运算与欧拉公式</label></div>
+      <div class="preq-item"><input type="checkbox" id="p7"><label for="p7">了解狄拉克 delta 函数与广义函数概念</label></div>
+      <div class="preq-progress">
+        <div class="preq-progress-bar"><div class="preq-progress-fill" id="preqFill"></div></div>
+        <div class="preq-progress-text" id="preqText">已掌握 0 / 7</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick-links">
+    <a href="reader.html" class="quick-link">
+      <span class="ql-icon">📖</span>
+      <span class="ql-label">PDF 阅读器</span>
+    </a>
+    <a href="tools.html" class="quick-link">
+      <span class="ql-icon">🧮</span>
+      <span class="ql-label">计算工具</span>
+    </a>
+    <a href="roadmap.html" class="quick-link">
+      <span class="ql-icon">🗺️</span>
+      <span class="ql-label">学习路线图</span>
+    </a>
+    <a href="appendix-nav.html" class="quick-link">
+      <span class="ql-icon">📐</span>
+      <span class="ql-label">公式速查</span>
+    </a>
+  </section>
+
+  <footer class="footer">
+    <p>电动力学自学教材 · 配套交互学习平台 · 仅供个人学习使用</p>
+  </footer>
+</div>
+
+<script>
+(function() {
+  const checks = document.querySelectorAll('.preq-item input[type="checkbox"]');
+  const fill = document.getElementById('preqFill');
+  const text = document.getElementById('preqText');
+  const total = checks.length;
+
+  function update() {
+    let checked = 0;
+    checks.forEach(c => { if(c.checked) checked++; });
+    const pct = (checked / total) * 100;
+    fill.style.width = pct + '%';
+    text.textContent = '已掌握 ' + checked + ' / ' + total;
+    if(checked === total) {
+      text.textContent = '✅ 前置知识已就绪，可以开始学习！';
+      text.style.color = '#2E7D32';
+    } else {
+      text.style.color = '#789';
+    }
+  }
+
+  checks.forEach(c => c.addEventListener('change', update));
+  update();
+
+  // 根据 URL 参数选择路线
+  const params = new URLSearchParams(window.location.search);
+  const route = params.get('route');
+  if(route) {
+    localStorage.setItem('selectedRoute', route);
+  }
+})();
+</script>
+</body>
+</html>

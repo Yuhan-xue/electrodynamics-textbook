@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电动力学 — 计算工具集</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: "微软雅黑", "Microsoft YaHei", "Segoe UI", sans-serif; background: #0b0f1a; color: #e0e0e0; min-height: 100vh; }
+
+.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 30% 20%, #0d1b3a 0%, transparent 60%), #0a0e1a; }
+.container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* 导航 */
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.nav-logo { font-size: 1.2rem; font-weight: 700; color: #2962FF; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { color: #9ab; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+.nav-links a:hover { color: #2962FF; }
+
+/* 标题 */
+.page-title { text-align: center; padding: 40px 0 30px; }
+.page-title h1 { font-size: 1.8rem; color: #fff; }
+.page-title p { color: #789; margin-top: 8px; }
+
+/* 工具网格 */
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; padding-bottom: 60px; }
+@media (max-width: 600px) { .tools-grid { grid-template-columns: 1fr; } }
+
+.tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; }
+.tool-card h2 { font-size: 1.15rem; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.tool-card .tool-sub { color: #678; font-size: 0.85rem; margin-bottom: 18px; }
+
+/* 输入样式 */
+.input-row { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.input-row label { min-width: 80px; font-size: 0.9rem; color: #abc; }
+.input-row input, .input-row select { flex: 1; min-width: 120px; padding: 10px 14px; border-radius: 8px; border: 1px solid #1f2937; background: #111827; color: #e0e0e0; font-size: 0.9rem; }
+.input-row input:focus, .input-row select:focus { outline: none; border-color: #2962FF; }
+.input-row .unit { color: #678; font-size: 0.85rem; min-width: 40px; }
+
+.btn { padding: 10px 20px; border-radius: 8px; border: none; background: #2962FF; color: #fff; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+.btn:hover { background: #1e4bd8; }
+
+.result-box { margin-top: 16px; padding: 14px; background: rgba(41,98,255,0.08); border-left: 3px solid #2962FF; border-radius: 0 8px 8px 0; font-size: 0.9rem; line-height: 1.8; }
+.result-box:empty { display: none; }
+.result-box .res-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.result-box .res-line:last-child { border-bottom: none; }
+.result-box .res-val { color: #fff; font-weight: 600; font-family: "Segoe UI", monospace; }
+
+/* 矢量工具三列输入 */
+.vec-inputs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.vec-inputs input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #1f2937; background: #111827; color: #e0e0e0; text-align: center; }
+
+/* Tab切换 */
+.tab-btns { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.tab-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid #1f2937; background: #111827; color: #9ab; cursor: pointer; font-size: 0.85rem; }
+.tab-btn.active { background: #2962FF; color: #fff; border-color: #2962FF; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.footer { text-align: center; padding: 30px 0; color: #567; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+
+  <nav class="nav-bar">
+    <div class="nav-logo">⚡ 工具集</div>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="reader.html">阅读</a>
+      <a href="roadmap.html">路线</a>
+      <a href="appendix-nav.html">附录</a>
+      <a href="errata.html">勘误</a>
+    </div>
+  </nav>
+
+  <div class="page-title">
+    <h1>🧮 计算工具集</h1>
+    <p>单位换算、电磁波参数、矢量运算 — 快速验证你的计算</p>
+  </div>
+
+  <div class="tools-grid">
+
+    <!-- 工具1：单位换算 -->
+    <div class="tool-card">
+      <h2>🔄 单位换算</h2>
+      <p class="tool-sub">SI 国际单位制 ↔ 高斯（CGS）单位制</p>
+
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="switchTab(this,'unit-si-cgs')">SI → CGS</button>
+        <button class="tab-btn" onclick="switchTab(this,'unit-cgs-si')">CGS → SI</button>
+      </div>
+
+      <div id="unit-si-cgs" class="tab-panel active">
+        <div class="input-row">
+          <label>物理量</label>
+          <select id="siQty">
+            <option value="E">电场强度 E</option>
+            <option value="B">磁感应强度 B</option>
+            <option value="D">电位移 D</option>
+            <option value="H">磁场强度 H</option>
+            <option value="Phi">磁通量 Φ</option>
+            <option value="P">极化强度 P</option>
+            <option value="M">磁化强度 M</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <label>SI 数值</label>
+          <input type="number" id="siVal" step="any" placeholder="输入数值">
+          <span class="unit" id="siUnit">V/m</span>
+        </div>
+        <button class="btn" onclick="convertSI_CGS()">换算</button>
+        <div class="result-box" id="siCgsResult"></div>
+      </div>
+
+      <div id="unit-cgs-si" class="tab-panel">
+        <div class="input-row">
+          <label>物理量</label>
+          <select id="cgsQty">
+            <option value="E">电场强度 E</option>
+            <option value="B">磁感应强度 B</option>
+            <option value="D">电位移 D</option>
+            <option value="H">磁场强度 H</option>
+            <option value="Phi">磁通量 Φ</option>
+            <option value="P">极化强度 P</option>
+            <option value="M">磁化强度 M</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <label>CGS 数值</label>
+          <input type="number" id="cgsVal" step="any" placeholder="输入数值">
+          <span class="unit" id="cgsUnit">statV/cm</span>
+        </div>
+        <button class="btn" onclick="convertCGS_SI()">换算</button>
+        <div class="result-box" id="cgsSiResult"></div>
+      </div>
+    </div>
+
+    <!-- 工具2：电磁波参数 -->
+    <div class="tool-card">
+      <h2>📡 电磁波参数</h2>
+      <p class="tool-sub">输入频率或波长，计算其余参数</p>
+
+      <div class="input-row">
+        <label>已知量</label>
+        <select id="emKnown" onchange="updateEmUnit()">
+          <option value="f">频率 f</option>
+          <option value="lambda">波长 λ</option>
+          <option value="k">波数 k</option>
+        </select>
+      </div>
+      <div class="input-row">
+        <label>数值</label>
+        <input type="number" id="emVal" step="any" placeholder="输入数值">
+        <span class="unit" id="emUnit">Hz</span>
+      </div>
+      <div class="input-row">
+        <label>介质</label>
+        <select id="emMedium">
+          <option value="vacuum">真空 εᵣ=1, μᵣ=1</option>
+          <option value="air">空气 εᵣ≈1.0006</option>
+          <option value="water">水 εᵣ≈80</option>
+          <option value="glass">玻璃 εᵣ≈4.0</option>
+          <option value="custom">自定义</option>
+        </select>
+      </div>
+      <div class="input-row" id="customMedium" style="display:none;">
+        <label>εᵣ</label><input type="number" id="customEr" value="1" step="0.1">
+        <label style="min-width:40px;">μᵣ</label><input type="number" id="customUr" value="1" step="0.1">
+      </div>
+      <button class="btn" onclick="calcEM()">计算</button>
+      <div class="result-box" id="emResult"></div>
+    </div>
+
+    <!-- 工具3：矢量运算 -->
+    <div class="tool-card">
+      <h2>➡️ 矢量运算</h2>
+      <p class="tool-sub">输入分量，计算散度、旋度、模长</p>
+
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="switchTab(this,'vec-one')">单矢量</button>
+        <button class="tab-btn" onclick="switchTab(this,'vec-two')">双矢量</button>
+      </div>
+
+      <div id="vec-one" class="tab-panel active">
+        <p style="color:#678; font-size:0.85rem; margin-bottom:8px;">矢量 A = (Ax, Ay, Az)</p>
+        <div class="vec-inputs">
+          <input type="number" id="ax" step="any" placeholder="Ax">
+          <input type="number" id="ay" step="any" placeholder="Ay">
+          <input type="number" id="az" step="any" placeholder="Az">
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" onclick="vecNorm()">模长 |A|</button>
+          <button class="btn" onclick="vecDivergence()" style="background:#2E7D32;">散度 ∇·A</button>
+          <button class="btn" onclick="vecCurl()" style="background:#E65100;">旋度 ∇×A</button>
+        </div>
+        <div class="result-box" id="vecResult"></div>
+      </div>
+
+      <div id="vec-two" class="tab-panel">
+        <p style="color:#678; font-size:0.85rem; margin-bottom:8px;">矢量 A = (Ax, Ay, Az)</p>
+        <div class="vec-inputs">
+          <input type="number" id="a2x" step="any" placeholder="Ax">
+          <input type="number" id="a2y" step="any" placeholder="Ay">
+          <input type="number" id="a2z" step="any" placeholder="Az">
+        </div>
+        <p style="color:#678; font-size:0.85rem; margin:10px 0 8px;">矢量 B = (Bx, By, Bz)</p>
+        <div class="vec-inputs">
+          <input type="number" id="b2x" step="any" placeholder="Bx">
+          <input type="number" id="b2y" step="any" placeholder="By">
+          <input type="number" id="b2z" step="any" placeholder="Bz">
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" onclick="vecDot()">点积 A·B</button>
+          <button class="btn" onclick="vecCross()" style="background:#B71C1C;">叉积 A×B</button>
+        </div>
+        <div class="result-box" id="vecResult2"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>电动力学自学教材 · 工具集 · 计算结果仅供参考，请核对教材公式</p>
+  </footer>
+</div>
+
+<script>
+/* 通用 Tab 切换 */
+function switchTab(btn, panelId) {
+  const card = btn.closest('.tool-card');
+  card.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+/* 单位换算 */
+const convFactors = {
+  E: { siUnit: 'V/m', cgsUnit: 'statV/cm', si2cgs: 1/29979.2458, cgs2si: 29979.2458 },
+  B: { siUnit: 'T', cgsUnit: 'G', si2cgs: 1e4, cgs2si: 1e-4 },
+  D: { siUnit: 'C/m²', cgsUnit: 'statC/cm²', si2cgs: 1/2.99792458e-5, cgs2si: 2.99792458e-5 },
+  H: { siUnit: 'A/m', cgsUnit: 'Oe', si2cgs: 4*Math.PI*1e-3, cgs2si: 1/(4*Math.PI*1e-3) },
+  Phi: { siUnit: 'Wb', cgsUnit: 'Mx', si2cgs: 1e8, cgs2si: 1e-8 },
+  P: { siUnit: 'C/m²', cgsUnit: 'statC/cm²', si2cgs: 1/2.99792458e-5, cgs2si: 2.99792458e-5 },
+  M: { siUnit: 'A/m', cgsUnit: 'emu/cm³', si2cgs: 1e3, cgs2si: 1e-3 }
+};
+
+function updateSiUnit() { document.getElementById('siUnit').textContent = convFactors[document.getElementById('siQty').value].siUnit; }
+function updateCgsUnit() { document.getElementById('cgsUnit').textContent = convFactors[document.getElementById('cgsQty').value].cgsUnit; }
+document.getElementById('siQty').addEventListener('change', updateSiUnit);
+document.getElementById('cgsQty').addEventListener('change', updateCgsUnit);
+
+function convertSI_CGS() {
+  const qty = document.getElementById('siQty').value;
+  const val = parseFloat(document.getElementById('siVal').value);
+  const f = convFactors[qty];
+  if(isNaN(val)) { document.getElementById('siCgsResult').innerHTML = '<span style="color:#B71C1C">请输入有效数值</span>'; return; }
+  const res = val * f.si2cgs;
+  document.getElementById('siCgsResult').innerHTML = '<div class="res-line"><span>CGS 值</span><span class="res-val">' + res.toExponential(4) + ' ' + f.cgsUnit + '</span></div>' +
+    '<div class="res-line"><span>换算系数</span><span class="res-val">1 ' + f.siUnit + ' = ' + f.si2cgs.toExponential(4) + ' ' + f.cgsUnit + '</span></div>';
+}
+function convertCGS_SI() {
+  const qty = document.getElementById('cgsQty').value;
+  const val = parseFloat(document.getElementById('cgsVal').value);
+  const f = convFactors[qty];
+  if(isNaN(val)) { document.getElementById('cgsSiResult').innerHTML = '<span style="color:#B71C1C">请输入有效数值</span>'; return; }
+  const res = val * f.cgs2si;
+  document.getElementById('cgsSiResult').innerHTML = '<div class="res-line"><span>SI 值</span><span class="res-val">' + res.toExponential(4) + ' ' + f.siUnit + '</span></div>' +
+    '<div class="res-line"><span>换算系数</span><span class="res-val">1 ' + f.cgsUnit + ' = ' + f.cgs2si.toExponential(4) + ' ' + f.siUnit + '</span></div>';
+}
+
+/* 电磁波参数 */
+const c0 = 299792458; // m/s
+const mu0 = 4*Math.PI*1e-7;
+const eps0 = 8.854187817e-12;
+const mediumData = { vacuum: {er:1,ur:1}, air: {er:1.0006,ur:1}, water: {er:80,ur:1}, glass: {er:4,ur:1} };
+
+document.getElementById('emMedium').addEventListener('change', function() {
+  document.getElementById('customMedium').style.display = this.value === 'custom' ? 'flex' : 'none';
+});
+
+function updateEmUnit() {
+  const map = { f:'Hz', lambda:'m', k:'rad/m' };
+  document.getElementById('emUnit').textContent = map[document.getElementById('emKnown').value];
+}
+
+function calcEM() {
+  const known = document.getElementById('emKnown').value;
+  const val = parseFloat(document.getElementById('emVal').value);
+  const medium = document.getElementById('emMedium').value;
+  if(isNaN(val) || val <= 0) { document.getElementById('emResult').innerHTML = '<span style="color:#B71C1C">请输入正数</span>'; return; }
+
+  let er, ur;
+  if(medium === 'custom') { er = parseFloat(document.getElementById('customEr').value)||1; ur = parseFloat(document.getElementById('customUr').value)||1; }
+  else { er = mediumData[medium].er; ur = mediumData[medium].ur; }
+
+  const v = c0 / Math.sqrt(er * ur);
+  let f, lambda, k, omega, fc, n;
+
+  if(known === 'f') { f = val; lambda = v / f; }
+  else if(known === 'lambda') { lambda = val; f = v / lambda; }
+  else { k = val; lambda = 2*Math.PI/k; f = v / lambda; }
+
+  omega = 2 * Math.PI * f;
+  k = 2 * Math.PI / lambda;
+  n = Math.sqrt(er * ur);
+  fc = f; // 截止频率对TEM波不适用，仅显示
+
+  document.getElementById('emResult').innerHTML =
+    '<div class="res-line"><span>频率 f</span><span class="res-val">' + f.toExponential(4) + ' Hz</span></div>' +
+    '<div class="res-line"><span>角频率 ω</span><span class="res-val">' + omega.toExponential(4) + ' rad/s</span></div>' +
+    '<div class="res-line"><span>波长 λ</span><span class="res-val">' + lambda.toExponential(4) + ' m</span></div>' +
+    '<div class="res-line"><span>波数 k</span><span class="res-val">' + k.toExponential(4) + ' rad/m</span></div>' +
+    '<div class="res-line"><span>相速度 v</span><span class="res-val">' + v.toExponential(4) + ' m/s</span></div>' +
+    '<div class="res-line"><span>折射率 n</span><span class="res-val">' + n.toFixed(4) + '</span></div>' +
+    '<div class="res-line"><span>本征阻抗 η</span><span class="res-val">' + (Math.sqrt(mu0*ur/(eps0*er))).toExponential(4) + ' Ω</span></div>';
+}
+
+/* 矢量运算 */
+function getVec(prefix) { return [parseFloat(document.getElementById(prefix+'x').value)||0, parseFloat(document.getElementById(prefix+'y').value)||0, parseFloat(document.getElementById(prefix+'z').value)||0]; }
+
+function vecNorm() {
+  const [x,y,z] = getVec('a');
+  const r = Math.sqrt(x*x+y*y+z*z);
+  document.getElementById('vecResult').innerHTML = '<div class="res-line"><span>|A|</span><span class="res-val">' + r.toFixed(6) + '</span></div>';
+}
+function vecDivergence() {
+  // 数值散度假设均匀场的简单估计，需用户提供导数时才能精确计算
+  // 这里提供概念性说明
+  const [x,y,z] = getVec('a');
+  document.getElementById('vecResult').innerHTML = '<div style="color:#789">散度 ∇·A = ∂Ax/∂x + ∂Ay/∂y + ∂Az/∂z 需要空间导数信息。若场均匀，散度为 0。</div>';
+}
+function vecCurl() {
+  document.getElementById('vecResult').innerHTML = '<div style="color:#789">旋度 ∇×A 需要空间导数信息。请提供 ∂Aᵢ/∂xⱼ 后手动计算行列式。</div>';
+}
+function vecDot() {
+  const [x1,y1,z1] = getVec('a2');
+  const [x2,y2,z2] = [parseFloat(document.getElementById('b2x').value)||0, parseFloat(document.getElementById('b2y').value)||0, parseFloat(document.getElementById('b2z').value)||0];
+  const dot = x1*x2+y1*y2+z1*z2;
+  const r1 = Math.sqrt(x1*x1+y1*y1+z1*z1), r2 = Math.sqrt(x2*x2+y2*y2+z2*z2);
+  const angle = r1*r2 > 0 ? Math.acos(dot/(r1*r2)) * 180 / Math.PI : 0;
+  document.getElementById('vecResult2').innerHTML =
+    '<div class="res-line"><span>点积 A·B</span><span class="res-val">' + dot.toFixed(6) + '</span></div>' +
+    '<div class="res-line"><span>夹角 θ</span><span class="res-val">' + angle.toFixed(4) + '°</span></div>';
+}
+function vecCross() {
+  const [x1,y1,z1] = getVec('a2');
+  const [x2,y2,z2] = [parseFloat(document.getElementById('b2x').value)||0, parseFloat(document.getElementById('b2y').value)||0, parseFloat(document.getElementById('b2z').value)||0];
+  const cx = y1*z2 - z1*y2, cy = z1*x2 - x1*z2, cz = x1*y2 - y1*x2;
+  document.getElementById('vecResult2').innerHTML =
+    '<div class="res-line"><span>A×B = (</span><span class="res-val">' + cx.toFixed(6) + ', ' + cy.toFixed(6) + ', ' + cz.toFixed(6) + ')</span></div>' +
+    '<div class="res-line"><span>|A×B|</span><span class="res-val">' + Math.sqrt(cx*cx+cy*cy+cz*cz).toFixed(6) + '</span></div>';
+}
+</script>
+</body>
+</html>

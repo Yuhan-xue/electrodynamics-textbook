@@ -1,0 +1,17 @@
+# LaTeX编译产物
+*.aux
+*.log
+*.out
+*.toc
+*.idx
+*.upa
+*.upb
+*.ilg
+*.ind
+
+# 备份文件
+*.bak
+
+# OS文件
+.DS_Store
+Thumbs.db

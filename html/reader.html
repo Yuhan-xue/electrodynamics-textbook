@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电动力学 — PDF 阅读器</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: "微软雅黑", "Microsoft YaHei", "Segoe UI", sans-serif; background: #0b0f1a; color: #e0e0e0; height: 100vh; overflow: hidden; }
+
+/* 顶部栏 */
+.top-bar { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: #111827; border-bottom: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 100; }
+.top-bar .title { font-size: 1rem; color: #fff; font-weight: 600; }
+.top-bar .title span { color: #2962FF; font-weight: 700; }
+.top-bar .nav-btns { display: flex; gap: 10px; }
+.top-bar .nav-btns a { color: #9ab; text-decoration: none; font-size: 0.85rem; padding: 6px 12px; border-radius: 6px; background: rgba(255,255,255,0.04); transition: all 0.2s; }
+.top-bar .nav-btns a:hover { background: rgba(41,98,255,0.15); color: #2962FF; }
+
+/* 侧边栏 */
+.sidebar { position: fixed; top: 52px; left: 0; width: 260px; bottom: 56px; background: #111827; border-right: 1px solid #1f2937; overflow-y: auto; z-index: 50; transition: transform 0.3s; }
+.sidebar h3 { font-size: 0.85rem; color: #678; text-transform: uppercase; letter-spacing: 1px; padding: 18px 20px 8px; }
+.sidebar ul { list-style: none; }
+.sidebar li a { display: block; padding: 10px 20px; color: #abc; text-decoration: none; font-size: 0.88rem; transition: all 0.2s; border-left: 3px solid transparent; }
+.sidebar li a:hover { background: rgba(41,98,255,0.08); color: #fff; border-left-color: #2962FF; }
+.sidebar li a.active { background: rgba(41,98,255,0.12); color: #2962FF; border-left-color: #2962FF; font-weight: 600; }
+.sidebar .group { margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.04); }
+
+/* 主内容区 */
+.main { position: fixed; top: 52px; left: 260px; right: 0; bottom: 56px; overflow: hidden; background: #1a1f2e; }
+.main iframe { width: 100%; height: 100%; border: none; }
+
+/* 底部栏 */
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 56px; background: #111827; border-top: 1px solid #1f2937; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 100; }
+.bottom-bar .chapter-nav { display: flex; gap: 12px; align-items: center; }
+.bottom-bar .chapter-nav button { padding: 8px 16px; border-radius: 8px; border: none; background: #1f2937; color: #e0e0e0; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+.bottom-bar .chapter-nav button:hover { background: #2962FF; color: #fff; }
+.bottom-bar .chapter-nav button:disabled { opacity: 0.4; cursor: not-allowed; background: #1f2937; }
+.bottom-bar .chapter-nav .chap-info { font-size: 0.85rem; color: #789; margin-left: 8px; }
+.bottom-bar .legend { display: flex; gap: 14px; font-size: 0.8rem; }
+.bottom-bar .legend span { display: flex; align-items: center; gap: 6px; }
+.bottom-bar .legend .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* 图例颜色 */
+.dot-e { background: #B71C1C; }
+.dot-b { background: #2962FF; }
+.dot-k { background: #2E7D32; }
+
+/* 侧边栏开关 */
+.sidebar-toggle { display: none; position: fixed; top: 62px; left: 10px; z-index: 60; width: 36px; height: 36px; border-radius: 8px; background: #111827; border: 1px solid #1f2937; color: #fff; font-size: 1.2rem; cursor: pointer; align-items: center; justify-content: center; }
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main { left: 0; }
+  .sidebar-toggle { display: flex; }
+  .bottom-bar .legend { display: none; }
+  .bottom-bar .chapter-nav .chap-info { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="title">📘 <span>电动力学</span> 阅读器</div>
+  <div class="nav-btns">
+    <a href="index.html">首页</a>
+    <a href="tools.html">工具</a>
+    <a href="roadmap.html">路线图</a>
+    <a href="appendix-nav.html">附录</a>
+  </div>
+</div>
+
+<button class="sidebar-toggle" id="sidebarToggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<div class="sidebar" id="sidebar">
+  <h3>📑 目录</h3>
+  <ul>
+    <li><a href="#" class="active" data-page="1">第1章 矢量分析</a></li>
+    <li><a href="#" data-page="2">第2章 静电场</a></li>
+    <li><a href="#" data-page="3">第3章 静磁场</a></li>
+    <li><a href="#" data-page="4">第4章 麦克斯韦方程</a></li>
+    <li><a href="#" data-page="5">第5章 电磁波</a></li>
+    <li><a href="#" data-page="6">第6章 传输线</a></li>
+    <li><a href="#" data-page="7">第7章 波导</a></li>
+    <li><a href="#" data-page="8">第8章 辐射</a></li>
+    <li><a href="#" data-page="9">第9章 相对论电动力学</a></li>
+    <li><a href="#" data-page="10">第10章 等离子体</a></li>
+  </ul>
+  <div class="group">
+    <h3>📎 附录</h3>
+    <ul>
+      <li><a href="appendix-nav.html" target="_blank">公式速查</a></li>
+      <li><a href="errata.html" target="_blank">勘误表</a></li>
+    </ul>
+  </div>
+  <div class="group">
+    <h3>⚠️ 易错点</h3>
+    <ul>
+      <li><a href="#" onclick="alert('该章节正在整理中...')">散度 vs 旋度符号</a></li>
+      <li><a href="#" onclick="alert('该章节正在整理中...')">高斯制单位换算</a></li>
+      <li><a href="#" onclick="alert('该章节正在整理中...')">边界条件方向</a></li>
+      <li><a href="#" onclick="alert('该章节正在整理中...')">坡印廷矢量方向</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="main">
+  <!-- 注意：请替换为实际PDF路径 -->
+  <iframe id="pdfFrame" src="about:blank" title="PDF 阅读器"></iframe>
+</div>
+
+<div class="bottom-bar">
+  <div class="chapter-nav">
+    <button id="prevBtn" onclick="goChapter(-1)">← 上一章</button>
+    <button id="nextBtn" onclick="goChapter(1)">下一章 →</button>
+    <span class="chap-info" id="chapInfo">第 1 / 10 章</span>
+  </div>
+  <div class="legend">
+    <span><span class="dot dot-e"></span> E 电场（红）</span>
+    <span><span class="dot dot-b"></span> B 磁场（蓝）</span>
+    <span><span class="dot dot-k"></span> k 波矢（绿）</span>
+  </div>
+</div>
+
+<script>
+(function() {
+  const chapters = [
+    '第1章 矢量分析',
+    '第2章 静电场',
+    '第3章 静磁场',
+    '第4章 麦克斯韦方程',
+    '第5章 电磁波',
+    '第6章 传输线',
+    '第7章 波导',
+    '第8章 辐射',
+    '第9章 相对论电动力学',
+    '第10章 等离子体'
+  ];
+  let current = 1;
+  const total = chapters.length;
+  const iframe = document.getElementById('pdfFrame');
+  const chapInfo = document.getElementById('chapInfo');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const links = document.querySelectorAll('.sidebar li a[data-page]');
+
+  function updateUI() {
+    chapInfo.textContent = '第 ' + current + ' / ' + total + ' 章：' + chapters[current-1];
+    prevBtn.disabled = current <= 1;
+    nextBtn.disabled = current >= total;
+    links.forEach(l => {
+      l.classList.toggle('active', parseInt(l.dataset.page) === current);
+    });
+    // 在实际部署时，这里应指向 PDF 的对应页或分章PDF
+    // 示例：iframe.src = 'chapter_' + current + '.pdf';
+  }
+
+  function goChapter(delta) {
+    const next = current + delta;
+    if(next >= 1 && next <= total) {
+      current = next;
+      updateUI();
+    }
+  }
+  window.goChapter = goChapter;
+
+  links.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      current = parseInt(this.dataset.page);
+      updateUI();
+    });
+  });
+
+  // 键盘导航
+  document.addEventListener('keydown', function(e) {
+    if(e.key === 'ArrowLeft') goChapter(-1);
+    if(e.key === 'ArrowRight') goChapter(1);
+  });
+
+  // 检查 URL 参数选择路线
+  const params = new URLSearchParams(window.location.search);
+  const route = params.get('route') || localStorage.getItem('selectedRoute');
+  if(route === 'engineering') {
+    // 工科路线：第1-9章，跳过10章
+  }
+
+  updateUI();
+})();
+</script>
+</body>
+</html>

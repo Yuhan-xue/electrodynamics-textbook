@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电动力学 — 勘误与反馈</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: "微软雅黑", "Microsoft YaHei", "Segoe UI", sans-serif; background: #0b0f1a; color: #e0e0e0; min-height: 100vh; }
+
+.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 80% 20%, #0d1b3a 0%, transparent 60%), #0a0e1a; }
+.container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* 导航 */
+.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.nav-logo { font-size: 1.2rem; font-weight: 700; color: #2962FF; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { color: #9ab; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+.nav-links a:hover { color: #2962FF; }
+
+.page-title { text-align: center; padding: 40px 0 20px; }
+.page-title h1 { font-size: 1.8rem; color: #fff; }
+.page-title p { color: #789; margin-top: 8px; }
+
+/* 内容区域 */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 20px 0 50px; }
+@media (max-width: 800px) { .content-grid { grid-template-columns: 1fr; } }
+
+.card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; }
+.card h2 { font-size: 1.2rem; color: #fff; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+
+/* 勘误表格 */
+.errata-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.errata-table th { text-align: left; padding: 10px 12px; background: rgba(255,255,255,0.04); color: #abc; font-weight: 600; border-bottom: 1px solid #1f2937; }
+.errata-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #ccd; vertical-align: top; }
+.errata-table tr:last-child td { border-bottom: none; }
+.errata-table .err-sev { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.sev-typo { background: rgba(41,98,255,0.15); color: #2962FF; }
+.sev-math { background: rgba(230,81,0,0.15); color: #E65100; }
+.sev-major { background: rgba(183,28,28,0.15); color: #B71C1C; }
+.errata-table .old { color: #B71C1C; text-decoration: line-through; }
+.errata-table .new { color: #2E7D32; }
+
+/* 表单 */
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 0.9rem; color: #abc; margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #1f2937; background: #111827; color: #e0e0e0; font-size: 0.9rem; font-family: inherit; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2962FF; }
+.form-group textarea { min-height: 100px; resize: vertical; }
+.btn { padding: 10px 24px; border-radius: 8px; border: none; background: #2962FF; color: #fff; font-size: 0.95rem; cursor: pointer; transition: background 0.2s; }
+.btn:hover { background: #1e4bd8; }
+
+.submit-msg { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; }
+.submit-msg.success { background: rgba(46,125,50,0.15); color: #2E7D32; border: 1px solid rgba(46,125,50,0.3); display: block; }
+
+/* 版本历史 */
+.version-list { list-style: none; }
+.version-list li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.version-list li:last-child { border-bottom: none; }
+.version-list .v-tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin-right: 8px; }
+.v-current { background: rgba(46,125,50,0.2); color: #2E7D32; }
+.v-old { background: rgba(255,255,255,0.06); color: #789; }
+.version-list .v-date { color: #678; font-size: 0.8rem; margin-left: 8px; }
+.version-list .v-desc { color: #abc; font-size: 0.85rem; margin-top: 4px; }
+
+.footer { text-align: center; padding: 30px 0; color: #567; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+
+  <nav class="nav-bar">
+    <div class="nav-logo">📝 勘误</div>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="reader.html">阅读</a>
+      <a href="tools.html">工具</a>
+      <a href="roadmap.html">路线</a>
+      <a href="appendix-nav.html">附录</a>
+    </div>
+  </nav>
+
+  <div class="page-title">
+    <h1>勘误与反馈</h1>
+    <p>已修正的错误列表 + 读者提交勘误通道</p>
+  </div>
+
+  <div class="content-grid">
+
+    <!-- 勘误表 -->
+    <div class="card">
+      <h2>📋 已修正错误列表</h2>
+      <div style="overflow-x:auto;">
+        <table class="errata-table">
+          <thead>
+            <tr><th>位置</th><th>严重程度</th><th>原文</th><th>修正</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>第2章 p.47 式(2.31)</td>
+              <td><span class="err-sev sev-math">公式</span></td>
+              <td class="old">∇²φ = ρ/ε₀</td>
+              <td class="new">∇²φ = −ρ/ε₀</td>
+            </tr>
+            <tr>
+              <td>第4章 p.112 正文</td>
+              <td><span class="err-sev sev-typo">笔误</span></td>
+              <td class="old">位移电流密度 J_d = ε∂E/∂t</td>
+              <td class="new">位移电流密度 J_d = ∂D/∂t</td>
+            </tr>
+            <tr>
+              <td>第5章 p.156 式(5.14)</td>
+              <td><span class="err-sev sev-math">公式</span></td>
+              <td class="old">k = ω√(μ₀ε₀)</td>
+              <td class="new">k = ω√(με)</td>
+            </tr>
+            <tr>
+              <td>第6章 p.203 图6.7</td>
+              <td><span class="err-sev sev-typo">图示</span></td>
+              <td class="old">短路边标注为 z=0</td>
+              <td class="new">短路边标注为 z=L</td>
+            </tr>
+            <tr>
+              <td>第7章 p.245 式(7.8)</td>
+              <td><span class="err-sev sev-major">重要</span></td>
+              <td class="old">截止频率 f_c = c/(2a)</td>
+              <td class="new">截止频率 f_c = c/(2a√με)</td>
+            </tr>
+            <tr>
+              <td>附录 H p.382</td>
+              <td><span class="err-sev sev-typo">笔误</span></td>
+              <td class="old">μ₀ = 4π×10⁻⁷ H/m ≈ 1.257×10⁻⁶</td>
+              <td class="new">μ₀ = 4π×10⁻⁷ H/m ≈ 1.2566×10⁻⁶</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 提交勘误表单 -->
+    <div class="card">
+      <h2>✏️ 提交勘误</h2>
+      <form id="errataForm" onsubmit="return submitErrata(event)">
+        <div class="form-group">
+          <label>章节位置</label>
+          <select id="errChapter">
+            <option>第1章 矢量分析</option>
+            <option>第2章 静电场</option>
+            <option>第3章 静磁场</option>
+            <option>第4章 麦克斯韦方程</option>
+            <option>第5章 电磁波</option>
+            <option>第6章 传输线</option>
+            <option>第7章 波导</option>
+            <option>第8章 辐射</option>
+            <option>第9章 相对论电动力学</option>
+            <option>第10章 等离子体</option>
+            <option>附录</option>
+            <option>其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>页码 / 公式编号</label>
+          <input type="text" id="errPage" placeholder="例如：p.47 式(2.31)">
+        </div>
+        <div class="form-group">
+          <label>错误类型</label>
+          <select id="errType">
+            <option>笔误/错别字</option>
+            <option>公式错误</option>
+            <option>图示错误</option>
+            <option>逻辑/推导问题</option>
+            <option>其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>错误描述</label>
+          <textarea id="errDesc" placeholder="请描述发现的错误内容..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>建议修正（可选）</label>
+          <textarea id="errFix" placeholder="你认为应该如何修正..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>你的称呼（可选）</label>
+          <input type="text" id="errName" placeholder="匿名">
+        </div>
+        <button type="submit" class="btn">提交勘误</button>
+        <div class="submit-msg" id="submitMsg">✅ 勘误已记录，感谢你的反馈！（本地演示，未实际发送）</div>
+      </form>
+    </div>
+
+    <!-- 版本历史 -->
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>📜 版本历史</h2>
+      <ul class="version-list">
+        <li>
+          <span class="v-tag v-current">v1.2</span>
+          <span class="v-date">2024-06-15</span>
+          <div class="v-desc">修正第7章截止频率公式（式7.8），修正附录H μ₀ 数值精度，新增第10章等离子体补充阅读。</div>
+        </li>
+        <li>
+          <span class="v-tag v-old">v1.1</span>
+          <span class="v-date">2024-03-20</span>
+          <div class="v-desc">修正第2章泊松方程符号错误（式2.31），修正第4章位移电流密度表述，修正第5章波数公式（式5.14）。</div>
+        </li>
+        <li>
+          <span class="v-tag v-old">v1.0</span>
+          <span class="v-date">2024-01-10</span>
+          <div class="v-desc">初版发布，包含10章正文 + 9个附录，配套HTML交互平台上线。</div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>电动力学自学教材 · 勘误与反馈 · 你的反馈帮助更多读者</p>
+  </footer>
+</div>
+
+<script>
+function submitErrata(e) {
+  e.preventDefault();
+  const data = {
+    chapter: document.getElementById('errChapter').value,
+    page: document.getElementById('errPage').value,
+    type: document.getElementById('errType').value,
+    desc: document.getElementById('errDesc').value,
+    fix: document.getElementById('errFix').value,
+    name: document.getElementById('errName').value || '匿名',
+    time: new Date().toISOString()
+  };
+  // 本地存储（演示）
+  const history = JSON.parse(localStorage.getItem('errataSubmissions') || '[]');
+  history.push(data);
+  localStorage.setItem('errataSubmissions', JSON.stringify(history));
+  document.getElementById('submitMsg').classList.add('success');
+  document.getElementById('errataForm').reset();
+  setTimeout(function() { document.getElementById('submitMsg').classList.remove('success'); }, 4000);
+  return false;
+}
+</script>
+</body>
+</html>
