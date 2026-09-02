@@ -675,11 +675,11 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \foreach \a in {1,1.5,2,2.5,3} {
   \draw[thick,blue] (0,0) ellipse (\a*0.8 and \a*0.5);
 }
-\node[blue,font=\small] at (3,1.5) {等势面 $\phi=C$};
+\node[blue,font=\small,anchor=south] at (-1.8,1.7) {等势面 $\phi=C$};
 
 % 梯度方向（垂直于等高线，指向增长方向）
-\draw[->,thick,red] (0,0) -- (2.5,1.5) node[right] {$\grad\phi$};
-\draw[->,thick,red] (0,0) -- (-2.5,-1.5) node[left] {$-\grad\phi$};
+\draw[->,thick,red] (0,0) -- (1.8,1.08) node[right,font=\small] {$\grad\phi$};
+\draw[->,thick,red] (0,0) -- (-1.8,-1.08) node[left,font=\small] {$-\grad\phi$};
 
 % 标注
 \node[align=center,font=\small] at (0,-2.5) {$\grad\phi$ 垂直于等势面\\指向$\phi$增长最快的方向};
@@ -743,14 +743,14 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \begin{center}
 \begin{tikzpicture}[scale=0.85]
 % 源 (div > 0)
-\begin{scope}[shift={(-4,0)}]
+\begin{scope}[shift={(-5,0)}]
 \draw[thick] (0,0) circle (1.5);
 \foreach \a in {0,45,90,135,180,225,270,315} {
   \draw[->,thick,red] (\a:0.3) -- (\a:1.3);
 }
 \fill[red] (0,0) circle (3pt);
-\node at (0,-2) {\textbf{(a) 源：$\divg\vecA>0$}};
-\node[align=center,font=\small] at (0,-2.7) {场线从点发出\\净流出};
+\node at (0,-2.1) {\textbf{(a) 源}：$\divg\vecA>0$};
+\node[align=center,font=\small] at (0,-2.9) {场线从点发出\\净流出};
 \end{scope}
 
 % 汇 (div < 0)
@@ -760,17 +760,17 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
   \draw[->,thick,blue] (\a:1.3) -- (\a:0.3);
 }
 \fill[blue] (0,0) circle (3pt);
-\node at (0,-2) {\textbf{(b) 汇：$\divg\vecA<0$}};
-\node[align=center,font=\small] at (0,-2.7) {场线向点会聚\\净流入};
+\node at (0,-2.1) {\textbf{(b) 汇}：$\divg\vecA<0$};
+\node[align=center,font=\small] at (0,-2.9) {场线向点会聚\\净流入};
 \end{scope}
 
 % 无源 (div = 0)
-\begin{scope}[shift={(4,0)}]
+\begin{scope}[shift={(5,0)}]
 \draw[thick] (0,0) circle (1.5);
 \draw[->,thick,green!60!black] (-1.3,0.5) -- (1.3,0.5);
 \draw[->,thick,green!60!black] (-1.3,-0.5) -- (1.3,-0.5);
-\node at (0,-2) {\textbf{(c) 无源：$\divg\vecA=0$}};
-\node[align=center,font=\small] at (0,-2.7) {场线平行穿过\\净通量为零};
+\node at (0,-2.1) {\textbf{(c) 无源}：$\divg\vecA=0$};
+\node[align=center,font=\small] at (0,-2.9) {场线平行穿过\\净通量为零};
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -817,9 +817,9 @@ A_x & A_y & A_z
 }
 \draw[thick] (0,0) circle (0.6);
 \draw[->,thick,blue] (0,0) -- (0,1.2) node[above] {$\curl\vecA$};
-\node[font=\small] at (0,-0.2) {叶轮};
-\node at (0,-1.5) {\textbf{(a) 有旋场}};
-\node[align=center,font=\small] at (0,-2.2) {$\curl\vecA\neq\vect{0}$\\叶轮旋转};
+\node[font=\small] at (0,-1.0) {叶轮};
+\node at (0,-1.7) {\textbf{(a) 有旋场}};
+\node[align=center,font=\small] at (0,-2.4) {$\curl\vecA\neq\vect{0}$\\叶轮旋转};
 \end{scope}
 
 % 无旋场 (curl = 0)
@@ -828,9 +828,9 @@ A_x & A_y & A_z
   \draw[->,thick,green!60!black] (-1.5,\y) -- (1.5,\y);
 }
 \draw[thick] (0,0) circle (0.6);
-\node[font=\small] at (0,-0.2) {叶轮};
-\node at (0,-1.5) {\textbf{(b) 无旋场}};
-\node[align=center,font=\small] at (0,-2.2) {$\curl\vecA=\vect{0}$\\叶轮不转};
+\node[font=\small,fill=white,inner sep=1pt] at (0,0) {叶轮};
+\node at (0,-1.7) {\textbf{(b) 无旋场}};
+\node[align=center,font=\small] at (0,-2.4) {$\curl\vecA=\vect{0}$\\叶轮不转};
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -1407,8 +1407,8 @@ r^2 \frac{\partial f}{\partial r} = -1
 \draw[->,thick] (0,0,0) -- (2,0,0) node[right] {$x$};
 \draw[->,thick] (0,0,0) -- (0,2,0) node[above] {$y$};
 \draw[->,thick] (0,0,0) -- (0,0,2) node[below left] {$z$};
-\node at (0,-0.8) {\textbf{(a) 直角坐标系}};
-\node[align=center,font=\small] at (0,-1.4) {$\vecA=A_x\unitvec{x}+A_y\unitvec{y}+A_z\unitvec{z}$\\单位矢量为常矢量};
+\node at (0,-1.2) {\textbf{(a) 直角坐标系}};
+\node[align=center,font=\small] at (0,-2.0) {$\vecA=A_x\unitvec{x}+A_y\unitvec{y}+A_z\unitvec{z}$\\单位矢量为常矢量};
 \end{scope}
 
 % 柱坐标系
@@ -1420,8 +1420,8 @@ r^2 \frac{\partial f}{\partial r} = -1
 \draw[->,thick,red] (1.2,0.8) -- (1.8,1.2) node[right] {$\unitvec{r}$};
 \draw[->,thick,blue] (1.2,0.8) -- (0.6,1.4) node[above] {$\unitvec{\phi}$};
 \draw[->,thick] (1.2,0.8) -- (1.2,1.6) node[right] {$\unitvec{z}$};
-\node at (1,-0.8) {\textbf{(b) 柱坐标系}};
-\node[align=center,font=\small] at (1,-1.4) {$(r,\phi,z)$\\$\unitvec{r},\unitvec{\phi}$随位置变化};
+\node at (1,-1.2) {\textbf{(b) 柱坐标系}};
+\node[align=center,font=\small] at (1,-2.0) {$(r,\phi,z)$\\$\unitvec{r},\unitvec{\phi}$随位置变化};
 \end{scope}
 
 % 球坐标系
@@ -1432,8 +1432,8 @@ r^2 \frac{\partial f}{\partial r} = -1
 \draw[->,thick,blue] (1.5,1) -- (1.9,0.4) node[right] {$\unitvec{\theta}$};
 \draw[->,thick,green!60!black] (1.5,1) -- (0.8,1.3) node[above] {$\unitvec{\phi}$};
 \draw (0.5,0) arc (0:35:0.5) node[midway,right,font=\small] {$\theta$};
-\node at (0.8,-0.8) {\textbf{(c) 球坐标系}};
-\node[align=center,font=\small] at (0.8,-1.4) {$(r,\theta,\phi)$\\适用于球对称问题};
+\node at (0.8,-1.2) {\textbf{(c) 球坐标系}};
+\node[align=center,font=\small] at (0.8,-2.0) {$(r,\theta,\phi)$\\适用于球对称问题};
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -1694,9 +1694,9 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \end{review}
 
 \begin{tip}{本章核心框架}{ch1-summary}
-\textbf{一句话总结}：矢量分析是描述电磁场的数学语言。\\par
-\textbf{四大核心}：梯度（标量→矢量）、散度（矢量→标量，源/汇判断）、旋度（矢量→矢量，旋转程度）、拉普拉斯（二阶导数，波动/扩散方程核心）。\\par
-\textbf{三大工具}：高斯定理（体积分↔面积分）、斯托克斯定理（面积分↔线积分）、$\delta$函数（点源描述）。\\par
+\textbf{一句话总结}：矢量分析是描述电磁场的数学语言。\\
+\textbf{四大核心}：梯度（标量→矢量）、散度（矢量→标量，源/汇判断）、旋度（矢量→矢量，旋转程度）、拉普拉斯（二阶导数，波动/扩散方程核心）。\\
+\textbf{三大工具}：高斯定理（体积分↔面积分）、斯托克斯定理（面积分↔线积分）、$\delta$函数（点源描述）。\\
 \textbf{衔接}：第2章将用$\grad$描述电势与电场关系，用$\lap$建立泊松方程。
 \end{tip}
 
@@ -2317,9 +2317,9 @@ $\lap\phi = 0$ & 拉普拉斯方程 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch2-summary}
-\textbf{一句话总结}：静电场的有源无旋特性通过高斯定理和环路定理完全刻画。\\par
-\textbf{核心方程}：$\divg\vecE=\rho/\eps_0$（有源）、$\curl\vecE=\vect{0}$（无旋，保守场）、$\lap\phi=-\rho/\eps_0$（泊松方程）。\\par
-\textbf{核心方法}：库仑叠加（点电荷）、高斯定理（对称性）、电势法（标量比矢量好算）、唯一性定理（边值问题定解）。\\par
+\textbf{一句话总结}：静电场的有源无旋特性通过高斯定理和环路定理完全刻画。\\
+\textbf{核心方程}：$\divg\vecE=\rho/\eps_0$（有源）、$\curl\vecE=\vect{0}$（无旋，保守场）、$\lap\phi=-\rho/\eps_0$（泊松方程）。\\
+\textbf{核心方法}：库仑叠加（点电荷）、高斯定理（对称性）、电势法（标量比矢量好算）、唯一性定理（边值问题定解）。\\
 \textbf{衔接}：第3章引入电介质，将$\eps_0$替换为$\eps$，新增极化强度$\vect{P}$和电位移$\vect{D}$。
 \end{tip}
 
@@ -2738,14 +2738,23 @@ $\vect{D}_2 = \eps_0\eps_r\vecE_2 = \eps_0\eps_r E_0\sin\theta\,\unitvec{x} + \e
 
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-\filldraw[fill=gray!20,draw=black,thick] (0,0) circle (1);
-\filldraw[fill=blue!10,draw=black,thick] (0,0) circle (2);
-\draw[dashed] (0,0) -- (1,0) node[midway,above] {$a$};
-\draw[dashed] (0,0) -- (2,0) node[midway,below] {$b$};
-\node at (0,0) {$\sigma_f$};
-\node at (1.5,0) {$\eps$};
-\node at (2.5,0) {$\eps_0$};
-\draw[->,thick,red] (2.2,0.8) -- (2.8,0.8) node[right] {$\vecE$};
+% 真空区（最外层，白色）
+\draw[black,thick] (0,0) circle (3);
+% 电介质层（蓝色环）
+\filldraw[fill=blue!15,draw=black,thick] (0,0) circle (2);
+% 导体球（灰色实心）
+\filldraw[fill=gray!35,draw=black,thick] (0,0) circle (1);
+% 半径标注
+\draw[dashed] (0,0) -- (0.707,-0.707) node[midway,right] {$a$};
+\draw[dashed] (0,0) -- (1.414,-1.414) node[midway,right] {$b$};
+% 区域标签
+\node[font=\small] at (0,0.35) {导体};
+\node[font=\small] at (0,-0.45) {$\sigma_f$};
+\node[font=\small,blue!70!black] at (0,1.5) {电介质 $\eps$};
+\node[font=\small] at (2.45,0) {真空 $\eps_0$};
+% 电场方向（介质内径向）
+\draw[->,thick,red] (0.9,0.35) -- (1.75,0.68) node[above,midway,font=\small] {$\vecE_{II}$};
+\draw[->,thick,red] (2.1,-0.6) -- (2.8,-0.8) node[below,right,font=\small] {$\vecE_{III}$};
 \end{tikzpicture}
 \end{center}
 \tcblower
@@ -2881,9 +2890,9 @@ $\phi|_{\text{导体}} = \text{常数}$ & 导体边界条件 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch3-summary}
-\textbf{一句话总结}：电介质通过极化响应外电场，产生束缚电荷，改变有效介电常数。\\par
-\textbf{核心关系}：$\vect{D}=\eps_0\vecE+\vect{P}=\eps\vecE$（LIH介质）、$\rho_p=-\divg\vect{P}$（束缚电荷）。\\par
-\textbf{边界条件}：$E_{1t}=E_{2t}$（切向连续）、$D_{1n}=D_{2n}$（法向连续，无自由面电荷）。\\par
+\textbf{一句话总结}：电介质通过极化响应外电场，产生束缚电荷，改变有效介电常数。\\
+\textbf{核心关系}：$\vect{D}=\eps_0\vecE+\vect{P}=\eps\vecE$（LIH介质）、$\rho_p=-\divg\vect{P}$（束缚电荷）。\\
+\textbf{边界条件}：$E_{1t}=E_{2t}$（切向连续）、$D_{1n}=D_{2n}$（法向连续，无自由面电荷）。\\
 \textbf{衔接}：第4章将用分离变量法、镜像法等解析方法求解含电介质的边值问题。
 \end{tip}
 
@@ -3653,9 +3662,9 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \end{review}
 
 \begin{tip}{本章核心框架}{ch4-summary}
-\textbf{一句话总结}：静电学边值问题可通过分离变量、镜像法、格林函数三大解析方法求解。\\par
-\textbf{核心工具}：勒让德多项式（球坐标）、贝塞尔函数（柱坐标）、镜像电荷（导体边界）、格林函数（$\delta$源响应）。\\par
-\textbf{关键定理}：唯一性定理（给定边界条件则解唯一）、多极展开（远场近似）。\\par
+\textbf{一句话总结}：静电学边值问题可通过分离变量、镜像法、格林函数三大解析方法求解。\\
+\textbf{核心工具}：勒让德多项式（球坐标）、贝塞尔函数（柱坐标）、镜像电荷（导体边界）、格林函数（$\delta$源响应）。\\
+\textbf{关键定理}：唯一性定理（给定边界条件则解唯一）、多极展开（远场近似）。\\
 \textbf{衔接}：第5章进入静磁学，类比地引入矢势$\vecA$和毕奥-萨伐尔定律。
 \end{tip}
 
@@ -4214,9 +4223,9 @@ $\vect{\mu} = I\vect{S}$ & 磁偶极矩 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch5-summary}
-\textbf{一句话总结}：静磁场由电流产生，无源有旋，需要用矢势$\vecA$描述。\\par
-\textbf{核心方程}：$\divg\vecB=0$（无源）、$\curl\vecB=\mu_0\vecJ$（安培定理，恒定电流）、$\lap\vecA=-\mu_0\vecJ$（库仑规范下）。\\par
-\textbf{核心方法}：毕奥-萨伐尔定律（积分叠加）、安培环路定理（对称性）、矢势法（自动满足$\divg\vecB=0$）。\\par
+\textbf{一句话总结}：静磁场由电流产生，无源有旋，需要用矢势$\vecA$描述。\\
+\textbf{核心方程}：$\divg\vecB=0$（无源）、$\curl\vecB=\mu_0\vecJ$（安培定理，恒定电流）、$\lap\vecA=-\mu_0\vecJ$（库仑规范下）。\\
+\textbf{核心方法}：毕奥-萨伐尔定律（积分叠加）、安培环路定理（对称性）、矢势法（自动满足$\divg\vecB=0$）。\\
 \textbf{衔接}：第6章引入磁介质，类比电介质引入磁化强度$\vect{M}$和$\vect{H}$场。
 \end{tip}
 
@@ -4620,23 +4629,25 @@ H_2 &= \sqrt{H_{2n}^2 + H_{2t}^2} = H_1 \sqrt{\left(\frac{\mu}{\muz}\right)^2\co
 % ---------- 图：磁偶极子的磁场线 ----------
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
-% 偶极子（小电流环）
-\draw[thick,blue] (0,0) ellipse (0.8 and 0.4);
-\draw[->,thick,blue] (0.7,0.15) arc (20:160:0.8 and 0.4);
-\node[blue,font=\small] at (0,-0.7) {$I$};
-\node[blue,font=\small] at (0,0.8) {$\vect{m}$};
-\draw[->,thick,blue] (0,0.4) -- (0,1.2);
+% 偶极子（小电流环，位于原点，轴沿 z）
+\draw[thick,blue] (-0.5,0) arc (180:360:0.5 and 0.18);
+\draw[thick,blue,dashed] (-0.5,0) arc (180:0:0.5 and 0.18);
+\node[blue,font=\small,anchor=west] at (0.6,0) {$I$};
 
-% 磁场线（类似电偶极子但方向相反）
-\foreach \a in {30,50,70,110,130,150} {
-  \draw[thick,red!50] ({0.8*cos(\a)},{0.4*sin(\a)}) .. controls (1.5,{2*sin(\a)}) .. ({0.8*cos(180-\a)},{0.4*sin(180-\a)});
+% 磁场线：闭合回线从环的上方 (0, 0.2w) 出发，向两侧张开再弯回下方
+% 控制点在水平方向远处、垂直方向近处，形成"饱满"的回线
+\foreach \w in {1.2, 2.0, 2.8} {
+  \draw[thick,red!70] (0,{0.22*\w}) .. controls ({1.1*\w},{0.5*\w}) and ({1.1*\w},{-0.5*\w}) .. (0,{-0.22*\w});
+  \draw[thick,red!70] (0,{-0.22*\w}) .. controls ({-1.1*\w},{-0.5*\w}) and ({-1.1*\w},{0.5*\w}) .. (0,{0.22*\w});
 }
-\foreach \a in {210,230,250,290,310,330} {
-  \draw[thick,red!50] ({0.8*cos(\a)},{0.4*sin(\a)}) .. controls (1.5,{2*sin(\a)}) .. ({0.8*cos(180-\a)},{0.4*sin(180-\a)});
-}
-\node[red,font=\small] at (2.5,1.5) {$\vecB$};
+% 方向箭头（左右最外线上，指示外部 B 从上（N）出、下（S）回）
+\draw[->,thick,red!70] ({2.6},0.9) -- ({2.65},0.55);
+\draw[->,thick,red!70] ({-2.6},-0.9) -- ({-2.65},-0.55);
+% 磁矩方向箭头（轴向上，从环心向上）
+\draw[->,thick,blue] (0,0.15) -- (0,1.3) node[above] {$\vect{m}$};
+\node[red,font=\small] at (3.1,1.6) {$\vecB$};
 
-\node[align=center,font=\small] at (0,-2) {磁偶极子磁场线\\外部似条形磁铁，内部闭合};
+\node[align=center,font=\small] at (0,-2.6) {磁偶极子磁场线\\外部似条形磁铁，内部闭合};
 \end{tikzpicture}
 \end{center}
 
@@ -4650,32 +4661,31 @@ H_2 &= \sqrt{H_{2n}^2 + H_{2t}^2} = H_1 \sqrt{\left(\frac{\mu}{\muz}\right)^2\co
 % ---------- 图：铁磁介质的磁畴结构 ----------
 \begin{center}
 \begin{tikzpicture}[scale=0.8]
-% 未磁化
+% 未磁化：每个磁畴是带框的小方块，磁化方向随机
 \begin{scope}[shift={(-3,0)}]
-\foreach \x in {-1.5,-0.5,0.5,1.5} {
-  \foreach \y in {-1,0,1} {
-    \pgfmathsetmacro{\a}{random(0,360)}
-    \draw[thick,blue,rotate around={\a:(\x,\y)}] (\x-0.2,\y) -- (\x+0.2,\y);
-    \fill[red] (\x-0.2,\y) circle (1.5pt);
-    \fill[blue] (\x+0.2,\y) circle (1.5pt);
+\draw[thick] (-2,-1.3) rectangle (2,1.3);
+\foreach \x/\a in {-1.5/30, -0.5/150, 0.5/80, 1.5/210} {
+  \foreach \y in {-0.75, 0, 0.75} {
+    \draw[gray!60] (\x-0.42,\y-0.28) rectangle (\x+0.42,\y+0.28);
+    \draw[->,thick,blue,rotate around={\a:(\x,\y)}] (\x-0.25,\y) -- (\x+0.25,\y);
   }
 }
-\node at (0,-2) {\textbf{(a) 未磁化}};
-\node[align=center,font=\small] at (0,-2.6) {磁畴随机取向\\$\langle\vect{M}\rangle=0$};
+\node at (0,-2.0) {\textbf{(a) 未磁化}};
+\node[align=center,font=\small] at (0,-2.8) {磁畴随机取向\\$\langle\vect{M}\rangle=0$};
 \end{scope}
 
-% 磁化饱和
+% 磁化饱和：所有磁畴方向一致（向右），外场 H
 \begin{scope}[shift={(3,0)}]
+\draw[thick] (-2,-1.3) rectangle (2,1.3);
 \foreach \x in {-1.5,-0.5,0.5,1.5} {
-  \foreach \y in {-1,0,1} {
-    \draw[thick,blue] (\x-0.2,\y) -- (\x+0.2,\y);
-    \fill[red] (\x-0.2,\y) circle (1.5pt);
-    \fill[blue] (\x+0.2,\y) circle (1.5pt);
+  \foreach \y in {-0.75, 0, 0.75} {
+    \draw[gray!60] (\x-0.42,\y-0.28) rectangle (\x+0.42,\y+0.28);
+    \draw[->,thick,blue] (\x-0.25,\y) -- (\x+0.25,\y);
   }
 }
-\draw[->,thick,green!60!black] (-2,1.5) -- (2,1.5) node[right] {$\vect{H}$};
-\node at (0,-2) {\textbf{(b) 磁化饱和}};
-\node[align=center,font=\small] at (0,-2.6) {外场对齐磁畴\\$\langle\vect{M}\rangle\neq 0$};
+\draw[->,thick,green!60!black] (-2,1.9) -- (2,1.9) node[right] {$\vect{H}$};
+\node at (0,-2.0) {\textbf{(b) 磁化饱和}};
+\node[align=center,font=\small] at (0,-2.8) {外场对齐磁畴\\$\langle\vect{M}\rangle\neq 0$};
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -4700,9 +4710,9 @@ $H_{2t} - H_{1t} = K_f$ & H切向跳跃 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch6-summary}
-\textbf{一句话总结}：磁介质通过磁化响应磁场，分类为抗磁、顺磁、铁磁，改变有效磁导率。\\par
-\textbf{核心关系}：$\vecB=\mu_0(\vect{H}+\vect{M})=\mu\vect{H}$（LIH介质）、$\vecJ_m=\curl\vect{M}$（磁化电流）。\\par
-\textbf{边界条件}：$B_{1n}=B_{2n}$（法向连续）、$H_{1t}=H_{2t}$（切向连续，无自由面电流）。\\par
+\textbf{一句话总结}：磁介质通过磁化响应磁场，分类为抗磁、顺磁、铁磁，改变有效磁导率。\\
+\textbf{核心关系}：$\vecB=\mu_0(\vect{H}+\vect{M})=\mu\vect{H}$（LIH介质）、$\vecJ_m=\curl\vect{M}$（磁化电流）。\\
+\textbf{边界条件}：$B_{1n}=B_{2n}$（法向连续）、$H_{1t}=H_{2t}$（切向连续，无自由面电流）。\\
 \textbf{衔接}：第7章将统一电磁学，安培定理修正为麦克斯韦-安培方程，引入位移电流。
 \end{tip}
 
@@ -5224,31 +5234,33 @@ $B = \dfrac{\muz I r}{2\pi R^2}$（$r < R$）
 % ---------- 位移电流示意图 ----------
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
-  % Capacitor plates
+  % Capacitor plates（左正右负）
   \fill[blue!10] (-2,0) rectangle (-1.8,3);
   \fill[red!10] (1.8,0) rectangle (2,3);
-  \node[blue!70!black] at (-1.9,3.3) {$+Q$};
-  \node[red!70!black] at (1.9,3.3) {$-Q$};
-  
-  % Wires and current
-  \draw[thick, ->] (-1.9,4) -- (-1.9,3.2);
-  \node at (-1.9,4.3) {$I$};
-  \draw[thick, ->] (1.9,3.2) -- (1.9,4);
-  \node at (1.9,4.3) {$I$};
-  
-  % Electric field between plates
-  \foreach \y in {0.5,1.0,1.5,2.0,2.5} {
+  \node[blue!70!black,anchor=east] at (-2.15,2.7) {$+Q$};
+  \node[red!70!black,anchor=west] at (2.15,2.7) {$-Q$};
+
+  % Wires and current（导线在极板外侧，电流标注在箭头上方错开）
+  \draw[thick] (-1.9,4.2) -- (-1.9,3);
+  \draw[->, thick] (-1.9,3.9) -- (-1.9,3.4);
+  \node at (-1.55,4.0) {$I$};
+  \draw[thick] (1.9,3) -- (1.9,4.2);
+  \draw[->, thick] (1.9,3.4) -- (1.9,3.9);
+  \node at (2.25,4.0) {$I$};
+
+  % Electric field between plates（红箭头，避开放大区）
+  \foreach \y in {0.4,0.8,2.2,2.6} {
     \draw[->, red, thick] (-1.5,\y) -- (1.5,\y);
   }
-  \node[red] at (0,2.8) {$\vecE$};
-  \node[red] at (0,0.2) {$\eps_0\dfrac{\partial\vecE}{\partial t}$};
-  
-  % Displacement current label
-  \draw[->, orange, very thick, dashed] (-0.5,1.5) -- (0.5,1.5);
-  \node[orange] at (0,1.1) {$\vecJ_D$};
-  
+  \node[red] at (0,2.85) {$\vecE$};
+
+  % Displacement current（橙色虚线，单独一行居中，上下留白）
+  \draw[->, orange, very thick, dashed] (-1.2,1.5) -- (1.2,1.5);
+  \node[orange,anchor=west] at (1.35,1.5) {$\vecJ_D$};
+  \node[font=\small,orange!80!black] at (0,1.05) {$\eps_0\dfrac{\partial\vecE}{\partial t}$};
+
   % Caption
-  \node at (0,-0.5) {\small 电容器极板间：位移电流接上传导电流的断裂};
+  \node at (0,-0.6) {\small 电容器极板间：位移电流接上传导电流的断裂};
 \end{tikzpicture}
 \end{center}
 
@@ -5501,9 +5513,9 @@ $\vect{S} = \vecE \times \vect{H}$ & 坡印廷矢量（能流密度） \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch7-summary}
-\textbf{一句话总结}：麦克斯韦方程组统一了电磁学，预言了电磁波，奠定了狭义相对论的基础。\\par
-\textbf{核心方程}：四个方程（高斯、法拉第、安培-麦克斯韦、无磁单极），两个势方程（达朗贝尔方程），能量守恒（坡印廷定理）。\\par
-\textbf{核心方法}：规范变换（库仑规范vs洛伦兹规范）、推迟势（$t_r=t-R/c$）。\\par
+\textbf{一句话总结}：麦克斯韦方程组统一了电磁学，预言了电磁波，奠定了狭义相对论的基础。\\
+\textbf{核心方程}：四个方程（高斯、法拉第、安培-麦克斯韦、无磁单极），两个势方程（达朗贝尔方程），能量守恒（坡印廷定理）。\\
+\textbf{核心方法}：规范变换（库仑规范vs洛伦兹规范）、推迟势（$t_r=t-R/c$）。\\
 \textbf{衔接}：第8章将研究电磁波在介质中的传播——反射、折射、波导、色散。
 \end{tip}
 
@@ -5806,7 +5818,7 @@ I = \langle S \rangle = \frac{1}{2}c\eps_0 E_0^2
 \begin{tikzpicture}[scale=1.3]
   % Axes
   \draw[->, thick, green!60!black] (-4,0) -- (4.5,0) node[right] {$\vecK$};
-  
+
   % E field (red sine wave) in y-direction
   \draw[red, very thick, domain=-4:4, samples=100] plot(\x, {1.2*sin(2*\x r)});
   \foreach \x in {-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5} {
@@ -5814,18 +5826,30 @@ I = \langle S \rangle = \frac{1}{2}c\eps_0 E_0^2
     \draw[->, red!70!black, thick] (\x,0) -- (\x,\ey);
   }
   \node[red, font=\Large] at (0,1.8) {$\vecE$};
-  
-  % B field (blue sine wave) in z-direction (represented as circles with dots/crosses)
+
+  % B field: ⊙ (out of page) above axis, ⊗ (into page) below — B oscillates in z
+  % E 与 B 同相位: B_z ∝ sin(2x), E 峰值处 B 最大
   \foreach \x in {-3.5,-2.5,-1.5,-0.5,0.5,1.5,2.5,3.5} {
-    \pgfmathsetmacro{\by}{0.8*sin(2*\x r + 90)}
-    \ifdim\by pt>0pt
-      \draw[->, blue!70!black, thick] (\x,-1.6) arc (90:440:0.2);
+    \pgfmathsetmacro{\ey}{1.2*sin(2*\x r)}
+    \pgfmathsetmacro{\bsep}{0.34*abs(\ey)}
+    \ifdim\ey pt>0pt
+      % E 朝上：B 朝 +z（出纸 ⊙ 在下方，入纸 ⊗ 在更下方）
+      \draw[blue!70!black, thick] (\x,{-0.6}) circle (0.14);
+      \fill[blue!70!black] (\x,{-0.6}) circle (0.035);
+      \draw[blue!70!black, thick] (\x,{-1.0-\bsep}) circle (0.14);
+      \draw[blue!70!black, thick] (\x-0.098,{-1.0-\bsep-0.098}) -- (\x+0.098,{-1.0-\bsep+0.098});
+      \draw[blue!70!black, thick] (\x-0.098,{-1.0-\bsep+0.098}) -- (\x+0.098,{-1.0-\bsep-0.098});
     \else
-      \draw[->, blue!70!black, thick] (\x,-1.3) arc (-90:260:0.2);
+      % E 朝下：B 朝 -z（入纸 ⊗ 在下方，出纸 ⊙ 在更下方）
+      \draw[blue!70!black, thick] (\x,{-0.6}) circle (0.14);
+      \draw[blue!70!black, thick] (\x-0.098,{-0.6-0.098}) -- (\x+0.098,{-0.6+0.098});
+      \draw[blue!70!black, thick] (\x-0.098,{-0.6+0.098}) -- (\x+0.098,{-0.6-0.098});
+      \draw[blue!70!black, thick] (\x,{-1.0-\bsep}) circle (0.14);
+      \fill[blue!70!black] (\x,{-1.0-\bsep}) circle (0.035);
     \fi
   }
-  \node[blue, font=\Large] at (0,-2.1) {$\vecB$};
-  
+  \node[blue, font=\Large] at (0,-1.9) {$\vecB$（⊙出纸 / ⊗入纸）};
+
   % Labels and annotations
   \node[green!60!black, font=\large] at (4.2,-0.4) {传播方向};
   \node at (0,-2.8) {$\vecE\perp\vecB\perp\vecK$ \quad (横波)};
@@ -6133,9 +6157,9 @@ $\tan\theta_B = n_2/n_1$ & 布儒斯特角 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch8-summary}
-\textbf{一句话总结}：电磁波是横波，在介质中传播遵循反射/折射定律，在波导中形成离散模式。\\par
-\textbf{核心内容}：平面波（TEM）、反射折射（菲涅尔公式、布儒斯特角、全反射）、波导（TE/TM模式、截止频率）、色散（相速/群速）。\\par
-\textbf{关键公式}：$v=c/n$、$n=\sqrt{\mu_r\eps_r}$、$\omega_{mn}=c\pi\sqrt{(m/a)^2+(n/b)^2}$。\\par
+\textbf{一句话总结}：电磁波是横波，在介质中传播遵循反射/折射定律，在波导中形成离散模式。\\
+\textbf{核心内容}：平面波（TEM）、反射折射（菲涅尔公式、布儒斯特角、全反射）、波导（TE/TM模式、截止频率）、色散（相速/群速）。\\
+\textbf{关键公式}：$v=c/n$、$n=\sqrt{\mu_r\eps_r}$、$\omega_{mn}=c\pi\sqrt{(m/a)^2+(n/b)^2}$。\\
 \textbf{衔接}：第9章将讨论电磁波的产生——加速电荷的辐射、天线辐射场。
 \end{tip}
 
@@ -6409,21 +6433,22 @@ G(\vect{r}, t) = \frac{\delta(t - r/c)}{4\pi r}
   \draw[gray!30] (0,0) -- (0,2.5);
   \draw[gray!30] (0,0) -- (-2.5,0);
   \draw[gray!30] (0,0) -- (0,-2.5);
-  
-  % sin^2(theta) pattern
-  \draw[red, very thick, domain=0:360, samples=200, smooth] plot ({2*sin(\x)*sin(\x)}, {2*sin(\x)*cos(\x)});
-  
-  % Dipole axis
-  \draw[->, thick, blue] (0,-2.5) -- (0,2.5) node[above] {$z$ (偶极轴)};
-  \node[blue] at (0.3,2.3) {$\vect{p}$};
-  
+
+  % sin^2(theta) 花生形：极坐标 r = 2 sin^2(theta)，x = r sin(theta)（对水平轴的夹角），y = r cos(theta)
+  % 完整 0-360 度，上下对称双瓣
+  \draw[red, very thick, domain=0:360, samples=240, smooth] plot ({2*sin(\x)*sin(\x)*sin(\x)}, {2*sin(\x)*sin(\x)*cos(\x)});
+
+  % Dipole axis（z 轴向上，p 标注在轴右侧错开）
+  \draw[->, thick, blue] (0,-2.5) -- (0,2.5) node[above] {$z$（偶极轴）};
+  \node[blue] at (0.35,2.0) {$\vect{p}$};
+
   % Labels
-  \node at (2.3,0.3) {$\sin^2\theta$};
-  \node at (1.5,-2.2) {\small 赤道面最强，轴方向为零};
-  
-  % Angular labels
-  \node at (2.7,0) {$\theta=90°$};
-  \node at (0,2.7) {$\theta=0°$};
+  \node[red] at (1.35,0.25) {$\sin^2\theta$};
+  \node at (0,-2.85) {\small 赤道面最强，轴方向为零};
+
+  % Angular labels（θ=0 移到轴左侧，避开 z 标签）
+  \node[anchor=west] at (2.35,0.12) {$\theta=90°$};
+  \node[anchor=east,font=\small] at (-0.15,2.62) {$\theta=0$};
 \end{tikzpicture}
 \end{center}
 
@@ -6524,9 +6549,9 @@ $P \propto \omega^4$ & 辐射功率频率依赖 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch9-summary}
-\textbf{一句话总结}：加速运动的电荷辐射电磁波，辐射功率与加速度平方成正比。\\par
-\textbf{核心内容}：推迟势（$t_r=t-R/c$）、拉莫尔公式（$P\propto|\ddot{\vect{p}}|^2$）、电偶极辐射（$dP/d\Omega\propto\sin^2\theta$）、磁偶极辐射、天线方向性。\\par
-\textbf{关键概念}：远场区（辐射场$\propto 1/r$）、近场区（准静态）、推迟效应。\\par
+\textbf{一句话总结}：加速运动的电荷辐射电磁波，辐射功率与加速度平方成正比。\\
+\textbf{核心内容}：推迟势（$t_r=t-R/c$）、拉莫尔公式（$P\propto|\ddot{\vect{p}}|^2$）、电偶极辐射（$dP/d\Omega\propto\sin^2\theta$）、磁偶极辐射、天线方向性。\\
+\textbf{关键概念}：远场区（辐射场$\propto 1/r$）、近场区（准静态）、推迟效应。\\
 \textbf{衔接}：第10章将电动力学纳入狭义相对论框架，实现电磁理论的四维协变形式。
 \end{tip}
 
@@ -6987,73 +7012,69 @@ B'_z &\approx B_z - \frac{vE_y}{c^2} = B_z - \frac{1}{c^2}(\vect{v}\times\vecE)_
 
 % ---------- 电磁场张量彩色分块图 ----------
 \begin{center}
-\begin{tikzpicture}[scale=1.1]
+\begin{tikzpicture}[scale=1.1, every node/.style={font=\small}]
+  % 格宽 1.3，避免 $-E_x/c$ 标签溢出
+  \def\cw{1.3}
   % Matrix frame
-  \draw[thick] (0,0) rectangle (4,4);
-  
+  \draw[thick] (0,0) rectangle (4*\cw,4*\cw);
+
   % Grid lines
-  \draw[thick] (1,0) -- (1,4);
-  \draw[thick] (2,0) -- (2,4);
-  \draw[thick] (3,0) -- (3,4);
-  \draw[thick] (0,1) -- (4,1);
-  \draw[thick] (0,2) -- (4,2);
-  \draw[thick] (0,3) -- (4,3);
-  
+  \foreach \i in {1,2,3} {
+    \draw[thick] (\i*\cw,0) -- (\i*\cw,4*\cw);
+    \draw[thick] (0,\i*\cw) -- (4*\cw,\i*\cw);
+  }
+
   % Red blocks for E components (first row and first col, excluding 00)
-  \fill[red!20] (0,3) rectangle (1,4);
-  \fill[red!20] (1,3) rectangle (2,4);
-  \fill[red!20] (2,3) rectangle (3,4);
-  \fill[red!20] (3,3) rectangle (4,4);
-  \fill[red!20] (0,2) rectangle (1,3);
-  \fill[red!20] (0,1) rectangle (1,2);
-  
+  \fill[red!20] (0,3*\cw) rectangle (\cw,4*\cw);
+  \fill[red!20] (\cw,3*\cw) rectangle (2*\cw,4*\cw);
+  \fill[red!20] (2*\cw,3*\cw) rectangle (3*\cw,4*\cw);
+  \fill[red!20] (3*\cw,3*\cw) rectangle (4*\cw,4*\cw);
+  \fill[red!20] (0,2*\cw) rectangle (\cw,3*\cw);
+  \fill[red!20] (0,\cw) rectangle (\cw,2*\cw);
+
   % Blue blocks for B components (spatial submatrix)
-  \fill[blue!20] (1,1) rectangle (2,2);
-  \fill[blue!20] (2,2) rectangle (3,3);
-  \fill[blue!20] (1,2) rectangle (2,3);
-  \fill[blue!20] (2,1) rectangle (3,2);
-  
-  % Labels
-  \node at (0.5,3.5) {$0$};
-  \node[red!70!black] at (1.5,3.5) {$-E_x/c$};
-  \node[red!70!black] at (2.5,3.5) {$-E_y/c$};
-  \node[red!70!black] at (3.5,3.5) {$-E_z/c$};
-  
-  \node[red!70!black] at (0.5,2.5) {$E_x/c$};
-  \node at (1.5,2.5) {$0$};
-  \node[blue!70!black] at (2.5,2.5) {$-B_z$};
-  \node[blue!70!black] at (3.5,2.5) {$B_y$};
-  
-  \node[red!70!black] at (0.5,1.5) {$E_y/c$};
-  \node[blue!70!black] at (1.5,1.5) {$B_z$};
-  \node at (2.5,1.5) {$0$};
-  \node[blue!70!black] at (3.5,1.5) {$-B_x$};
-  
-  \node[red!70!black] at (0.5,0.5) {$E_z/c$};
-  \node[blue!70!black] at (1.5,0.5) {$-B_y$};
-  \node[blue!70!black] at (2.5,0.5) {$B_x$};
-  \node at (3.5,0.5) {$0$};
-  
+  \fill[blue!20] (\cw,\cw) rectangle (2*\cw,2*\cw);
+  \fill[blue!20] (2*\cw,2*\cw) rectangle (3*\cw,3*\cw);
+  \fill[blue!20] (\cw,2*\cw) rectangle (2*\cw,3*\cw);
+  \fill[blue!20] (2*\cw,\cw) rectangle (3*\cw,2*\cw);
+
+  % Labels（居中于各格）
+  \node at (0.5*\cw,3.5*\cw) {$0$};
+  \node[red!70!black] at (1.5*\cw,3.5*\cw) {$-E_x/c$};
+  \node[red!70!black] at (2.5*\cw,3.5*\cw) {$-E_y/c$};
+  \node[red!70!black] at (3.5*\cw,3.5*\cw) {$-E_z/c$};
+
+  \node[red!70!black] at (0.5*\cw,2.5*\cw) {$E_x/c$};
+  \node at (1.5*\cw,2.5*\cw) {$0$};
+  \node[blue!70!black] at (2.5*\cw,2.5*\cw) {$-B_z$};
+  \node[blue!70!black] at (3.5*\cw,2.5*\cw) {$B_y$};
+
+  \node[red!70!black] at (0.5*\cw,1.5*\cw) {$E_y/c$};
+  \node[blue!70!black] at (1.5*\cw,1.5*\cw) {$B_z$};
+  \node at (2.5*\cw,1.5*\cw) {$0$};
+  \node[blue!70!black] at (3.5*\cw,1.5*\cw) {$-B_x$};
+
+  \node[red!70!black] at (0.5*\cw,0.5*\cw) {$E_z/c$};
+  \node[blue!70!black] at (1.5*\cw,0.5*\cw) {$-B_y$};
+  \node[blue!70!black] at (2.5*\cw,0.5*\cw) {$B_x$};
+  \node at (3.5*\cw,0.5*\cw) {$0$};
+
   % Axis labels
-  \node[font=\small] at (0.5,4.3) {$0$};
-  \node[font=\small] at (1.5,4.3) {$1$};
-  \node[font=\small] at (2.5,4.3) {$2$};
-  \node[font=\small] at (3.5,4.3) {$3$};
-  \node[font=\small] at (-0.3,3.5) {$0$};
-  \node[font=\small] at (-0.3,2.5) {$1$};
-  \node[font=\small] at (-0.3,1.5) {$2$};
-  \node[font=\small] at (-0.3,0.5) {$3$};
-  
+  \foreach \i/\t in {0/0, 1/1, 2/2, 3/3} {
+    \node[font=\small] at ({(\i+0.5)*\cw},{4*\cw+0.3}) {$\t$};
+    \node[font=\small,anchor=east] at (-0.15,{((3-\i)+0.5)*\cw}) {$\t$};
+  }
+
   % Legend
-  \draw[red!50, fill=red!20, thick] (5,3) rectangle (5.5,3.5);
-  \node[right] at (5.6,3.25) {电场分量 $E$};
-  \draw[blue!50, fill=blue!20, thick] (5,2.3) rectangle (5.5,2.8);
-  \node[right] at (5.6,2.55) {磁场分量 $B$};
-  \node[right] at (5.6,1.85) {$F^{\mu\nu} = -F^{\nu\mu}$};
-  \node[right] at (5.6,1.4) {反对称：$F^{00}=F^{ii}=0$};
-  
+  \draw[red!50, fill=red!20, thick] ({4*\cw+0.9},3*\cw) rectangle ({4*\cw+1.4},{3*\cw+0.5});
+  \node[right] at ({4*\cw+1.5},{3*\cw+0.25}) {电场分量 $E$};
+  \draw[blue!50, fill=blue!20, thick] ({4*\cw+0.9},{3*\cw-0.7}) rectangle ({4*\cw+1.4},{3*\cw-0.2});
+  \node[right] at ({4*\cw+1.5},{3*\cw-0.45}) {磁场分量 $B$};
+  \node[right] at ({4*\cw+0.9},{3*\cw-1.1}) {$F^{\mu\nu} = -F^{\nu\mu}$};
+  \node[right] at ({4*\cw+0.9},{3*\cw-1.55}) {反对称：$F^{00}=F^{ii}=0$};
+
   % Title
-  \node[font=\bfseries] at (2,4.8) {电磁场张量 $F^{\mu\nu}$ 的彩色分块};
+  \node[font=\bfseries] at (2*\cw,{4*\cw+0.8}) {电磁场张量 $F^{\mu\nu}$ 的彩色分块};
 \end{tikzpicture}
 \end{center}
 
@@ -7179,9 +7200,9 @@ $\vect{F} = q(\vecE + \vect{v}\times\vecB)$ & 洛伦兹力 \\
 \end{review}
 
 \begin{tip}{本章核心框架}{ch10-summary}
-\textbf{一句话总结}：狭义相对论将电动力学统一为四维协变理论，证明电磁场是同一物理实体的不同表现。\\par
-\textbf{核心内容}：洛伦兹变换（时空统一）、四维矢量（$x^\mu, j^\mu, A^\mu$）、电磁场张量$F^{\mu\nu}$（$E$和$B$的协变统一）、麦克斯韦方程组的协变形式。\\par
-\textbf{关键公式}：$E=\gamma m_0c^2$、$\partial_\mu F^{\mu\nu}=\mu_0j^\nu$、$F_{\mu\nu}F^{\mu\nu}=2(B^2-E^2/c^2)$。\\par
+\textbf{一句话总结}：狭义相对论将电动力学统一为四维协变理论，证明电磁场是同一物理实体的不同表现。\\
+\textbf{核心内容}：洛伦兹变换（时空统一）、四维矢量（$x^\mu, j^\mu, A^\mu$）、电磁场张量$F^{\mu\nu}$（$E$和$B$的协变统一）、麦克斯韦方程组的协变形式。\\
+\textbf{关键公式}：$E=\gamma m_0c^2$、$\partial_\mu F^{\mu\nu}=\mu_0j^\nu$、$F_{\mu\nu}F^{\mu\nu}=2(B^2-E^2/c^2)$。\\
 \textbf{里程碑}：你已完整掌握经典电动力学。下一步：量子电动力学（QED）！
 \end{tip}
 
