@@ -151,6 +151,14 @@
 \newcommand{\lap}{\nabla^2}
 \newcommand{\difficulty}[1]{\marginnote{\textcolor{red}{\textbf{[#1]}}}}
 
+% ---------- 核心方程方框高亮（快速翻阅复习用） ----------
+% 用法：\begin{impEqbox}{标题} ... \end{impEqbox}
+\newtcolorbox{impEqbox}[1][]{
+  colback=exampurple!4,colframe=exampurple!70,fonttitle=\bfseries,
+  title={#1},breakable,
+  boxrule=1.2pt,arc=2mm,
+  left=6pt,right=6pt,top=5pt,bottom=5pt}
+
 % ---------- 图片路径 ----------
 \graphicspath{{C:\\Users\\53150\\Documents\\kimi\\workspace}}
 
@@ -271,6 +279,21 @@
 \hypertarget{symeps0}{$\eps_0$} & 真空介电常数 & $\approx 8.854\times 10^{-12}\,\mathrm{F/m}$ \\
 \hypertarget{symmuz0}{$\mu_0$} & 真空磁导率 & $4\pi\times 10^{-7}\,\mathrm{H/m}$ \\
 \hypertarget{symc}{$c$} & 光速 & $1/\sqrt{\mu_0\eps_0}\approx 3\times 10^8\,\mathrm{m/s}$ \\
+\midrule
+\multicolumn{3}{l}{\textit{—— 电磁场量（第 3、6 章引入）——}} \\
+\hypertarget{symE}{$\vecE$} & 电场强度 & 基本场，单位 \si{V/m}，红色标注 \\
+\hypertarget{symD}{$\vect{D}$} & 电位移矢量 & $\eps_0\vecE + \vect{P}$，单位 \si{C/m^2} \\
+\hypertarget{symP}{$\vect{P}$} & 极化强度 & 偶极矩密度，单位 \si{C/m^2} \\
+\hypertarget{symB}{$\vecB$} & 磁感应强度 & 基本场，单位 \si{T}，蓝色标注 \\
+\hypertarget{symH}{$\vect{H}$} & 磁场强度 & $\vecB/\mu_0 - \vect{M}$，单位 \si{A/m} \\
+\hypertarget{symM}{$\vect{M}$} & 磁化强度 & 偶极矩密度，单位 \si{A/m} \\
+\midrule
+\multicolumn{3}{l}{\textit{—— 势与能量（第 2、5、7 章引入）——}} \\
+\hypertarget{symphi}{$\phi$} & 标量电势 & $\vecE = -\grad\phi - \partial\vecA/\partial t$，单位 \si{V} \\
+\hypertarget{symA4}{$\vecA$} & 磁矢势 & $\vecB = \curl\vecA$，单位 \si{T.m} = \si{Wb/m}，深蓝标注 \\
+\hypertarget{symu}{$u$} & 电磁场能量密度 & $u = \frac{1}{2}(\eps_0 E^2 + B^2/\mu_0)$，单位 \si{J/m^3} \\
+\hypertarget{symS}{$\vect{S}$} & 坡印廷矢量（能流密度） & $\vecE \times \vect{H}$，单位 \si{W/m^2} \\
+\hypertarget{symchi}{$\chi_e,\ \chi_m$} & 电极化率 / 磁化率 & 无量纲，$\eps_r = 1+\chi_e$，$\mu_r = 1+\chi_m$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -285,6 +308,156 @@
 \end{itemize}
 
 \newpage
+\chapter{全书高频公式速查表}
+% ============================================================
+
+按章节分块，方便快速查阅与复习。所有公式均采用SI单位制。
+
+\begin{tip}{使用说明}{quickref-tip}
+本表置于全书最前，供复习时\textbf{快速翻阅}使用；各公式的推导与物理意义在对应章节。外文教材（Griffiths、Jackson）部分公式采用高斯单位制，转换方法见附录"单位制转换手册"。
+\end{tip}
+
+\section{第1章：矢量分析}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$\grad\phi = \unitvec{x}\partial\phi/\partial x + \cdots$ & 直角坐标梯度 \\
+$\divg\vecA = \partial A_x/\partial x + \cdots$ & 直角坐标散度 \\
+$\curl\vecA = \begin{vmatrix}\unitvec{x}&\unitvec{y}&\unitvec{z}\\\partial_x&\partial_y&\partial_z\\A_x&A_y&A_z\end{vmatrix}$ & 直角坐标旋度 \\
+$\lap\phi = \divg\grad\phi$ & 拉普拉斯算子 \\
+$\nabla\times(\nabla\times\vecA) = \grad(\divg\vecA) - \lap\vecA$ & BAC-CAB恒等式 \\
+$\int_V \divg\vecA\,dV = \oint_S \vecA\cdot d\vect{S}$ & 高斯散度定理 \\
+$\int_S (\curl\vecA)\cdot d\vect{S} = \oint_C \vecA\cdot d\vect{l}$ & 斯托克斯定理 \\
+$\delta^{(3)}(\vect{r}) = \frac{1}{(2\pi)^3}\int e^{i\vecK\cdot\vect{r}}d^3k$ & $\delta$函数傅里叶表示 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{第2--4章：静电学}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$\vecE=\frac{1}{4\pi\eps_0}\frac{q\unitvec{r}}{r^2}$ & 点电荷电场（库仑） \\
+$\divg\vecE=\rho/\eps_0$ & 高斯定律微分形式 \\
+$\oint\vecE\cdot d\vect{S}=Q/\eps_0$ & 高斯定律积分形式 \\
+$\vecE=-\grad\phi$ & 电场与电势关系 \\
+$\lap\phi=-\rho/\eps_0$ & 泊松方程 \\
+$\lap\phi=0$ & 拉普拉斯方程（无源区） \\
+$\phi_P=\frac{1}{4\pi\eps_0}\frac{\vect{p}\cdot\unitvec{r}}{r^2}$ & 偶极子电势 \\
+$\phi(\vect{r})=\frac{1}{4\pi\eps_0}\left[\frac{Q}{r}+\frac{\vect{p}\cdot\unitvec{r}}{r^2}+\cdots\right]$ & 多极展开 \\
+$\vect{D}=\eps_0\vecE+\vect{P}=\eps\vecE$ & 各向同性介质 \\
+$D_{1\perp}-D_{2\perp}=\sigma_f$ & 法向边界条件 \\
+$E_{1\parallel}=E_{2\parallel}$ & 切向边界条件 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{第5--6章：静磁学}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$d\vecB=\frac{\muz}{4\pi}\frac{I d\vect{l}\times\unitvec{r}}{r^2}$ & 毕奥-萨伐尔定律 \\
+$\oint\vecB\cdot d\vect{l}=\muz I_{\text{enc}}$ & 安培环路定理 \\
+$\vecB=\curl\vecA$ & 磁矢势定义 \\
+$\vecA'=\vecA+\grad\chi$ & 规范变换 \\
+$\nabla\cdot\vecA=0$ & 库仑规范 \\
+$\vecB=\muz(\vect{H}+\vect{M})=\muz\mu_r\vect{H}$ & 线性介质 \\
+$\vecJ_M=\nabla\times\vect{M}$ & 磁化电流 \\
+$B_{1\perp}=B_{2\perp}$ & 法向边界条件 \\
+$H_{1\parallel}-H_{2\parallel}=j_{f,\parallel}$ & 切向边界条件 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{第7章：麦克斯韦方程组}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$\divg\vecE=\rho/\eps_0$ & 高斯定律（电场有源） \\
+$\divg\vecB=0$ & 磁场无源（无磁单极） \\
+$\curl\vecE=-\partial\vecB/\partial t$ & 法拉第电磁感应定律 \\
+$\curl\vecB=\muz\vecJ+\muz\eps_0\partial\vecE/\partial t$ & 安培-麦克斯韦定律 \\
+$\vecE=-\grad\phi-\partial\vecA/\partial t$ & 时变电磁势 \\
+$\lap\phi-\muz\eps_0\partial^2\phi/\partial t^2=-\rho/\eps_0$（即 $\Box\phi=-\rho/\eps_0$） & 标势达朗贝尔方程 \\
+$\lap\vecA-\muz\eps_0\partial^2\vecA/\partial t^2=-\muz\vecJ$（即 $\Box\vecA=-\muz\vecJ$） & 矢势达朗贝尔方程 \\
+$\vect{S}=\vecE\times\vect{H}$ & 坡印廷矢量 \\
+$-\oint\vect{S}\cdot d\vecA=\int_V \vecJ\cdot\vecE\,dV+\frac{d}{dt}\int_V w\,dV$ & 坡印廷定理 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{第8章：电磁波}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$\vecE=\vecE_0 e^{i(\vecK\cdot\vect{r}-\omega t)}$ & 平面波一般形式 \\
+$k=\omega\sqrt{\muz\eps}=n\omega/c$ & 介质中波数 \\
+$\vecB=\frac{1}{\omega}\vecK\times\vecE$ & 平面波中E-B关系 \\
+$R=\left|\frac{n_1-n_2}{n_1+n_2}\right|^2$ & 正入射反射率 \\
+$T=\frac{4n_1 n_2}{(n_1+n_2)^2}$ & 正入射透射率 \\
+$\delta=\sqrt{\frac{2}{\muz\sigma\omega}}$ & 趋肤深度 \\
+$\omega_c=c\pi\sqrt{(m/a)^2+(n/b)^2}$ & 矩形波导截止频率 \\
+$\theta_c=\arcsin(n_2/n_1)$ & 全反射临界角 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{第9章：辐射}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$\phi(\vect{r},t)=\frac{1}{4\pi\eps_0}\int\frac{\rho(\vect{r}',t_r)}{|\vect{r}-\vect{r}'|}d^3r'$ & 推迟标势 \\
+$\vecA(\vect{r},t)=\frac{\muz}{4\pi}\int\frac{\vecJ(\vect{r}',t_r)}{|\vect{r}-\vect{r}'|}d^3r'$ & 推迟矢势 \\
+$t_r=t-\frac{|\vect{r}-\vect{r}'|}{c}$ & 推迟时间 \\
+$\vecE=\frac{\muz\omega^2 p_0}{4\pi r}\sin\theta\,\unitvec{\theta}\,e^{i(kr-\omega t)}$ & 电偶极辐射远场 \\
+$P=\frac{\muz p_0^2\omega^4}{12\pi c}$ & 电偶极辐射功率 \\
+$P=\frac{\muz m_0^2\omega^4}{12\pi c^3}$ & 磁偶极辐射功率 \\
+$P=\frac{q^2 a^2}{6\pi\eps_0 c^3}$ & 拉莫尔公式 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{第10章：相对论电动力学}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{公式} & \textbf{说明} \\
+\midrule
+$x^\mu=(ct,x,y,z)$ & 四维逆变坐标 \\
+$\eta_{\mu\nu}=\text{diag}(1,-1,-1,-1)$ & 闵氏度规（本书采用） \\
+$x_\mu=\eta_{\mu\nu}x^\nu$ & 协变坐标 \\
+$A^\mu=(\phi/c,\vecA)$ & 四维电磁势 \\
+$j^\mu=(c\rho,\vecJ)$ & 四维电流 \\
+$F^{\mu\nu}=\partial^\mu A^\nu-\partial^\nu A^\mu$ & 电磁场张量 \\
+$\partial_\mu F^{\mu\nu}=\muz j^\nu$ & 协变麦克斯韦方程（含源） \\
+$\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda\mu}=0$ & 协变麦克斯韦方程（齐次） \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ============================================================
+
 
 
 
@@ -554,6 +727,15 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \end{insight}
 
 \subsection{并矢基础}
+
+\begin{tip}{学习预警：本节可以跳过}{dyadic-skip-tip}
+\textbf{第一次阅读可以跳过本节}，不影响后续章节的连贯性。并矢（dyadic）是张量的记号化表示，在本书中只在两处真正用到：
+\begin{itemize}[nosep]
+\item \textbf{第4章}多极展开中的电四极矩 $Q_{ij}$（本节"并矢的物理意义"中列出的应用之一）
+\item \textbf{第10章}相对论电动力学中的四维张量 $F^{\mu\nu}$
+\end{itemize}
+建议的学习方式：先学完第 1--5 章的矢量内容，等第 4 章遇到 $Q_{ij}$ 或第 10 章遇到场张量时，\textbf{再回头读本节}，此时带着具体需求学习，效率最高。读的时候只需抓住一个核心：并矢 $\vecA\vecB$ 就是"带两个方向的数"，左方向来自 $\vecA$、右方向来自 $\vecB$，其余全是记号细节。
+\end{tip}
 
 \begin{definition}{并矢}{dyadic-v2}
 两个矢量 $\vecA$ 和 $\vecB$ 的\textbf{并矢}记为 $\vecA\vecB$，是一个二阶张量，其分量形式为：
@@ -1783,6 +1965,16 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \end{itemize}
 \end{chapterreview}
 
+\begin{tip}{本章自检清单}{ch1-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 不查表写出梯度、散度、旋度在直角/柱/球坐标下的表达式
+\item 用高斯定理和斯托克斯定理验证简单矢量场
+\item 理解 $\delta$ 函数的筛选性质并完成含 $\delta$ 的积分
+\item 知道并矢可以跳过、何时回头补
+\end{itemize}
+\end{tip}
+
 % ---------- 第1章综合练习题 ----------
 \section*{第1章综合练习题}
 \addcontentsline{toc}{section}{第1章综合练习题}
@@ -1908,7 +2100,7 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 静电学研究\textbf{静止电荷}产生的电场及其性质。这是整个电磁理论的起点——不仅因为静电现象最容易观测，更因为静电学中建立的概念和方法（如标量势、高斯定理、唯一性定理）贯穿整个电动力学。
 
 \begin{history}{静电学的发展}{electrostatics-history}
-古希腊人早在公元前600年就发现了摩擦起电现象（琥珀吸引轻小物体，希腊语"琥珀"elektron正是"电"的词源）。但系统的定量研究要等到18世纪：\textbf{库仑}（Charles-Augustin de Coulomb）在1785年使用扭秤实验确立了电荷间力的平方反比律；\textbf{高斯}（Carl Friedrich Gauss）在1813年给出了著名的散度定理；\textbf{格林}（George Green）在1828年的论文中引入了势函数方法。而\textbf{泊松}（Simeon Denis Poisson）在1813年将拉普拉斯方程推广为泊松方程，为边值问题的系统研究奠定了基础。值得注意的是，法拉第在1830年代提出的"力线"概念，虽然没有数学形式化，但为麦克斯韦后来的场论提供了关键的物理图像。
+摩擦起电早在公元前 600 年就被古希腊人发现（希腊语"琥珀"elektron 正是"电"的词源），但定量研究始于 18 世纪：\textbf{库仑} 1785 年用扭秤实验确立平方反比律；\textbf{泊松}与\textbf{高斯}在 1813 年分别给出泊松方程与散度定理；\textbf{格林} 1828 年引入势函数方法。法拉第 1830 年代的"力线"概念虽未数学形式化，却为麦克斯韦的场论提供了关键物理图像。
 \end{history}
 
 \section{库仑定律与电场}
@@ -2185,6 +2377,7 @@ E_z = -\frac{\partial\phi}{\partial z} = \frac{Qz}{4\pi\eps_0 (R^2+z^2)^{3/2}}
 \]
 
 \begin{theorem}{泊松方程}{poisson-eq-v2}
+\begin{impEqbox}{★ 静电学核心方程}
 \begin{equation}
 \lap\phi = -\frac{\rho}{\eps_0}\label{eq:poisson}
 \end{equation}
@@ -2192,6 +2385,7 @@ E_z = -\frac{\partial\phi}{\partial z} = \frac{Qz}{4\pi\eps_0 (R^2+z^2)^{3/2}}
 \[
 \lap\phi = 0
 \]
+\end{impEqbox}
 \end{theorem}
 
 \begin{insight}{泊松方程的物理意义}{poisson-insight-v2}
@@ -2384,6 +2578,16 @@ $\lap\phi = 0$ & 拉普拉斯方程 \\
 \item \textbf{衔接预告}：第3章将引入电介质，讨论极化、电位移矢量$\vect{D}$和边界条件。
 \end{itemize}
 \end{chapterreview}
+
+\begin{tip}{本章自检清单}{ch2-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 由库仑定律导出电场，并计算典型电荷分布的 $\vecE$ 与 $\phi$
+\item 用高斯定理处理球/柱/面对称问题
+\item 写出泊松方程并用叠加原理验证特解
+\item 说出导体静电平衡的三条性质
+\end{itemize}
+\end{tip}
 
 % ---------- 第2章综合练习题 ----------
 \section*{第2章综合练习题}
@@ -2586,6 +2790,33 @@ $\vect{D}$ 是一个\textbf{辅助场量}，它的引入是为了简化方程—
 可以这样理解：总电场 $\vecE$ 是"自由电荷产生的电场"加上"束缚电荷产生的电场"。$\vect{D}$ 则"提前计入"了极化效应，使其方程形式上只与自由电荷有关。
 \end{insight}
 
+\begin{tip}{E、D、P 三场完整对比表}{edp-compare-table}
+\begin{center}
+\small
+\begin{tabular}{@{}p{2.2cm}p{3.6cm}p{3.2cm}p{3.6cm}@{}}
+\toprule
+ & $\vecE$（电场强度） & $\vect{D}$（电位移矢量） & $\vect{P}$（极化强度） \\
+\midrule
+定义来源 & 基本场（库仑力 $q\vecE$ 定义） & 辅助定义：$\vect{D} = \eps_0\vecE + \vect{P}$ & 偶极矩密度 $\vect{P} = \sum\vect{p}_i/\Delta V$ \\
+\midrule
+方程源 & $\divg\vecE = (\rho_f+\rho_b)/\eps_0$（全部电荷） & $\divg\vect{D} = \rho_f$（仅自由电荷） & $\rho_b = -\divg\vect{P}$（其散度即束缚电荷） \\
+\midrule
+单位 & \si{V/m} & \si{C/m^2} & \si{C/m^2} \\
+\midrule
+可测量性 & 可直接测量（试探电荷受力） & 不可直接测量 & 不可直接测量 \\
+\midrule
+线性介质中 & $\vecE = \vect{D}/\eps$ & $\vect{D} = \eps\vecE$ & $\vect{P} = \eps_0(\eps_r-1)\vecE$ \\
+\midrule
+边界条件 & 切向连续：$E_{2t}=E_{1t}$ & 法向：$D_{2n}-D_{1n}=\sigma_f$ & 法向：$P_{2n}-P_{1n}=-\sigma_b$ \\
+\midrule
+物理角色 & 决定受力与能量 & 简化方程，绕开束缚电荷 & 描述介质响应本身 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{易错点}：$\vect{D}$ 和 $\vect{P}$ 单位相同（\si{C/m^2}）但物理含义完全不同——$\vect{D}$ 包含真空部分 $\eps_0\vecE$，$\vect{P}$ 只描述介质响应。在真空中 $\vect{P}=0$ 但 $\vect{D}=\eps_0\vecE\neq 0$。判断介质分界面上的物理问题时，先分清问的是哪一种"面电荷"：自由电荷用 $\vect{D}$ 的法向跃变，束缚电荷用 $\vect{P}$ 的法向跃变。
+\end{tip}
+
 \subsection{线性各向同性电介质}
 
 对于\textbf{线性各向同性}电介质，实验表明：
@@ -2654,7 +2885,7 @@ D_{2n} - D_{1n} = \sigma_f
 
 若界面上无自由电荷（$\sigma_f = 0$）：
 \[
-D_{1n} = D_{2n}\	ext{（法向 } \vect{D} \text{ 连续）}
+D_{1n} = D_{2n}\text{（法向 } \vect{D} \text{ 连续）}
 \]
 \end{theorem}
 
@@ -2961,6 +3192,16 @@ $\phi|_{\text{导体}} = \text{常数}$ & 导体边界条件 \\
 \item \textbf{衔接预告}：第4章将用分离变量法、镜像法等解析方法求解边值问题。
 \end{itemize}
 \end{chapterreview}
+
+\begin{tip}{本章自检清单}{ch3-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 由极化机制推导 $\rho_b = -\divg\vect{P}$
+\item 区分 $\vecE$、$\vect{D}$、$\vect{P}$ 的源与单位
+\item 写出电介质界面的法向/切向边界条件
+\item 计算含介质的平行板电容器
+\end{itemize}
+\end{tip}
 
 % ---------- 第3章综合练习题 ----------
 \section*{第3章综合练习题}
@@ -3647,6 +3888,10 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \textbf{引力波天文学}：质量分布的四极矩变化是引力波辐射的主要来源（类比于电磁辐射中偶极矩变化产生电磁波）。LIGO 探测到的双黑洞并合信号，本质上是追踪系统质量四极矩随时间的演化。
 \end{insight}
 
+\begin{tip}{拓展：用 Python 数值求解泊松方程}{python-poisson-tip}
+镜像法和分离变量法只适用于对称边界；对一般几何，\textbf{数值方法}是标准工具。最简单的入门方案是\textbf{有限差分 + 迭代}：把求解区域切成网格，将 $\lap\phi = 0$ 离散为"每点电势 = 四邻平均"，反复迭代直到收敛（雅可比/高斯-塞德尔迭代），边界格子固定为已知的边界条件值。十几行 Python（NumPy 数组 + 双重 for 循环或向量化切片更新）即可算出任意二维截面的电势分布，再用 \texttt{matplotlib} 画等势线直观验证。想深入可查 \texttt{FEniCS} 有限元库或 SciPy 的稀疏线性求解器。本书不展开代码细节，但理解"泊松方程 + 边界条件 = 唯一解"后，数值求解的思想是自然延伸。
+\end{tip}
+
 \begin{review}{第4章要点回顾}{ch4-review}
 \begin{center}
 \begin{tabular}{@{}lll@{}}
@@ -3733,6 +3978,16 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \item \textbf{衔接预告}：第5章进入静磁学——电流、毕奥-萨伐尔定律、安培环路定理。
 \end{itemize}
 \end{chapterreview}
+
+\begin{tip}{本章自检清单}{ch4-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 用镜像法处理接地导体球与无限大导体平板
+\item 用分离变量法求解直角/球坐标拉普拉斯方程
+\item 做多极展开并判断主导阶
+\item 说出唯一性定理的内容及其在镜像法中的角色
+\end{itemize}
+\end{tip}
 
 % ---------- 第4章综合练习题 ----------
 \section*{第4章综合练习题}
@@ -3867,7 +4122,7 @@ $q_1$ 对 $y=0$ 镜像：$q_3 = +q$ 在 $(-a,-b)$；$q_2$ 对 $x=0$ 镜像：$q_
 静磁学研究\textbf{恒定电流}产生的磁场。虽然静磁学在结构上与静电学有许多相似之处，但磁场的有旋性（$\curl\vecB \neq 0$）使其数学性质与静电场截然不同。
 
 \begin{history}{静磁学的发展}{magnetostatics-history}
-磁现象的发现远早于电现象——天然磁石（磁铁矿Fe$_3$O$_4$）在古代中国和希腊就被用于指南针。但系统的定量研究要等到19世纪：\textbf{奥斯特}（Hans Christian Oersted）在1820年发现电流可以使磁针偏转，首次揭示了电与磁的联系；\textbf{毕奥}和\textbf{萨伐尔}随后给出了电流元产生磁场的定量规律；\textbf{安培}在1820-1825年间建立了电流之间作用力的完整理论，并提出了"分子电流"假说来解释永磁体的磁性。值得注意的是，\textbf{法拉第}在1831年发现电磁感应后，人们才意识到磁场随时间变化会产生电场——这为麦克斯韦的统一理论铺平了道路。
+磁现象的发现远早于电——天然磁石在古代中国和希腊就被制成指南针。定量研究始于 1820 年：\textbf{奥斯特}发现电流使磁针偏转，首次揭示电与磁的联系；\textbf{毕奥}和\textbf{萨伐尔}随后给出电流元磁场的定量规律；\textbf{安培}在 1820--1825 年间建立电流间作用力的完整理论并提出"分子电流"假说。1831 年\textbf{法拉第}发现电磁感应，为麦克斯韦的统一理论铺平了道路。
 \end{history}
 
 \section{毕奥-萨伐尔定律}
@@ -4154,6 +4409,10 @@ $\vecA$ 称为\textbf{磁矢势}。由矢量分析恒等式 $\divg(\curl\vecA) =
 \]
 该方程在数学上恒有解（对应第4章的格林函数方法），因此\textbf{库仑规范 $\divg\vecA = 0$ 总可以实现}。
 
+\begin{tip}{学习预警：规范选择初学可略}{coulomb-gauge-skip-tip}
+\textbf{第一次阅读可以跳过"库仑规范"相关段落}。在静磁学中，直接令 $\divg\vecA = 0$ 只是众多可能选择中最方便的一种——它的唯一作用是把矢势方程 $\lap\vecA = -\muz\vecJ$ 化成与静电泊松方程\textbf{完全同形}的形式，从而可以直接套用第 2 章的全部求解技巧（格林函数、镜像法、分离变量）。规范自由度真正的物理讨论要到\textbf{第 7 章}（时变场中的库仑规范 vs 洛伦兹规范完整对比表）和\textbf{第 10 章}（协变形式 $\partial_\mu A^\mu = 0$）才展开。初学时只需记住一句话：$\vecA$ 不唯一，$\vecB$ 才是物理。
+\end{tip}
+
 \begin{insight}{规范自由度的物理意义}{gauge-meaning-v2}
 规范自由度意味着 $\vecA$ 本身\textbf{不可直接测量}——只有 $\vecB = \curl\vecA$ 才有直接的物理意义。这与静电学中电势零点的任意性类似：$\phi$ 可以整体加减常数而不改变 $\vecE = -\grad\phi$。
 
@@ -4294,6 +4553,16 @@ $\vect{\mu} = I\vect{S}$ & 磁偶极矩 \\
 \item \textbf{衔接预告}：第6章将讨论磁介质、磁化强度$\vect{M}$和磁场强度$\vect{H}$。
 \end{itemize}
 \end{chapterreview}
+
+\begin{tip}{本章自检清单}{ch5-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 用毕奥--萨伐尔定律计算直导线与电流环的磁场
+\item 用安培环路定理处理对称电流分布
+\item 理解矢势 $\vecA$ 与规范自由度
+\item 计算磁偶极矩及其在外场中的受力
+\end{itemize}
+\end{tip}
 
 % ---------- 第5章综合练习题 ----------
 \section*{第5章综合练习题}
@@ -4506,7 +4775,31 @@ $\vect{D} = \eps\vecE$ & $\longleftrightarrow$ & $\vecB = \mu\vect{H}$ \\
 \end{tabular}
 \end{center}
 
+\textbf{三个磁学量的完整对比}：
+\begin{center}
+\small
+\begin{tabular}{@{}p{2.2cm}p{3.6cm}p{3.2cm}p{3.6cm}@{}}
+\toprule
+ & $\vecB$（磁感应强度） & $\vect{H}$（磁场强度） & $\vect{M}$（磁化强度） \\
+\midrule
+定义来源 & 基本场（电流元受力 $I\diff\vect{l}\times\vecB$） & 辅助定义：$\vect{H} = \vecB/\muz - \vect{M}$ & 偶极矩密度 $\vect{M} = \sum\vect{\mu}_i/\Delta V$ \\
+\midrule
+方程源 & $\curl\vecB = \muz(\vecJ_f+\vecJ_M)$（全部电流） & $\curl\vect{H} = \vecJ_f$（仅自由电流） & $\vecJ_M = \curl\vect{M}$（其旋度即磁化电流） \\
+\midrule
+单位 & \si{T}（特斯拉） & \si{A/m} & \si{A/m} \\
+\midrule
+线性介质中 & $\vecB = \mu\vect{H}$ & $\vect{H} = \vecB/\mu$ & $\vect{M} = \chi_m\vect{H}$ \\
+\midrule
+边界条件 & 法向连续（无磁单极） & 切向：$\unitvec{n}\times(\vect{H}_2-\vect{H}_1)=\vect{K}_f$ & 法向：$M_{2n}-M_{1n}=-K_{Mb}$ \\
+\midrule
+物理角色 & 决定洛伦兹力与能量 & 简化方程，绕开磁化电流 & 描述介质磁响应本身 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 但要注意一个关键区别：$\vecE$ 是基本场（电荷受力 $q\vecE$），而 $\vecB$ 是基本场（电流元受力 $I\diff\vect{l}\times\vecB$）。对应关系中，$\vecE \leftrightarrow \vecB$（基本场），$\vect{D} \leftrightarrow \vect{H}$（辅助场）。
+
+另一个常见困惑：$\vect{H}$ 与 $\vect{M}$ 单位相同（\si{A/m}）但含义完全不同——$\vect{H}$ 的源是\textbf{自由电流}（外部可控），$\vect{M}$ 的源是介质内的\textbf{分子环流}（介质响应）。真空中 $\vect{M}=0$ 但 $\vect{H}\neq 0$。磁介质分界面上的"电流"同理要分清：自由电流出现在 $\vect{H}$ 的切向边界条件中，磁化面电流出现在 $\vect{M}$ 的法向跃变中。
 \end{insight}
 
 \begin{warning}{$\vect{P}$ 与 $\vect{M}$ 的本质不对称}{p-m-asymmetry-v2}
@@ -4775,6 +5068,16 @@ $H_{2t} - H_{1t} = K_f$ & H切向跳跃 \\
 \end{itemize}
 \end{chapterreview}
 
+\begin{tip}{本章自检清单}{ch6-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 由分子环流图像推导 $\vecJ_M = \curl\vect{M}$
+\item 区分 $\vecB$、$\vect{H}$、$\vect{M}$ 的源与单位
+\item 写出磁介质界面的边界条件
+\item 分类抗磁/顺磁/铁磁并解释磁滞
+\end{itemize}
+\end{tip}
+
 
 % ---------- 第6章综合练习题 ----------
 \section*{第6章综合练习题}
@@ -4889,7 +5192,7 @@ B_{2n}A - B_{1n}A = 0 \quad\Rightarrow\quad B_{1n} = B_{2n}
 麦克斯韦方程组是经典物理学的巅峰成就之一。它不仅统一了电学和磁学，预言了电磁波的存在，揭示了光的电磁本质，更为狭义相对论的诞生埋下了种子。本章将系统推导这组方程，并讨论其物理意义。
 
 \begin{history}{麦克斯韦与电磁理论统一}{maxwell-history}
-\textbf{詹姆斯·克拉克·麦克斯韦}（James Clerk Maxwell，1831-1879）在1861-1865年间发表了开创性的论文《电磁场的动力学理论》，在其中他引入了我们今天称之为"位移电流"的关键项，将四个方程组合成一个自洽的体系。麦克斯韦计算了电磁波的传播速度，发现它恰等于光速，从而得出"光是一种电磁振动"的革命性结论。\textbf{赫兹}（Heinrich Hertz）在1887年首次在实验室中产生并检测到了电磁波，证实了麦克斯韦的预言。爱因斯坦后来评价道："麦克斯韦方程组是自牛顿以来物理学最深刻、最富有成果的工作。"
+\textbf{麦克斯韦}（James Clerk Maxwell，1831--1879）在 1865 年的《电磁场的动力学理论》中引入"位移电流"，把电磁学定律统一为自洽的方程组，并算出电磁波速恰等于光速——"光是一种电磁振动"。23 年后\textbf{赫兹}在实验室中产生并检测到电磁波，证实了这一预言。
 \end{history}
 
 \section{法拉第电磁感应定律}
@@ -5081,12 +5384,14 @@ B_{2n}A - B_{1n}A = 0 \quad\Rightarrow\quad B_{1n} = B_{2n}
 \end{align*}
 
 \begin{theorem}{达朗贝尔方程}{d-alembert-eqs}
+\begin{impEqbox}{★ 时变电磁场的核心方程}
 在洛伦兹规范下，标势 $\phi$ 和矢势 $\vecA$ 满足\textbf{达朗贝尔方程}（非齐次波动方程）：
 \begin{align}
 \lap\phi - \muz\eps_0\frac{\partial^2\phi}{\partial t^2} &= -\frac{\rho}{\eps_0} \label{eq:d-alembert-phi} \\
 \lap\vecA - \muz\eps_0\frac{\partial^2\vecA}{\partial t^2} &= -\muz\vecJ \label{eq:d-alembert-A}
 \end{align}
-两式具有相同的微分算符结构——\textbf{达朗贝尔算符} $\Box = \lap - \muz\eps_0\,\partial^2/\partial t^2$，这保证了电磁势在四维时空中具有统一的协变描述。
+两式具有相同的微分算符结构——\textbf{达朗贝尔算符} $\Box = \lap - \muz\eps_0\,\dfrac{\partial^2}{\partial t^2} = \dfrac{1}{c^2}\dfrac{\partial^2}{\partial t^2} - \lap$（全书统一用 $\Box$ 记号，两种写法等价，因 $\muz\eps_0 = 1/c^2$），这保证了电磁势在四维时空中具有统一的协变描述。
+\end{impEqbox}
 \end{theorem}
 \end{ocg}
 
@@ -5268,6 +5573,7 @@ $B = \dfrac{\muz I r}{2\pi R^2}$（$r < R$）
 \section{麦克斯韦方程组的完整形式}
 
 \begin{theorem}{麦克斯韦方程组}{maxwell-eqs-v2}
+\begin{impEqbox}{★ 全书最重要的方程（SI 单位制）}
 \textbf{积分形式}：
 \begin{align}
 \oint_S \vect{D} \cdot \diff\vect{S} &= Q_{f,\text{enc}} \label{eq:M1} \\
@@ -5283,6 +5589,7 @@ $B = \dfrac{\muz I r}{2\pi R^2}$（$r < R$）
 \divg\vecB &= 0 \label{eq:m3} \\
 \curl\vect{H} &= \vecJ_f + \frac{\partial\vect{D}}{\partial t} \label{eq:m4}
 \end{align}
+\end{impEqbox}
 \end{theorem}
 
 \begin{insight}{麦克斯韦方程组的对称性与不对称性}{maxwell-symmetry-v2}
@@ -5585,6 +5892,16 @@ $\vect{S} = \vecE \times \vect{H}$ & 坡印廷矢量（能流密度） \\
 \end{itemize}
 \end{chapterreview}
 
+\begin{tip}{本章自检清单}{ch7-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 完整写出麦克斯韦方程组并说明每条的实验来源
+\item 解释位移电流为什么必须引入
+\item 用坡印廷矢量验证能量守恒
+\item 推导达朗贝尔方程并说明规范条件的作用
+\end{itemize}
+\end{tip}
+
 % ---------- 第7章综合练习题 ----------
 \section*{第7章综合练习题}
 \addcontentsline{toc}{section}{第7章综合练习题}
@@ -5704,8 +6021,17 @@ $B = \muz\eps_0\omega V_0\rho\sin\omega t/(2d)$（$\rho < R$）。
 \begin{warning}{第7章常见误区}{ch7-warnings}
 \begin{enumerate}
 \item 位移电流不是真实电荷的流动——它是变化电场的等效效果。
+
+  \textit{反例}：充电平板电容器两极板之间是\textbf{真空}，没有任何电荷移动，但 $\partial\vect{D}/\partial t \neq 0$ 使得安培环路定理在极板间依然成立、磁场依然存在。若位移电流是"真实电流"，就要求真空中有电荷在流动——显然矛盾。位移电流的正确理解：它是 $\partial \vecE/\partial t$ 的\textbf{等效效应}，与传导电流共同构成"全电流"，两者各自都能产生磁场，但物理本质完全不同。
+
 \item 法拉第定律中感应电动势的方向（负号）——总是阻碍磁通量变化（楞次定律）。
+
+  \textit{反例}：磁铁 N 极插入线圈时，线圈中感应电流产生的磁场在插入端为 N 极，\textbf{排斥}磁铁——若方向相反（助磁），感应电流会加速磁铁插入、产生更大电流，能量凭空增加，违反能量守恒。负号正是能量守恒的体现。
+
 \item $\curl\vecE \neq 0$ 时，不能定义全局电势——但局部仍可定义。
+
+  \textit{反例}：围绕通电螺线管的闭合回路上 $\oint\vecE\cdot\diff\vect{l} = -\diff\Phi/\diff t \neq 0$（Aharonov--Bohm 实验配置），电势的单值定义失效——同一空间点沿不同路径积分会得到不同的"势差"。但在不含时变磁通的任意小区域内，仍然可以局部定义 $\phi = -\int\vecE\cdot\diff\vect{l}$。
+
 \item 麦克斯韦方程组是\textbf{完备的}：给定初始条件和边界条件，电磁场的演化被完全确定。
 \end{enumerate}
 \end{warning}
@@ -5912,6 +6238,15 @@ k^2 \approx \ii\mu\sigma\omega \quad\Rightarrow\quad k \approx \sqrt{\ii\mu\sigm
 这就是微波炉不能用金属容器、手机信号在电梯里变差的原因。
 \end{insight}
 
+\begin{tip}{工程联系：趋肤深度决定了屏蔽与布线设计}{skin-depth-engineering-v2}
+\begin{itemize}[nosep]
+\item \textbf{电磁屏蔽}：屏蔽罩厚度只需几个趋肤深度即可将泄露场衰减 $e^{-5}\approx 150$ 倍以上。电子设备的金属外壳对 1 GHz 干扰只需 \SI{10}{\mu m} 量级的铜层——这就是为什么"薄薄一层铝箔"就能屏蔽大部分射频干扰。
+\item \textbf{高频布线}：高频电流只流经导线表面 $\delta$ 厚的薄层，有效截面积变小、交流电阻增大。射频连接器和高频电感常采用\textbf{镀银}（$\sigma$ 更高）而非加粗导线。
+\item \textbf{电力传输}：工频 50 Hz 下铜的 $\delta \approx \SI{9.3}{mm}$，粗导线中心部分几乎不载流——大电流母线有时做成空心管或采用多股绝缘绞线（利兹线）。
+\item \textbf{感应加热}：工业感应加热利用 $\delta \propto 1/\sqrt{\omega}$ 把能量集中注入金属表层，频率越高加热层越浅，用于表面淬火。
+\end{itemize}
+\end{tip}
+
 \section{波导基础}
 
 电磁波在自由空间中传播时，TEM波（横电磁波）可以存在。但在波导（中空的金属管）中，边界条件要求电磁波必须以特定的\textbf{模式}传播。
@@ -5946,6 +6281,8 @@ k_z^2 = \frac{\omega^2}{c^2} - \left(\frac{m\pi}{a}\right)^2 - \left(\frac{n\pi}
 \omega_c = c\pi\sqrt{\left(\frac{m}{a}\right)^2 + \left(\frac{n}{b}\right)^2}
 \]
 只有当工作频率 $\omega > \omega_c$（即 $k_z$ 为实数）时，该模式才能在波导中传播；当 $\omega < \omega_c$ 时，$k_z$ 为纯虚数，波呈指数衰减（\textbf{截止}）。
+
+[量纲校验] $[c/a] = (\mathrm{m/s})/\mathrm{m} = \mathrm{s}^{-1}$，$\omega_c$ 单位为 \si{rad/s}。\checkmark
 \end{theorem}
 
 最低截止频率对应\textbf{主模} $\text{TE}_{10}$（$m=1, n=0$）：
@@ -5976,6 +6313,37 @@ H_z &= \frac{\ii\pi}{\omega\muz a} E_0 \cos\left(\frac{\pi x}{a}\right) \ee^{\ii
 \item 磁场有 $x$ 和 $z$ 两个分量
 \item 表面电流在宽边中央为零，在宽边边缘最强
 \end{itemize}
+
+% ---------- 波导模式示意图（横截面场分布） ----------
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % waveguide cross-section (a wide, b tall)
+  \draw[very thick] (0,0) rectangle (6,3);
+  \node[below] at (3,-0.15) {$a$（宽边）};
+  \node[left] at (-0.15,1.5) {$b$（窄边）};
+
+  % TE10 E_y field: half-sine along x, uniform along y (drawn as vertical arrows)
+  \foreach \x in {0.6,1.2,1.8,2.4,3.0,3.6,4.2,4.8,5.4} {
+    \pgfmathsetmacro{\ee}{1.1*sin(30*\x)}
+    \ifdim\ee pt>0pt
+      \draw[->, red, thick] (\x,1.5) -- (\x,{1.5+\ee});
+    \else
+      \draw[->, red, thick] (\x,1.5) -- (\x,{1.5+\ee});
+    \fi
+  }
+  \node[red] at (3,2.9) {$\vecE$（$y$ 方向，半正弦分布）};
+
+  % H field: closed loops around E maxima (drawn as small ellipses)
+  \draw[blue!70!black, thick] (3.0,1.5) ellipse (0.8 and 0.45);
+  \draw[blue!70!black, thick] (3.0,1.5) ellipse (0.45 and 0.25);
+  \node[blue!70!black] at (3.0,0.45) {$\vect{H}$（绕 $E$ 闭环）};
+
+  % labels
+  \node at (0.9,0.35) {\small 导体壁};
+  \draw[gray, dashed] (0,0.7) -- (6,0.7);
+  \node[right, gray] at (6.1,0.7) {\small 中线};
+\end{tikzpicture}
+\end{center}
 
 \begin{example}{矩形波导尺寸设计}{waveguide-design-ex-v2}
 \difficulty{提高}
@@ -6008,6 +6376,16 @@ f_{c,01} = \frac{c}{2b}
 同时为保证单模工作稳定性，通常取 $b < a/2$，且 $b$ 不能太小（功率容量和损耗考虑）。
 
 \textbf{结论}：窄边应满足 $b < \SI{3}{\cm}$，工程上常取 $b = \SI{2.5}{\cm}$ 左右。
+
+\begin{insight}{为什么空心金属波导不能传TEM波}{tem-no-propagation-v2}
+上面的设计中我们默认只有 TE/TM 模式——为什么 TEM 波在空心波导中不存在？
+
+\textbf{论证}：TEM 波要求 $E_z = H_z = 0$，即电场和磁场都完全横向。由 $\curl\vecE = 0$（对横向场而言），横向电场必须可以写成某个横向标量势的梯度：$\vecE_t = -\grad_t\phi$。代入横向的 $\divg\vect{D} = 0$ 得 $\lap_t\phi = 0$。而波导壁是等势体（理想导体），边界条件要求 $\phi$ 在整个横截面边界上为常数——由拉普拉斯方程解的唯一性，$\phi$ 在整个截面上恒为常数，于是 $\vecE_t = \vect{0}$，波不存在。
+
+\textbf{物理图像}：TEM 波本质上是"双导体传输线"模式（如同轴线），电场线必须从一个导体出发、终止于另一个导体。空心波导只有\textbf{一个}导体边界，电场线无处安放。同轴线之所以能传 TEM 波，正是因为它有内、外两个导体。
+
+\textbf{工程意义}：这也是低频下同轴电缆优于空心波导的原因——TEM 模\textbf{无截止频率}，可以传输任意低频；而空心波导的 $\text{TE}_{10}$ 主模有截止频率 $f_c = c/2a$，只适合微波频段（雷达、卫星通信）。
+\end{insight}
 \end{example}
 
 \section{色散与洛伦兹模型}
@@ -6225,6 +6603,16 @@ $\tan\theta_B = n_2/n_1$ & 布儒斯特角 \\
 \end{itemize}
 \end{chapterreview}
 
+\begin{tip}{本章自检清单}{ch8-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 由麦克斯韦方程组导出真空波动方程
+\item 说明平面波的横波结构与 $\vecE$、$\vecB$、$\vecK$ 关系
+\item 计算介质与导体中的波速、衰减与趋肤深度
+\item 求矩形波导截止频率并解释 TEM 波不存在的机理
+\end{itemize}
+\end{tip}
+
 % ---------- 第8章综合练习题 ----------
 \section*{第8章综合练习题}
 \addcontentsline{toc}{section}{第8章综合练习题}
@@ -6379,6 +6767,8 @@ $\dfrac{dn}{d\omega} = \dfrac{Ne^2}{2\eps_0 m}\dfrac{2\omega}{((\omega_0^2 - \om
 \vecA(\vect{r},t) &= \frac{\muz}{4\pi} \int \frac{\vecJ(\vect{r}', t_r)}{|\vect{r} - \vect{r}'|} \, \diff^3r'
 \end{align}
 其中 $t_r = t - |\vect{r} - \vect{r}'|/c$ 是\textbf{推迟时间}。
+
+[量纲校验] $[\rho\,\diff^3r'/R] = (\mathrm{C/m^3})(\mathrm{m^3})/\mathrm{m} = \mathrm{C/m}$，乘 $[1/(4\pi\eps_0)] = \mathrm{N\cdot m^2/C^2}$ 得 $\mathrm{N\cdot m/C} = \mathrm{V}$ = 电势单位。\checkmark；$[\vecJ\,\diff^3r'/R] = (\mathrm{A/m^2})(\mathrm{m^3})/\mathrm{m} = \mathrm{A\cdot m}$，乘 $[\muz/4\pi] = \mathrm{H/m}$ 得 $\mathrm{H\cdot A} = \mathrm{Wb/m} = \mathrm{T\cdot m}$ = 矢势单位。\checkmark
 \end{theorem}
 
 \begin{insight}{推迟势与格林函数}{retarded-green-v2}
@@ -6466,12 +6856,31 @@ G(\vect{r}, t) = \frac{\delta(t - r/c)}{4\pi r}
 \end{theorem}
 
 \begin{insight}{电偶极与磁偶极辐射的对比}{dipole-compare-v2}
-\begin{itemize}
-\item 角分布：两者都具有 $\sin^2\theta$ 的角分布，但极化方向旋转了 $90^\circ$
-\item 电偶极：$\vecE$ 沿 $\unitvec{\theta}$，$\vecB$ 沿 $\unitvec{\phi}$
-\item 磁偶极：$\vecE$ 沿 $\unitvec{\phi}$，$\vecB$ 沿 $\unitvec{\theta}$
-\item 总辐射功率（对时谐磁偶极子）：$P = \dfrac{\muz m_0^2 \omega^4}{12\pi c^3}$
-\end{itemize}
+\begin{center}
+\small
+\begin{tabular}{@{}p{3.0cm}p{4.6cm}p{4.6cm}@{}}
+\toprule
+ & \textbf{电偶极辐射} & \textbf{磁偶极辐射} \\
+\midrule
+辐射源 & 时变电偶极矩 $\vect{p}(t)$（如振荡电荷对） & 时变磁偶极矩 $\vect{m}(t)$（如小电流环） \\
+\midrule
+远场 $\vecE$ & 沿 $\unitvec{\theta}$ 方向 & 沿 $\unitvec{\phi}$ 方向 \\
+远场 $\vecB$ & 沿 $\unitvec{\phi}$ 方向 & 沿 $\unitvec{\theta}$ 方向 \\
+\midrule
+角分布 & $\dfrac{\diff P}{\diff\Omega}\propto\sin^2\theta$ & $\dfrac{\diff P}{\diff\Omega}\propto\sin^2\theta$（相同） \\
+\midrule
+总功率 & $P = \dfrac{\muz p_0^2\omega^4}{12\pi c}$ & $P = \dfrac{\muz m_0^2\omega^4}{12\pi c^3}$ \\
+\midrule
+极化平面 & $\vecE$ 在含偶极轴的平面内振动 & $\vecE$ 在垂直于偶极轴的平面内振动 \\
+\midrule
+典型物理源 & 半波天线、原子电偶极跃迁 & 小电流环天线、原子磁偶极跃迁 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{易错点}：两者角分布相同但\textbf{极化方向旋转了 $90^\circ$}。强度上磁偶极辐射通常比同尺寸的电偶极辐射弱 $(v/c)^2$ 量级——这就是为什么实用天线几乎都是电偶极型（如半波天线），磁偶极天线只在小尺寸（如 NFC 线圈）或特殊场合使用。
+
+\textbf{学习预警}：本小节公式推导用到推迟势展开（$\ee^{\ii kr}$ 的多极展开），第一次阅读可以只记结论表，推导细节留到复习时再看。
 \end{insight}
 
 \toggleButton{挑战题}{ocg挑战5}
@@ -6499,6 +6908,8 @@ P = \frac{\muz m_0^2 \omega^4}{12\pi c^3} = \frac{\muz (I_0 \pi a^2)^2 \omega^4}
 P = \frac{q^2 a^2}{6\pi\eps_0 c^3}
 \]
 其中 $a$ 是加速度。对非相对论性粒子成立。
+
+[量纲校验] $[q^2/(\eps_0 c^3)] = \mathrm{C}^2 \cdot (\mathrm{N\cdot m^2/C^2}) / (\mathrm{m^3/s^3}) = \mathrm{N\cdot s^2/m} = \mathrm{kg}$，乘 $[a^2] = \mathrm{m^2/s^4}$ 得 $\mathrm{kg\cdot m^2/s^3} = \mathrm{W}$。\checkmark
 \end{theorem}
 
 （相对论带电粒子的辐射公式见第10章。）
@@ -6532,6 +6943,26 @@ P = \frac{q^2 a^2}{6\pi\eps_0 c^3}
 对于普通电路参数，这个辐射功率极小——但这就是无线电天线的工作原理！
 \end{example}
 \end{ocg}
+
+\subsection*{拓展：李纳--维谢尔势简介}
+\addcontentsline{toc}{subsection}{拓展：李纳--维谢尔势简介}
+
+\begin{tip}{李纳--维谢尔势（进阶选学）}{lienard-wiechert-tip}
+拉莫尔公式只适用于\textbf{非相对论}粒子（$v \ll c$）。当源电荷高速运动时，必须使用\textbf{李纳--维谢尔势}（Liénard--Wiechert potentials）——它是推迟势对"运动点电荷"的严格解：
+\begin{align}
+\phi(\vect{r},t) &= \frac{q}{4\pi\eps_0}\left[\frac{1}{(1 - \vect{n}\cdot\bm{\beta})R}\right]_{t_r} \\
+\vecA(\vect{r},t) &= \frac{\bm{\beta}}{c}\,\phi(\vect{r},t)
+\end{align}
+其中 $\bm{\beta} = \vect{v}/c$ 是源电荷的无量纲速度，$\vect{n}$ 是从源点指向场点的单位矢量，方括号 $[\cdots]_{t_r}$ 表示在推迟时刻 $t_r$ 取值。与静止推迟势的关键区别在于分母中的\textbf{多普勒因子} $(1-\vect{n}\cdot\bm{\beta})$——源朝向观察者运动时辐射被"聚束"增强，这是同步辐射前向峰值强、侧向弱的根源。
+
+由该势可导出\textbf{李纳公式}（拉莫尔公式的相对论推广）：
+\[
+P = \frac{q^2\gamma^6}{6\pi\eps_0 c^3}\left(a^2 - \frac{|\vect{v}\times\vect{a}|^2}{c^2}\right)
+\]
+低速极限 $v\to 0$（$\gamma\to 1$，$|\vect{v}\times\vect{a}|/c \to 0$）时退化为拉莫尔公式。
+
+\textbf{学习建议}：本小节为选学内容，第一次阅读只需记住两点——(1) 推迟势对点电荷有严格解，分母多一个多普勒因子；(2) 相对论修正使辐射功率最多放大 $\gamma^6$ 倍（纵向加速度时），同步辐射光源、自由电子激光都源于此。完整推导见 Jackson 第 14 章。
+\end{tip}
 
 \begin{review}{第9章要点回顾}{ch9-review}
 \begin{center}
@@ -6609,6 +7040,32 @@ $P \propto \omega^4$ & 辐射功率频率依赖 \\
   \textit{答案：错误。磁偶极辐射通常比电偶极辐射弱$(v/c)^2$倍。}
 \end{ocg}
 \end{enumerate}
+
+\vspace{0.5em}
+\textbf{三、计算题}
+\begin{enumerate}[label=\arabic*.,resume]
+\item 一个半波天线近似为电偶极子，工作频率 $f = \SI{100}{MHz}$，偶极矩振幅 $p_0 = \SI{1e-9}{C.m}$。估算其平均辐射功率。
+
+\begin{ocg}{答案}{ocg答案9}{off}
+  \textit{解答：} $\omega = 2\pi f = 6.28\times 10^8 \,\si{rad/s}$。
+
+  $\langle P \rangle = \dfrac{\muz p_0^2\omega^4}{12\pi c} = \dfrac{4\pi\times 10^{-7} \times (10^{-9})^2 \times (6.28\times 10^8)^4}{12\pi \times 3\times 10^8} \approx \SI{1.7e-8}{W}$
+
+  \textit{量纲校验}：$[\mu_0 p_0^2 \omega^4/c] = (\mathrm{H/m})(\mathrm{C\cdot m})^2\mathrm{s}^{-4}/(\mathrm{m/s}) = \mathrm{W}$。$\checkmark$
+
+  \textit{物理解读}：功率虽小，但以球面波扩散，在 1 km 处的能流密度 $\langle S\rangle = \langle P\rangle/(4\pi r^2) \approx 10^{-15}\,\si{W/m^2}$——接收机灵敏度（约 $10^{-15}\sim10^{-13}\,\si{W/m^2}$）恰好能捕捉到这个量级，这就是无线通信可行的物理基础。
+\end{ocg}
+
+\item 电偶极子 $\vect{p}(t) = p_0\ee^{-\ii\omega t}\unitvec{z}$ 沿 $z$ 轴放置。求辐射最强的方向和辐射为零的方向，并说明 $\theta = \pi/2$ 处 $\vecE$ 的振动方向。
+
+\begin{ocg}{答案}{ocg答案9}{off}
+  \textit{解答：} 角分布 $dP/d\Omega \propto \sin^2\theta$。
+
+  最强：$\theta = \pi/2$（赤道面，垂直于偶极轴）；为零：$\theta = 0, \pi$（沿偶极轴）。
+
+  $\theta = \pi/2$ 处 $\vecE$ 沿 $\unitvec{\theta}$ 方向——在赤道面上 $\unitvec{\theta} = -\unitvec{z}$，即电场\textbf{平行于偶极轴}振动。这就是半波天线在赤道面接收信号最强的偏振特性来源。
+\end{ocg}
+\end{enumerate}
 \end{miniquiz}
 \toggleButton{显示答案}{ocg答案9}
 
@@ -6620,6 +7077,16 @@ $P \propto \omega^4$ & 辐射功率频率依赖 \\
 \item \textbf{衔接预告}：第10章将用电动力学为狭义相对论奠基——四维协变形式。
 \end{itemize}
 \end{chapterreview}
+
+\begin{tip}{本章自检清单}{ch9-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 写出推迟势并解释推迟时间的物理意义
+\item 用拉莫尔公式计算辐射功率
+\item 说明电偶极辐射的角分布与偏振
+\item 对比电偶极与磁偶极辐射
+\end{itemize}
+\end{tip}
 
 % ---------- 第9章综合练习题 ----------
 \section*{第9章综合练习题}
@@ -6745,7 +7212,7 @@ $\lap G = \dfrac{1}{4\pi r}\delta''(t - r/c)/c^2 - \dfrac{2}{4\pi r^2}\delta'(t 
 1905年，爱因斯坦的狭义相对论彻底改变了我们对时空的理解。而电动力学与相对论的关系尤为紧密——事实上，爱因斯坦创立相对论的动机之一就是解决电动力学中的矛盾。
 
 \begin{history}{相对论与电动力学}{relativity-history}
-麦克斯韦方程组预言电磁波以光速 $c$ 传播，但 $c$ 是相对于什么参考系呢？19世纪的物理学家假设存在一种无处不在的介质——\textbf{以太}——作为电磁波的载体。但\textbf{迈克尔逊-莫雷实验}（1887年）未能检测到地球相对于以太的运动。\textbf{洛伦兹}和\textbf{斐兹杰惹}提出了收缩假说来解释这一结果，但\textbf{爱因斯坦}在1905年采取了更根本的方法：他假设物理定律在所有惯性参考系中形式相同，光速不变——不需要以太。他后来发现，电磁场的洛伦兹变换自然地包含在他的理论中。可以说，电动力学\textbf{需要}相对论才能自洽。
+麦克斯韦方程组预言电磁波以光速 $c$ 传播——但相对于什么参考系？19 世纪物理学家假设"以太"作为载体，然而 1887 年\textbf{迈克尔逊-莫雷实验}未能检测到地球相对以太的运动。\textbf{爱因斯坦}在 1905 年给出根本解答：物理定律在所有惯性系中形式相同、光速不变，不需要以太——电磁场的洛伦兹变换自然地包含其中。电动力学\textbf{需要}相对论才能自洽。
 \end{history}
 
 \section{四维记号基础}
@@ -7315,6 +7782,16 @@ $\mathcal{I}_2 = 0$ 时，$\vecE\perp\vecB$，也是平面波的特征。
 \end{itemize}
 \end{chapterreview}
 
+\begin{tip}{本章自检清单}{ch10-checklist}
+学完本章后对照下列条目逐条自测，全部通过即可进入下一章；有未通过项时，回到对应小节复习：
+\begin{itemize}[label=$\square$, nosep]
+\item 用洛伦兹变换导出电磁场变换
+\item 写出电磁场张量 $F^{\mu\nu}$ 并验证其协变性
+\item 把麦克斯韦方程组写成协变形式 $\partial_\mu F^{\mu\nu} = \muz j^\nu$
+\item 说明号差约定对公式符号的影响
+\end{itemize}
+\end{tip}
+
 % ---------- 第10章综合练习题 ----------
 \section*{第10章综合练习题}
 \addcontentsline{toc}{section}{第10章综合练习题}
@@ -7536,6 +8013,16 @@ F_{\mu\nu}F^{\mu\nu} &= F_{0\nu}F^{0\nu} + F_{i\nu}F^{i\nu} + \cdots \\
 
 本书统一采用SI（国际单位制）。但外文经典教材（如Griffiths、Jackson）部分使用高斯CGS单位制，初学者极易混淆。本附录给出两套单位制的核心公式对照，并标注常见陷阱。
 
+\begin{warning}{不要直接照搬外文教材的公式}{unit-copied-tip}
+\textbf{Griffiths 与 Jackson 的部分公式采用高斯单位制，直接抄进 SI 计算会出错}。遇到外文教材公式时先做三步检查：
+\begin{enumerate}[nosep]
+\item 公式中是否出现 $4\pi$ 在\textbf{分子}（高斯制特征，如 $\divg\vecE = 4\pi\rho$）或 $1/4\pi\eps_0$ 在\textbf{分母}（SI 特征）——这是最快的高斯/SI 识别标志
+\item 是否显式含 $c$（高斯制中 $c$ 常出现在含磁场的公式中，如 $\vecB = \hat{\vect{k}}\times\vecE$ 无 $1/c$；SI 中 $\vecB = \frac{1}{c}\hat{\vect{k}}\times\vecE$）
+\item 用本书"单位制转换手册"的对照表逐项换算后再代入数值
+\end{enumerate}
+两本教材的具体情况：\textbf{Griffiths} 主文用 SI，个别专题用高斯制并明确标注；\textbf{Jackson}（第 3 版）第 1--10 章用高斯制、第 11 章起才转 SI——读 Jackson 前几章时要特别小心。
+\end{warning}
+
 \section{SI与高斯制的基本公式对照}
 
 \begin{center}
@@ -7614,151 +8101,6 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 \textbf{量纲验证}：$[q/(\eps_0 r)] = \text{C}/[\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}] = \text{N}\cdot\text{m}/\text{C} = \text{J}/\text{C} = \text{V}$ ✓
 \end{example}
 
-\chapter{全书高频公式速查表}
-% ============================================================
-
-按章节分块，方便快速查阅与复习。所有公式均采用SI单位制。
-
-\section{第1章：矢量分析}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$\grad\phi = \unitvec{x}\partial\phi/\partial x + \cdots$ & 直角坐标梯度 \\
-$\divg\vecA = \partial A_x/\partial x + \cdots$ & 直角坐标散度 \\
-$\curl\vecA = \begin{vmatrix}\unitvec{x}&\unitvec{y}&\unitvec{z}\\\partial_x&\partial_y&\partial_z\\A_x&A_y&A_z\end{vmatrix}$ & 直角坐标旋度 \\
-$\lap\phi = \divg\grad\phi$ & 拉普拉斯算子 \\
-$\nabla\times(\nabla\times\vecA) = \grad(\divg\vecA) - \lap\vecA$ & BAC-CAB恒等式 \\
-$\int_V \divg\vecA\,dV = \oint_S \vecA\cdot d\vect{S}$ & 高斯散度定理 \\
-$\int_S (\curl\vecA)\cdot d\vect{S} = \oint_C \vecA\cdot d\vect{l}$ & 斯托克斯定理 \\
-$\delta^{(3)}(\vect{r}) = \frac{1}{(2\pi)^3}\int e^{i\vecK\cdot\vect{r}}d^3k$ & $\delta$函数傅里叶表示 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{第2--4章：静电学}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$\vecE=\frac{1}{4\pi\eps_0}\frac{q\unitvec{r}}{r^2}$ & 点电荷电场（库仑） \\
-$\divg\vecE=\rho/\eps_0$ & 高斯定律微分形式 \\
-$\oint\vecE\cdot d\vect{S}=Q/\eps_0$ & 高斯定律积分形式 \\
-$\vecE=-\grad\phi$ & 电场与电势关系 \\
-$\lap\phi=-\rho/\eps_0$ & 泊松方程 \\
-$\lap\phi=0$ & 拉普拉斯方程（无源区） \\
-$\phi_P=\frac{1}{4\pi\eps_0}\frac{\vect{p}\cdot\unitvec{r}}{r^2}$ & 偶极子电势 \\
-$\phi(\vect{r})=\frac{1}{4\pi\eps_0}\left[\frac{Q}{r}+\frac{\vect{p}\cdot\unitvec{r}}{r^2}+\cdots\right]$ & 多极展开 \\
-$\vect{D}=\eps_0\vecE+\vect{P}=\eps\vecE$ & 各向同性介质 \\
-$D_{1\perp}-D_{2\perp}=\sigma_f$ & 法向边界条件 \\
-$E_{1\parallel}=E_{2\parallel}$ & 切向边界条件 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{第5--6章：静磁学}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$d\vecB=\frac{\muz}{4\pi}\frac{I d\vect{l}\times\unitvec{r}}{r^2}$ & 毕奥-萨伐尔定律 \\
-$\oint\vecB\cdot d\vect{l}=\muz I_{\text{enc}}$ & 安培环路定理 \\
-$\vecB=\curl\vecA$ & 磁矢势定义 \\
-$\vecA'=\vecA+\grad\chi$ & 规范变换 \\
-$\nabla\cdot\vecA=0$ & 库仑规范 \\
-$\vecB=\muz(\vect{H}+\vect{M})=\muz\mu_r\vect{H}$ & 线性介质 \\
-$\vecJ_M=\nabla\times\vect{M}$ & 磁化电流 \\
-$B_{1\perp}=B_{2\perp}$ & 法向边界条件 \\
-$H_{1\parallel}-H_{2\parallel}=j_{f,\parallel}$ & 切向边界条件 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{第7章：麦克斯韦方程组}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$\divg\vecE=\rho/\eps_0$ & 高斯定律（电场有源） \\
-$\divg\vecB=0$ & 磁场无源（无磁单极） \\
-$\curl\vecE=-\partial\vecB/\partial t$ & 法拉第电磁感应定律 \\
-$\curl\vecB=\muz\vecJ+\muz\eps_0\partial\vecE/\partial t$ & 安培-麦克斯韦定律 \\
-$\vecE=-\grad\phi-\partial\vecA/\partial t$ & 时变电磁势 \\
-$\lap\phi-\muz\eps_0\partial^2\phi/\partial t^2=-\rho/\eps_0$ & 标势达朗贝尔方程 \\
-$\lap\vecA-\muz\eps_0\partial^2\vecA/\partial t^2=-\muz\vecJ$ & 矢势达朗贝尔方程 \\
-$\vect{S}=\vecE\times\vect{H}$ & 坡印廷矢量 \\
-$-\oint\vect{S}\cdot d\vecA=\int_V \vecJ\cdot\vecE\,dV+\frac{d}{dt}\int_V w\,dV$ & 坡印廷定理 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{第8章：电磁波}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$\vecE=\vecE_0 e^{i(\vecK\cdot\vect{r}-\omega t)}$ & 平面波一般形式 \\
-$k=\omega\sqrt{\muz\eps}=n\omega/c$ & 介质中波数 \\
-$\vecB=\frac{1}{\omega}\vecK\times\vecE$ & 平面波中E-B关系 \\
-$R=\left|\frac{n_1-n_2}{n_1+n_2}\right|^2$ & 正入射反射率 \\
-$T=\frac{4n_1 n_2}{(n_1+n_2)^2}$ & 正入射透射率 \\
-$\delta=\sqrt{\frac{2}{\muz\sigma\omega}}$ & 趋肤深度 \\
-$\omega_c=c\pi\sqrt{(m/a)^2+(n/b)^2}$ & 矩形波导截止频率 \\
-$\theta_c=\arcsin(n_2/n_1)$ & 全反射临界角 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{第9章：辐射}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$\phi(\vect{r},t)=\frac{1}{4\pi\eps_0}\int\frac{\rho(\vect{r}',t_r)}{|\vect{r}-\vect{r}'|}d^3r'$ & 推迟标势 \\
-$\vecA(\vect{r},t)=\frac{\muz}{4\pi}\int\frac{\vecJ(\vect{r}',t_r)}{|\vect{r}-\vect{r}'|}d^3r'$ & 推迟矢势 \\
-$t_r=t-\frac{|\vect{r}-\vect{r}'|}{c}$ & 推迟时间 \\
-$\vecE=\frac{\muz\omega^2 p_0}{4\pi r}\sin\theta\,\unitvec{\theta}\,e^{i(kr-\omega t)}$ & 电偶极辐射远场 \\
-$P=\frac{\muz p_0^2\omega^4}{12\pi c}$ & 电偶极辐射功率 \\
-$P=\frac{\muz m_0^2\omega^4}{12\pi c^3}$ & 磁偶极辐射功率 \\
-$P=\frac{q^2 a^2}{6\pi\eps_0 c^3}$ & 拉莫尔公式 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{第10章：相对论电动力学}
-
-\begin{center}
-\begin{tabular}{@{}ll@{}}
-\toprule
-\textbf{公式} & \textbf{说明} \\
-\midrule
-$x^\mu=(ct,x,y,z)$ & 四维逆变坐标 \\
-$\eta_{\mu\nu}=\text{diag}(1,-1,-1,-1)$ & 闵氏度规（本书采用） \\
-$x_\mu=\eta_{\mu\nu}x^\nu$ & 协变坐标 \\
-$A^\mu=(\phi/c,\vecA)$ & 四维电磁势 \\
-$j^\mu=(c\rho,\vecJ)$ & 四维电流 \\
-$F^{\mu\nu}=\partial^\mu A^\nu-\partial^\nu A^\mu$ & 电磁场张量 \\
-$\partial_\mu F^{\mu\nu}=\muz j^\nu$ & 协变麦克斯韦方程（含源） \\
-$\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda\mu}=0$ & 协变麦克斯韦方程（齐次） \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-
-
-% ============================================================
 \chapter{全书高频易错点汇总}
 % ============================================================
 
@@ -8130,6 +8472,32 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 \item Physics Stack Exchange: 电动力学标签下的问答社区，适合解决具体疑惑
 \item 3Blue1Brown的\textit{Essence of linear algebra}系列（巩固矢量和张量的几何直觉）
 \end{itemize}
+
+\section*{教材章节对照表}
+
+\begin{tip}{郭硕鸿 / Griffiths 章节对应关系}{textbook-map-tip}
+交叉阅读不同教材时，可按下列对应关系定位同一主题（郭硕鸿《电动力学》第三版；Griffiths \textit{Introduction to Electrodynamics} 4th ed.）：
+\begin{center}
+\small
+\begin{tabular}{@{}p{4.2cm}p{4.6cm}p{4.6cm}@{}}
+\toprule
+\textbf{主题} & \textbf{本书章节} & \textbf{郭硕鸿 / Griffiths} \\
+\midrule
+矢量分析、 $\delta$ 函数 & 第 1 章 & 第 1 章 / 第 1 章 \\
+静电学、泊松方程 & 第 2 章 & 第 1 章 / 第 2 章 \\
+介质与边界条件 & 第 3 章 & 第 2 章 / 第 4 章 \\
+边值问题（镜像、分离变量、多极） & 第 4 章 & 第 2 章 / 第 3--4 章 \\
+静磁学、矢势 & 第 5 章 & 第 3 章 / 第 5 章 \\
+磁介质 & 第 6 章 & 第 3 章 / 第 6 章 \\
+麦克斯韦方程组、规范 & 第 7 章 & 第 4 章 / 第 7 章 \\
+电磁波传播、波导 & 第 8 章 & 第 5 章 / 第 8--9 章 \\
+辐射（推迟势、偶极辐射） & 第 9 章 & 第 6 章 / 第 10--11 章 \\
+相对论电动力学 & 第 10 章 & 第 7 章 / 第 12 章 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{阅读提示}：郭硕鸿篇幅紧凑、推导精炼，适合对照复习；Griffiths 例题丰富、物理图像详尽，适合第一遍学习卡壳时查阅。两书的符号约定与本书基本一致（SI 单位制），但 Griffiths 的四维记号用 $x^\mu = (ct, \vect{r})$ 排列顺序与本书 $(\phi/c, \vect{A})$ 略有差异，对照时注意指标位置。
+\end{tip}
 
 
 \printindex
