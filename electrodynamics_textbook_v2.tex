@@ -2,11 +2,14 @@
 % 电动力学自学教材 —— 专业审查优化版
 % 基于出版编辑与物理学者的双视角审查修订
 % ============================================================
-\documentclass[12pt,a4paper,openany,oneside]{book}
+\documentclass[11pt,a4paper,openany,oneside]{book}
 
 \usepackage[UTF8]{ctex}
+\ctexset{punct=quanjiao}
+\linespread{0.98}
+\setlength{\parskip}{2pt plus 1pt}
 \usepackage{geometry}
-\geometry{left=2.5cm,right=3.5cm,top=2.5cm,bottom=2.5cm}
+\geometry{left=2.2cm,right=2.8cm,top=2.2cm,bottom=2.2cm}
 \setlength{\headheight}{15pt}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
@@ -183,52 +186,84 @@
     ([yshift=\r*0.6cm]current page.south west) arc (180:0:\r*2.1cm);
 }
 
-% ===== 中心大图：电磁波 =====
-\begin{scope}[shift={($(current page.center)+(0,1cm)$)}]
+% ===== 中心大图：电偶极子场线 + 电磁波传播 =====
+\begin{scope}[shift={($(current page.center)+(0,0.5cm)$)}]
 
-% 光锥/波前效果（背景发光）
-\shade[inner color=white!15, outer color=transparent] (0,0) ellipse (4.5 and 1.5);
+% ---- 左半：电偶极子场线（场的源） ----
+\begin{scope}[shift={(-6.6,0)}, scale=1.0]
+  % 偶极子电荷（上下分开，场线以原点为中心）
+  \fill[red!70!white] (0,0.42) circle (0.12);
+  \node[black, font=\footnotesize] at (0,0.42) {$+$};
+  \fill[blue!60!white] (0,-0.42) circle (0.12);
+  \node[white, font=\footnotesize] at (0,-0.42) {$-$};
 
-% 传播方向（大箭头）
-\draw[->, line width=2pt, green!60!white] (-5,0) -- (5.5,0) node[right, font=\large] {$\vecK$};
-\node[green!60!white, font=\footnotesize] at (5.8,-0.4) {传播方向};
+  % 偶极子场线：r = a sin^2(theta)，x = a sin^3, y = a sin^2 cos（右半 + 镜像左半）
+  \foreach \a in {0.9, 1.6, 2.5, 3.6} {
+    \draw[white!45, line width=0.8pt, domain=0.15:179.85, samples=70, smooth]
+      plot ({\a*sin(\x)*sin(\x)*sin(\x)}, {\a*sin(\x)*sin(\x)*cos(\x)});
+    \draw[white!45, line width=0.8pt, domain=0.15:179.85, samples=70, smooth]
+      plot ({-\a*sin(\x)*sin(\x)*sin(\x)}, {\a*sin(\x)*sin(\x)*cos(\x)});
+  }
 
-% E场 - 红色正弦波（更醒目）
-\draw[line width=2pt, red!80!white, domain=-4.5:4.5, samples=120] plot(\x, {1.3*sin(1.8*\x r)});
-\foreach \x in {-4,-3,-2,-1,0,1,2,3,4} {
-  \pgfmathsetmacro{\ey}{1.3*sin(1.8*\x r)}
-  \draw[->, line width=1.2pt, red!60!white] (\x,0) -- (\x,\ey);
-}
-\node[red!80!white, font=\Large] at (0,1.8) {$\vecE$};
+  % 方向箭头（从 + 指向 -，取赤道附近点）
+  \draw[->, white!55, line width=0.9pt] (2.5,0.12) -- (2.5,-0.12);
+  \draw[->, white!55, line width=0.9pt] (-2.5,0.12) -- (-2.5,-0.12);
 
-% B场 - 蓝色圆圈箭头（更大更醒目）
-\foreach \x in {-4,-3,-2,-1,0,1,2,3,4} {
-  \pgfmathsetmacro{\by}{0.8*sin(1.8*\x r + 90)}
-  \ifdim\by pt>0pt
-    \draw[->, line width=1.2pt, blue!60!white] (\x,-1.6) arc (90:440:0.2);
-  \else
-    \draw[->, line width=1.2pt, blue!60!white] (\x,-1.3) arc (-90:260:0.2);
-  \fi
-}
-\node[blue!60!white, font=\Large] at (0,-2.1) {$\vecB$};
+  \node[white!60, font=\footnotesize] at (0,-3.1) {场};
+\end{scope}
 
-% E⊥B⊥k 标注
-\node[white!70, font=\footnotesize] at (0,-2.8) {$\vecE\perp\vecB\perp\vecK$};
+% ---- 中间：连接箭头（麦克斯韦方程组统一） ----
+\draw[->, line width=1.2pt, white!40] (-2.6,0) -- (-1.2,0);
+\node[white!50, font=\footnotesize] at (-1.9,0.75) {$\divg\vecE = \tfrac{\rho}{\eps_0}$};
+\node[white!50, font=\footnotesize] at (-1.9,-0.75) {$\curl\vecB = \muz\eps_0\tfrac{\partial\vecE}{\partial t}$};
 
-% 装饰圆环（科技感）
-\draw[white!30, line width=0.5pt] (0,0) circle (3.2);
-\draw[white!20, line width=0.5pt] (0,0) circle (3.5);
+% ---- 右半：电磁波 E/B/k（场的传播） ----
+\begin{scope}[shift={(4.6,0)}]
+  % 传播方向
+  \draw[->, line width=1.6pt, green!60!white] (-2.8,0) -- (3.4,0) node[right, font=\small] {$\vecK$};
+
+  % E场 - 红色正弦波
+  \draw[line width=1.6pt, red!75!white, domain=-2.6:3.2, samples=90] plot(\x, {0.85*sin(2.2*\x r)});
+  \foreach \x in {-2.2,-1.4,-0.6,0.2,1.0,1.8,2.6} {
+    \pgfmathsetmacro{\ey}{0.85*sin(2.2*\x r)}
+    \draw[->, line width=0.9pt, red!55!white] (\x,0) -- (\x,\ey);
+  }
+  \node[red!75!white, font=\large] at (2.9,1.15) {$\vecE$};
+
+  % B场 - ⊙/⊗ 符号（相位与 E 对齐）
+  \foreach \x in {-2.2,-1.4,-0.6,0.2,1.0,1.8,2.6} {
+    \pgfmathsetmacro{\ey}{0.85*sin(2.2*\x r)}
+    \ifdim\ey pt>0pt
+      \draw[blue!60!white, line width=0.9pt] (\x,-1.0) circle (0.11);
+      \fill[blue!60!white] (\x,-1.0) circle (0.028);
+    \else
+      \draw[blue!60!white, line width=0.9pt] (\x,-1.0) circle (0.11);
+      \draw[blue!60!white, line width=0.9pt] (\x-0.078,-1.078) -- (\x+0.078,-0.922);
+      \draw[blue!60!white, line width=0.9pt] (\x-0.078,-0.922) -- (\x+0.078,-1.078);
+    \fi
+  }
+  \node[blue!60!white, font=\large] at (2.9,-1.0) {$\vecB$};
+
+  % E⊥B⊥k 标注
+  \node[white!60, font=\footnotesize] at (0.2,-1.9) {波};
+\end{scope}
+
+% ---- 装饰圆环（科技感） ----
+\draw[white!25, line width=0.5pt] (0,0) circle (4.6);
+\draw[white!15, line width=0.5pt] (0,0) circle (4.9);
 
 \end{scope}
 
 % ===== 书名 =====
-\node[anchor=north, align=center] at ([yshift=-4.5cm]current page.north) {
-  {\fontsize{48}{56}\selectfont\bfseries\textcolor{white}{电动力学}}
+\node[anchor=north, align=center] at ([yshift=-3.2cm]current page.north) {
+  {\fontsize{48}{56}\selectfont\bfseries\textcolor{white}{电动力学}}\\[0.35cm]
+  {\fontsize{13}{16}\selectfont\textcolor{white!65}{从矢量分析到相对论协变的完整电磁理论}}
 };
 
 % ===== 作者 =====
-\node[anchor=south, align=center] at ([yshift=3cm]current page.south) {
-  {\LARGE\bfseries\textcolor{white}{Han \& Kimi}}\\[0.5cm]
+\node[anchor=south, align=center] at ([yshift=2.6cm]current page.south) {
+  {\LARGE\bfseries\textcolor{white}{Han \& Kimi \& glm}}\\[0.3cm]
+  {\footnotesize\textcolor{white!50}{AI 协作生成 · 人工审校}}
 };
 
 \end{tikzpicture}
@@ -735,6 +770,20 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \item \textbf{第10章}相对论电动力学中的四维张量 $F^{\mu\nu}$
 \end{itemize}
 建议的学习方式：先学完第 1--5 章的矢量内容，等第 4 章遇到 $Q_{ij}$ 或第 10 章遇到场张量时，\textbf{再回头读本节}，此时带着具体需求学习，效率最高。读的时候只需抓住一个核心：并矢 $\vecA\vecB$ 就是"带两个方向的数"，左方向来自 $\vecA$、右方向来自 $\vecB$，其余全是记号细节。
+\end{tip}
+
+\begin{tip}{极简通俗版：并矢是什么}{dyadic-plain-tip}
+在接触任何指标记号之前，先建立直观图像：
+
+\textbf{一个数}（标量）没有方向——$5$ 就是 $5$。
+
+\textbf{一个矢量}带\textbf{一个}方向——$\vect{v}$ 说"朝某方向、多大"。
+
+\textbf{一个并矢}带\textbf{两个}方向——$\vecA\vecB$ 说"左方向来自 $\vecA$、右方向来自 $\vecB$"。它回答的问题是："\textbf{沿} $\vecB$ 方向\textbf{看过去}，什么量沿 $\vecA$ 方向？"
+
+最常用的物理例子：\textbf{麦克斯韦应力张量} $T_{ij} = \eps_0(E_iE_j - \frac{1}{2}\delta_{ij}E^2)$ 就是一个并矢结构——它回答"沿 $\unitvec{n}$ 方向穿过一个面，电磁场沿哪个方向、传递多大的动量"。左指标 $i$ 是"传递方向"，右指标 $j$ 是"穿面方向"。两个方向缺一不可，这正是为什么需要两个指标的量（张量/并矢），而不是矢量。
+
+\textbf{一句话}：矢量 = 1 个方向的数；并矢 = 2 个方向的数；点乘缩掉一个方向（$\vecA\vecB\cdot\vect{C} = \vecA(\vecB\cdot\vect{C})$，剩 1 个方向）。下面的正式定义只是把这套图像写成 $(\vecA\vecB)_{ij} = A_iB_j$ 的分量形式。
 \end{tip}
 
 \begin{definition}{并矢}{dyadic-v2}
@@ -1747,6 +1796,26 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 
 \subsubsection{球坐标系中的单位矢量偏导数}
 
+\begin{tip}{初学者关键差异：曲线坐标系的单位矢量随位置变化}{curvilinear-unit-compare}
+\textbf{直角坐标系}中 $\unitvec{x}, \unitvec{y}, \unitvec{z}$ 是\textbf{常矢量}——无论站在空间哪一点，$\unitvec{x}$ 永远指向同一个方向。所以 $\partial\unitvec{x}/\partial x = \vect{0}$，求导永远只作用于场分量。
+
+\textbf{曲线坐标系}（柱、球）完全不同：单位矢量\textbf{随点的位置转动}。站在赤道的 $\unitvec{\theta}$ 和站在北极的 $\unitvec{\theta}$ 指向完全不同的方向。一个直观例子：
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & 单位矢量 & 对位置求导 \\
+\midrule
+直角坐标 & $\unitvec{x}, \unitvec{y}, \unitvec{z}$（固定方向） & $\partial\unitvec{x}_i/\partial x_j = 0$（全部为零） \\
+柱坐标 & $\unitvec{\rho}, \unitvec{\phi}$ 随 $\phi$ 转动 & $\partial\unitvec{\rho}/\partial\phi = \unitvec{\phi} \neq \vect{0}$ \\
+球坐标 & $\unitvec{r}, \unitvec{\theta}, \unitvec{\phi}$ 随 $(\theta,\phi)$ 转动 & $\partial\unitvec{r}/\partial\theta = \unitvec{\theta} \neq \vect{0}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{这就是为什么}球坐标的 $\lap\phi$ 比直角坐标多出 $\frac{2}{r}\partial_r$、$\frac{1}{r^2}\partial^2_\theta$ 等额外项——对单位矢量求导产生的"几何项"。$\grad$、$\curl$ 在曲线坐标系中的公式里也全是这些几何项。初学时不必死记偏导数表，但要记住结论：\textbf{曲线坐标系求导 = 对分量求导 + 对单位矢量求导}，后者就是公式复杂化的全部来源。
+\end{tip}
+
 \begin{theorem}{球坐标单位矢量的偏导数}{spherical-unit-derivatives-v2}
 \begin{align*}
 \frac{\partial\unitvec{r}}{\partial\theta} &= \unitvec{\theta}, &
@@ -2434,6 +2503,16 @@ E_z = -\frac{\partial\phi}{\partial z} = \frac{Qz}{4\pi\eps_0 (R^2+z^2)^{3/2}}
 则区域 $V$ 内的电势 $\phi(\vect{r})$ 被唯一确定（Neumann条件下允许差一个任意常数）。
 \end{theorem}
 
+\begin{tip}{通俗类比：为什么镜像法靠的就是唯一性定理}{uniqueness-analogy}
+唯一性定理听起来抽象，物理含义一句话就能说清：\textbf{"边条件定了，解就定了——不管你怎么找出来的"}。
+
+一个类比：给定"山谷的地形边界"，山谷里的水系（等高线）就完全确定。你可以用任何方法猜出一张水系图，只要它满足边界条件，它就是\textbf{唯一正确的那张}。
+
+\textbf{这正是镜像法的理论根基}：镜像电荷根本不存在，只是我们\textbf{猜}出来的一个虚构电荷；用它算出的电势恰好满足真实边界（导体表面等势）和泊松方程（区域内的真实电荷）。由唯一性定理，这个"凑出来的解"就是\textbf{唯一正确}的解——虚构的图像、真实的答案。没有唯一性定理，镜像法只是碰运气；有了它，猜对边界就赢了。
+
+\textbf{做题启示}：分离变量法同理——级数解只要满足边界条件，唯一性定理保证它就是答案，不用怀疑"是不是还有别的解"。
+\end{tip}
+
 \textbf{证明}（Dirichlet情况）：
 
 设 $\phi_1$ 和 $\phi_2$ 都满足泊松方程和相同的边界条件。令 $\psi = \phi_1 - \phi_2$，则：
@@ -2756,6 +2835,16 @@ Neumann条件：$\partial\psi/\partial n|_S = 0$，右端同样为0，故 $\grad
 
 \section{电位移矢量}
 
+\begin{tip}{为什么要引入 $\vect{D}$？}{why-D-tip}
+明明有 $\vecE$，为什么还要定义 $\vect{D}$？动机是一个"打包"操作：
+
+介质中的高斯定理 $\divg\vecE = (\rho_f + \rho_b)/\eps_0$ 用起来很别扭——$\rho_f$（自由电荷，通常已知可控）和 $\rho_b$（束缚电荷，取决于介质响应）混在\textbf{一个方程}里。做题时你往往只知道 $\rho_f$，却要先算出 $\rho_b$ 才能解 $\vecE$。
+
+$\vect{D} \equiv \eps_0\vecE + \vect{P}$ 的作用是\textbf{把束缚电荷打包进定义}：$\divg\vect{D} = \rho_f$——源只剩自由电荷。求解流程变成：先用已知的 $\rho_f$ 解 $\vect{D}$，再由 $\vecE = \vect{D}/\eps$（线性介质）回代得 $\vecE$。
+
+\textbf{代价}：$\vect{D}$ 不是真实力场——电荷受力是 $q\vecE$，\textbf{不是} $q\vect{D}$（见下方"易错点"）。$\vect{D}$ 只是让方程更好解的辅助量。
+\end{tip}
+
 极化电荷与自由电荷一样产生电场。因此，高斯定理应写为：
 \[
 \divg\vecE = \frac{\rho_f + \rho_b}{\eps_0} = \frac{\rho_f - \divg\vect{P}}{\eps_0}
@@ -2890,6 +2979,14 @@ D_{1n} = D_{2n}\text{（法向 } \vect{D} \text{ 连续）}
 \end{theorem}
 
 \textbf{推导}：对药盒应用高斯定理 $\oint\vect{D}\cdot\diff\vect{S} = Q_{f,\text{enc}}$。当药盒厚度趋于零时，侧面贡献消失，只剩下两底面。$Q_{f,\text{enc}} = \sigma_f A$，$\vect{D}_2\cdot\unitvec{n}A - \vect{D}_1\cdot\unitvec{n}A = \sigma_f A$，即得结果。
+
+\begin{warning}{初学者易错 ⚠️：跃变只来自自由电荷}{d-normal-bc-error}
+\textbf{最容易踩的坑}：$D_{2n} - D_{1n} = \sigma_f$ 中的 $\sigma_f$ 是\textbf{自由面电荷}，不是总面电荷！极化束缚电荷 $\sigma_b = \vect{P}\cdot\unitvec{n}$ \textbf{不会}出现在 $\vect{D}$ 的边界条件里——它已经被打包进 $\vect{D}$ 的定义（$\vect{D} = \eps_0\vecE + \vect{P}$）。
+
+\textit{反例}：介质-真空界面无自由电荷（$\sigma_f = 0$）时，$\vect{D}$ 法向连续，但 $\vecE$ 法向\textbf{不}连续（$E_{2n} - E_{1n} = \sigma_b/\eps_0$）——束缚电荷在 $\vecE$ 的边界条件里体现。初学者常把 $\sigma_b$ 代入 $\vect{D}$ 的公式，得到 $\vect{D}$ 法向不连续的错误结论。
+
+\textbf{记忆口诀}：$\vect{D}$ 的跃变问自由电荷，$\vecE$ 的跃变问总电荷（自由 + 束缚）。
+\end{warning}
 
 \subsection{电场的切向分量}
 
@@ -3361,6 +3458,8 @@ $\eps_0 E = \sigma_f$（真空外），$E = \sigma_f/\eps_0$。\qedsymbol
 \difficulty{基础}
 在 $z > 0$ 的半空间，距接地导体平面（$z=0$）$d$ 处有一点电荷 $q$（位于 $(0,0,d)$）。求 $z>0$ 区域的电势。
 \tcblower
+\textbf{✨ 解题思路}：无限大接地平面的对称性极好——在平面另一侧对称位置放一个镜像电荷，平面就成了一个天然的"对称面"。要猜的镜像电荷大小和位置只需满足一个条件：\textbf{它在平面上产生的电势与原电荷等值反号}，使平面电势为零（接地条件）。坐标系选直角坐标（平面对称），$z$ 轴垂直平面。\textbf{已知}：$q$ 在 $(0,0,d)$，$z=0$ 接地；\textbf{求}：$z>0$ 区域 $\phi(\vect{r})$。
+
 \textbf{解答：}
 
 镜像电荷 $q' = -q$ 置于 $(0,0,-d)$。
@@ -3391,7 +3490,45 @@ r_+ = \sqrt{x^2+y^2+d^2} = r_-
 \]
 
 总感应电荷：$\int\sigma\,\diff S = -q$（用极坐标积分验证）——感应电荷总量等于镜像电荷，符合电荷守恒。
+
+\textbf{💡 结果解读}：(1) 电势只对 $z>0$ 有效——镜像电荷在"镜子"后面，物理空间里不存在；(2) 极限校验 $d\to\infty$ 时 $\sigma\to 0$（电荷离平面越远感应越弱），$d\to 0$ 时 $\sigma \to -\infty\cdot$点状分布（点电荷贴近导体）；(3) 受力验证：$q$ 受到指向平面的吸引力 $F = -q^2/(16\pi\eps_0 d^2)$（等效于相距 $2d$ 的异号电荷间作用力除以 4）——这正是"镜像"名字的由来。这道题考察\textbf{唯一性定理}的应用：猜对边界条件就赢了。
 \end{example}
+
+% ---------- 镜像电荷示意图 ----------
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % conductor plane (z=0 horizontal)
+  \fill[gray!30] (-4,0) rectangle (4,0.12);
+  \draw[thick] (-4,0.12) -- (4,0.12);
+  \node[font=\small] at (3.3,0.35) {接地导体平面};
+  \node[font=\scriptsize] at (-3.3,0.35) {$\phi = 0$};
+
+  % real charge q at (0,0,d) -> draw at (0,1.8)
+  \fill[red] (0,1.8) circle (0.12);
+  \node[right, font=\small] at (0.2,1.8) {$q$（真实电荷）};
+  \draw[->, thick] (0,1.8) -- (1.4,2.6) node[right, font=\scriptsize] {真实空间 $z>0$};
+
+  % image charge at (0,-1.8) (virtual, behind plane)
+  \fill[blue] (0,-1.8) circle (0.12);
+  \node[right, font=\small] at (0.2,-1.8) {$q' = -q$（镜像）};
+  \node[font=\scriptsize, blue!60!black] at (0,-2.3) {虚像区 $z<0$（不存在）};
+
+  % dashed connection
+  \draw[dashed, gray] (0,1.8) -- (0,-1.8);
+  \node[font=\scriptsize] at (0.55,0.6) {$d$};
+  \node[font=\scriptsize] at (0.55,-0.6) {$d$};
+
+  % field lines from q curving down to plane
+  \foreach \x in {-2.4,-1.5,0,1.5,2.4} {
+    \draw[->, red!60, thin] (\x*0.45,1.65) .. controls (\x*0.75,0.9) .. (\x*0.62,0.14);
+  }
+
+  % induced sigma annotation
+  \node[font=\scriptsize] at (-2.2,-0.45) {感应电荷 $\sigma(x,y) = -\dfrac{qd}{2\pi(x^2+y^2+d^2)^{3/2}}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{图解}：镜像电荷 $q'=-q$ 放在平面\textbf{另一侧}对称位置（虚像区），不是真实电荷——它只是让平面电势恰好为零的数学技巧。真实空间（$z>0$）的电场线从 $q$ 出发、垂直终止于导体表面（表面感应出负电荷 $\sigma$）。由唯一性定理，这个"虚构电荷 + 真实电荷"算出的场就是真实场的唯一解。
 
 \begin{example}{点电荷与导体球}{image-sphere-ex-v2}
 \difficulty{提高}
@@ -4343,6 +4480,18 @@ F = \frac{\muz I^2}{2\pi(2d)} = \frac{\muz I^2}{4\pi d}
 \end{align}
 
 由式\eqref{eq:div-b-zero}，$\vecB$ 可表为某矢量的旋度：
+
+\begin{tip}{为什么要引入 $\vecA$？}{why-vector-potential-tip}
+明明有 $\vecB$，为什么还要引入矢势 $\vecA$？动机有三层：
+
+\textbf{1. 数学结构}：$\divg\vecB = 0$ 说磁场无源。而第 1 章证明过：\textbf{无散场一定是某个矢量的旋度}（旋度的散度恒为零）。所以 $\vecB$ 必然可以写成 $\vecB = \curl\vecA$——这不是假设，是数学必然。
+
+\textbf{2. 简化求解}：直接求 $\vecB$ 要同时满足 2 个方程（$\divg\vecB=0$ 和 $\curl\vecB=\muz\vecJ$）；引入 $\vecA$ 后，$\divg\vecB=0$ 被\textbf{自动满足}（$\divg(\curl\vecA)\equiv 0$），只剩一个方程 $\lap\vecA = -\muz\vecJ$——和静电泊松方程完全同形，第 2 章的所有求解技巧（格林函数、镜像法、分离变量）直接照搬。
+
+\textbf{3. 代价}：$\vecA$ 不唯一（$\vecA' = \vecA + \grad\chi$ 给出同一个 $\vecB$）——这就是\textbf{规范自由度}，见下文。此外第 7 章会看到：时变场中 $\vecA$ 不只是数学工具，Aharonov--Bohm 效应表明它有可观测的物理效应。
+
+\textbf{一句话}：引入 $\vecA$ = 把"两个约束的方程"换成"一个自动满足 + 一个同形泊松方程"，用规范自由度做代价换求解效率。
+\end{tip}
 
 \begin{definition}{磁矢势}{vector-potential-v2}
 \[
@@ -6247,6 +6396,35 @@ k^2 \approx \ii\mu\sigma\omega \quad\Rightarrow\quad k \approx \sqrt{\ii\mu\sigm
 \end{itemize}
 \end{tip}
 
+% ---------- 趋肤效应示意图 ----------
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % conductor cross-section (semicircle cross section of a wire)
+  \fill[gray!25] (0,0) circle (2);
+  \draw[thick] (0,0) circle (2);
+  \node[font=\small] at (0,-2.45) {导体横截面};
+
+  % skin depth layer (annulus near surface)
+  \draw[red, very thick] (0,0) circle (2);
+  \draw[red, dashed, thick] (0,0) circle (1.55);
+  \node[font=\scriptsize, red] at (1.05,1.35) {载流层};
+  \draw[<->, red] (1.415,1.03) -- (1.78,1.29) node[midway, right, font=\scriptsize] {$\delta$};
+
+  % current density arrows (strong near surface, weak inside)
+  \foreach \a in {0,45,90,135,180,225,270,315} {
+    \draw[->, red, thick] ({\a-90}:{1.85}) -- ({\a-90}:{1.6});
+    \draw[->, red!40, thin] ({\a-90}:{1.0}) -- ({\a-90}:{0.92});
+  }
+
+  % annotations
+  \node[font=\scriptsize, align=center] at (0,0) {中心：电流密度\\几乎为零};
+  \node[font=\scriptsize, align=center] at (4.1,0.9) {$J(z) = J_0\ee^{-z/\delta}$\\表面最强\\指数衰减};
+  \draw[->, gray] (3.3,0.9) -- (2.0,0.9);
+\end{tikzpicture}
+\end{center}
+
+\textbf{图解}：交流电流不是均匀流过导体截面，而是集中在表面 $\delta$ 厚的薄层——表面电流密度最强，向内指数衰减 $J = J_0\ee^{-z/\delta}$。频率越高，$\delta$ 越薄，中心"闲置"的导体越多——这就是为什么高频导线要镀银而不是加粗。
+
 \section{波导基础}
 
 电磁波在自由空间中传播时，TEM波（横电磁波）可以存在。但在波导（中空的金属管）中，边界条件要求电磁波必须以特定的\textbf{模式}传播。
@@ -6349,6 +6527,8 @@ H_z &= \frac{\ii\pi}{\omega\muz a} E_0 \cos\left(\frac{\pi x}{a}\right) \ee^{\ii
 \difficulty{提高}
 设计一个矩形波导，要求在 \SI{3}{\giga\hertz} 到 \SI{5}{\giga\hertz} 频段内单模（$\text{TE}_{10}$）工作。已知宽边 $a = \SI{5}{\cm}$，求窄边 $b$ 的取值范围。
 \tcblower
+\textbf{✨ 解题思路}：单模工作 = 主模 $\text{TE}_{10}$ 传播 + \textbf{所有高阶模截止}。审题分三步：(1) 算出 $\text{TE}_{10}$ 截止频率（由宽边 $a$ 决定），确认它在频段下限之下；(2) 算出最邻近的高阶模 $\text{TE}_{20}$（由 $a$）和 $\text{TE}_{01}$（由 $b$）的截止频率，确认它们在频段上限之上；(3) 由 $\text{TE}_{01}$ 的条件反解 $b$ 的范围。\textbf{已知}：频段 3--5 GHz，$a = 5$ cm；\textbf{求}：$b$ 取值范围。
+
 \textbf{解答：}
 
 单模工作的条件是：$\text{TE}_{10}$ 模式可以传播，而 $\text{TE}_{20}$ 和 $\text{TE}_{01}$ 模式被截止。
@@ -6376,6 +6556,8 @@ f_{c,01} = \frac{c}{2b}
 同时为保证单模工作稳定性，通常取 $b < a/2$，且 $b$ 不能太小（功率容量和损耗考虑）。
 
 \textbf{结论}：窄边应满足 $b < \SI{3}{\cm}$，工程上常取 $b = \SI{2.5}{\cm}$ 左右。
+
+\textbf{💡 结果解读}：(1) 结论中 $b$ 只设上限不设下限，但工程上 $b$ 太小会降低功率容量、增大壁损耗——所以实际取 $b\approx a/2$；(2) 极限校验 $b\to a/2 = 2.5$ cm 时 $\text{TE}_{01}$ 与 $\text{TE}_{10}$ 简并（$f_{c,01} = f_{c,10}$），多模风险最大，这就是工程上避开 $b = a/2$ 的原因；(3) 本题考察\textbf{截止频率公式的反向使用}——由"哪个模必须截止"反推几何尺寸，这是微波工程设计的标准思路。
 
 \begin{insight}{为什么空心金属波导不能传TEM波}{tem-no-propagation-v2}
 上面的设计中我们默认只有 TE/TM 模式——为什么 TEM 波在空心波导中不存在？
@@ -6746,6 +6928,16 @@ $\dfrac{dn}{d\omega} = \dfrac{Ne^2}{2\eps_0 m}\dfrac{2\omega}{((\omega_0^2 - \om
 
 静止电荷产生静电场，匀速运动电荷产生静磁场——但都不辐射电磁波。只有当电荷\textbf{加速运动}时，才会产生脱离源而独立传播的电磁辐射。
 
+\begin{tip}{想一想}{think-why-radiate}
+不急着看下面的数学，先自己想一想：\textbf{为什么静止电荷不辐射、加速电荷才辐射？}
+
+提示一：辐射是"脱离源独立传播"的波——它携带能量飞向远方。如果场完全由电荷当前位置决定（瞬时作用），电荷一停，远方的场就要立刻消失——能量凭空消失，违反能量守恒。
+
+提示二：场的扰动以光速 $c$ 传播（推迟势）。电荷加速时，它"通知"远处场变化的消息需要时间 $r/c$ 在路上跑——这个正在路上跑的"消息"就是辐射波。
+
+读完推迟势一节后回头对照：辐射正是"推迟消息"在电荷停止加速后仍在路上传播的部分。
+\end{tip}
+
 \section{推迟势}
 
 \subsection{非齐次波动方程}
@@ -6766,7 +6958,7 @@ $\dfrac{dn}{d\omega} = \dfrac{Ne^2}{2\eps_0 m}\dfrac{2\omega}{((\omega_0^2 - \om
 \phi(\vect{r},t) &= \frac{1}{4\pi\eps_0} \int \frac{\rho(\vect{r}', t_r)}{|\vect{r} - \vect{r}'|} \, \diff^3r' \\
 \vecA(\vect{r},t) &= \frac{\muz}{4\pi} \int \frac{\vecJ(\vect{r}', t_r)}{|\vect{r} - \vect{r}'|} \, \diff^3r'
 \end{align}
-其中 $t_r = t - |\vect{r} - \vect{r}'|/c$ 是\textbf{推迟时间}。
+其中 $t_r = t - |\vect{r} - \vect{r}'|/c$ 是\textbf{推迟时间}。符号逐项说明：$t_r$ = 推迟时刻（源"发出"影响的时刻）；$|\vect{r}-\vect{r}'|$ = 源点到场点的距离；$c$ = 光速；$\rho(\vect{r}',t_r)$ = 在推迟时刻的源电荷密度；$\vecJ(\vect{r}',t_r)$ = 在推迟时刻的源电流密度。
 
 [量纲校验] $[\rho\,\diff^3r'/R] = (\mathrm{C/m^3})(\mathrm{m^3})/\mathrm{m} = \mathrm{C/m}$，乘 $[1/(4\pi\eps_0)] = \mathrm{N\cdot m^2/C^2}$ 得 $\mathrm{N\cdot m/C} = \mathrm{V}$ = 电势单位。\checkmark；$[\vecJ\,\diff^3r'/R] = (\mathrm{A/m^2})(\mathrm{m^3})/\mathrm{m} = \mathrm{A\cdot m}$，乘 $[\muz/4\pi] = \mathrm{H/m}$ 得 $\mathrm{H\cdot A} = \mathrm{Wb/m} = \mathrm{T\cdot m}$ = 矢势单位。\checkmark
 \end{theorem}
@@ -6788,6 +6980,35 @@ G(\vect{r}, t) = \frac{\delta(t - r/c)}{4\pi r}
 
 这是相对论因果性的直接要求：如果场能瞬时传播，就违背了"信息不能超光速"的基本原理。推迟势的存在表明，电磁相互作用不是超距的，而是通过场以光速传播的。
 \end{insight}
+
+% ---------- 推迟势因果示意图 ----------
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % timeline axis
+  \draw[->, thick] (-0.5,0) -- (9.5,0) node[right, font=\small] {$t$};
+
+  % source event (t_r)
+  \fill[red] (2,0) circle (0.1);
+  \node[above, font=\small, red] at (2,0.15) {源"发出"影响：$t_r$};
+  \node[below, font=\scriptsize] at (2,-0.1) {电荷此刻在 $\vect{r}'$};
+
+  % propagation wave packet
+  \draw[->, thick, green!60!black] (2.3,0.5) -- (5.7,0.5) node[midway, above, font=\scriptsize] {电磁波以 $c$ 传播（在路上跑 $R/c$）};
+  \draw[decorate, decoration={snake, amplitude=1mm, segment length=3mm}, green!60!black, thick] (2.3,0.5) -- (5.7,0.5);
+
+  % observation event (t)
+  \fill[blue] (8,0) circle (0.1);
+  \node[above, font=\small, blue] at (8,0.15) {场点"收到"影响：$t$};
+  \node[below, font=\scriptsize] at (8,-0.1) {场点此刻在 $\vect{r}$};
+
+  % time interval R/c
+  \draw[<->, thick] (2,-0.9) -- (8,-0.9) node[midway, below, font=\small] {$t - t_r = R/c$};
+  \draw[dashed, gray] (2,-0.15) -- (2,-1.05);
+  \draw[dashed, gray] (8,-0.15) -- (8,-1.05);
+\end{tikzpicture}
+\end{center}
+
+\textbf{图解}：场点在时刻 $t$ "感受"到的电势，是源在\textbf{更早}时刻 $t_r = t - R/c$ 发出的影响——消息以光速在路上跑了 $R/c$ 才到达。类比声音：你听到的雷声是闪电\textbf{几秒前}发生的事，看到闪电听到雷声的时间差就是"推迟"。电磁场同理，只是"消息"跑得是光速。
 
 \section{电偶极辐射}
 
@@ -7233,6 +7454,26 @@ s^2 = \eta_{\mu\nu} x^\mu x^\nu = c^2t^2 - x^2 - y^2 - z^2
 \eta_{\mu\nu} = \mathrm{diag}(1, -1, -1, -1)
 \]
 \end{definition}
+
+\begin{tip}{前置小复习：升降指标，先用数字算一遍}{index-mini-review}
+协变/逆变是本节最大的拦路虎。先忘掉抽象定义，用\textbf{具体数字}算一遍：
+
+\textbf{第一步}：四维坐标上标（逆变）：$x^\mu = (2, 3, 4, 5)$（即 $ct=2, x=3, y=4, z=5$，单位略）。
+
+\textbf{第二步}：度规 $\eta_{\mu\nu} = \mathrm{diag}(1,-1,-1,-1)$ 是一台"翻号机"——\textbf{时间分量不动，空间分量翻号}。降指标：
+\[
+x_\mu = \eta_{\mu\nu}x^\nu = (2, -3, -4, -5)
+\]
+就这一步。上标变下标 = 空间分量乘 $-1$。
+
+\textbf{第三步}：验算不变量（时空间隔的平方）：
+\[
+x^\mu x_\mu = 2\times 2 + 3\times(-3) + 4\times(-4) + 5\times(-5) = 4 - 9 - 16 - 25 = -46
+\]
+一个上标配一个下标求和（Einstein 约定），结果与度规正负号约定一致。
+
+\textbf{记住三条}：(1) 上标逆变、下标协变；(2) 同一对象升降指标只差空间分量的正负号；(3) 求和永远一上一下。下面的正式定义只是这套操作的符号化。
+\end{tip}
 
 \begin{insight}{协变与逆变指标}{cov-contra-v2}
 上标 $x^\mu$ 称为\textbf{逆变}分量，下标 $x_\mu = \eta_{\mu\nu} x^\nu$ 称为\textbf{协变}分量：
