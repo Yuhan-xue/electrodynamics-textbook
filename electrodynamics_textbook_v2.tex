@@ -343,7 +343,8 @@
 \end{itemize}
 
 \newpage
-\chapter{全书高频公式速查表}
+\chapter*{全书高频公式速查表}
+\addcontentsline{toc}{chapter}{全书高频公式速查表}
 % ============================================================
 
 按章节分块，方便快速查阅与复习。所有公式均采用SI单位制。
@@ -559,7 +560,7 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 \chapter{数学预备知识}
 \epigraph{自然界最不可理解的，就是自然是可以被理解的。}{--- 阿尔伯特·爱因斯坦}
 
-\hypertarget{ch336-goal}{}\begin{insight}{本章核心目标}{ch1-goal-v2}
+\hypertarget{ch1-goal}{}\begin{insight}{本章核心目标}{ch1-goal-v2}
 掌握描述电磁场所需的数学语言——矢量分析与场论。理解梯度、散度、旋度的几何物理意义，以及它们如何通过积分定理相互联系。
 \tcblower
 \textbf{学习路径建议：}
@@ -578,7 +579,7 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 \item（可选）理解并矢$\vecA\vecB$的物理意义
 \end{itemize}
 
-\textbf{自学提示}：如果你被数学"卡住"了，\textbf{可以先跳过并矢和$\delta$函数的进阶内容}，直接进入第2章。后续章节用到时会提醒你"复习第1.X节"。不必在第一章就"吃完整头大象"。
+\textbf{自学提示}：如果你被数学"卡住"了，\textbf{可以先跳过并矢和$\delta$函数的进阶内容}，直接进入第2章。后续章节用到时会提醒你"复习第1.X节"，届时带着具体需求回来补即可。
 \end{insight}
 
 电动力学处理的核心对象是电场 $\vecE(\vect{r},t)$ 和磁场 $\vecB(\vect{r},t)$，它们是随空间和时间变化的\textbf{矢量场}。为了精确描述这些场及其演化规律，我们需要一套系统的数学工具——矢量分析与场论。
@@ -1343,7 +1344,7 @@ $\displaystyle\int_S (\curl\vecA) \cdot \diff\vect{S} = 2 \times \pi R^2 = 2\pi 
 两种方法结果一致。
 \end{example}
 
-\section{Dirac $\delta$ 函数}
+\section{Dirac \texorpdfstring{$\delta$}{δ} 函数}
 
 \subsection{定义与基本性质}
 
@@ -1417,7 +1418,7 @@ $\delta$ 函数可以看作一系列普通函数在极限下的产物。例如�
 
 \textbf{三维筛选性质}：$\displaystyle\int f(\vect{r}') \, \delta^{(3)}(\vect{r} - \vect{r}') \, \diff^3r' = f(\vect{r})$
 
-\subsection{$\delta$函数的缩放性质与复合函数}
+\subsection{\texorpdfstring{$\delta$}{δ}函数的缩放性质与复合函数}
 
 \begin{theorem}{$\delta$函数的缩放公式}{delta-scaling}
 对于非零常数 $a$：
@@ -1431,6 +1432,7 @@ $\delta$ 函数可以看作一系列普通函数在极限下的产物。例如�
 \end{theorem}
 
 \begin{example}{$\delta$函数缩放的应用}{delta-scaling-example}
+\difficulty{基础}
 求 $\delta(3x-2)$ 的表达式。
 \tcblower
 \textbf{解答：}令 $f(x)=3x-2$，则 $f'(x)=3$，零点 $x_0=2/3$。
@@ -1440,7 +1442,7 @@ $\delta$ 函数可以看作一系列普通函数在极限下的产物。例如�
 \]
 \end{example}
 
-\subsection{$\delta$ 函数与点电荷}
+\subsection{\texorpdfstring{$\delta$}{δ} 函数与点电荷}
 
 位于 $\vect{r}'$ 处的点电荷 $q$ 的电荷密度可写为：
 \[
@@ -1557,7 +1559,7 @@ f'(x) = 2x \quad\Rightarrow\quad f'(a) = 2a, \quad f'(-a) = -2a
 这正是球坐标系中处理 $r^2$ 因子时常见的形式。例如，若需要分离径向与角向变量，此公式可将 $r=a$ 球面上的源分布分解为两个对称平面上的等效源。
 \end{example}
 
-\subsection{$\delta$ 函数的重要表示}
+\subsection{\texorpdfstring{$\delta$}{δ} 函数的重要表示}
 
 \begin{theorem}{格林函数的泊松方程}{green-poisson-v2}
 \[
@@ -1669,7 +1671,7 @@ r^2 \frac{\partial f}{\partial r} = -1
 \end{tikzpicture}
 \end{center}
 
-\subsection{球坐标系 $(r, \theta, \phi)$}
+\subsection{球坐标系 \texorpdfstring{$(r, \theta, \phi)$}{(r, θ, φ)}}
 
 \begin{definition}{球坐标与直角坐标的关系}{spherical-coords-v2}
 \begin{align*}
@@ -1758,7 +1760,7 @@ z &= r\cos\theta
 \]
 \end{example}
 
-\subsection{柱坐标系 $(\rho, \phi, z)$}
+\subsection{柱坐标系 \texorpdfstring{$(\rho, \phi, z)$}{(ρ, φ, z)}}
 
 \begin{theorem}{柱坐标系中的微分算子}{cylindrical-operators-v2}
 与直角坐标的关系：
@@ -1947,7 +1949,7 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \begin{tip}{本章核心框架}{ch1-summary}
 \textbf{一句话总结}：矢量分析是描述电磁场的数学语言。\\
 \textbf{四大核心}：梯度（标量→矢量）、散度（矢量→标量，源/汇判断）、旋度（矢量→矢量，旋转程度）、拉普拉斯（二阶导数，波动/扩散方程核心）。\\
-\textbf{三大工具}：高斯定理（体积分↔面积分）、斯托克斯定理（面积分↔线积分）、$\delta$函数（点源描述）。\\
+\textbf{三大工具}：高斯定理（体积分 $\leftrightarrow$ 面积分）、斯托克斯定理（面积分 $\leftrightarrow$ 线积分）、$\delta$函数（点源描述）。\\
 \textbf{衔接}：第2章将用$\grad$描述电势与电场关系，用$\lap$建立泊松方程。
 \end{tip}
 
@@ -2162,7 +2164,7 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \chapter{静电学基础}
 \epigraph{给我一个支点，我就能撬动地球。}{--- 阿基米德（静电力也是一种"支点"）}
 
-\hypertarget{ch1883-goal}{}\begin{insight}{本章核心目标}{ch2-goal-v2}
+\hypertarget{ch2-goal}{}\begin{insight}{本章核心目标}{ch2-goal-v2}
 从库仑定律出发，建立静电学的完整理论框架：电场、电势、高斯定理、环路定理，最终得到泊松方程。掌握唯一性定理——它是镜像法和分离变量法的理论基石。本章的每个推导都应达到"自己能独立复现"的程度。
 \end{insight}
 
@@ -2446,7 +2448,7 @@ E_z = -\frac{\partial\phi}{\partial z} = \frac{Qz}{4\pi\eps_0 (R^2+z^2)^{3/2}}
 \]
 
 \begin{theorem}{泊松方程}{poisson-eq-v2}
-\begin{impEqbox}{★ 静电学核心方程}
+\begin{impEqbox}{静电学核心方程}
 \begin{equation}
 \lap\phi = -\frac{\rho}{\eps_0}\label{eq:poisson}
 \end{equation}
@@ -2786,7 +2788,7 @@ Neumann条件：$\partial\psi/\partial n|_S = 0$，右端同样为0，故 $\grad
 \chapter{电介质与静电边界条件}
 \epigraph{物质的结构决定了它的性质。}{--- 德谟克利特}
 
-\hypertarget{ch2482-goal}{}\begin{insight}{本章核心目标}{ch3-goal-v2}
+\hypertarget{ch3-goal}{}\begin{insight}{本章核心目标}{ch3-goal-v2}
 理解电介质在电场中的响应机制——极化。引入电位移矢量 $\vect{D}$ 简化方程，建立不同介质界面处的边界条件。这些边界条件是求解"分区均匀"介质中电场的关键工具，也是理解电容、电磁波反射等现象的基础。
 \end{insight}
 
@@ -2980,7 +2982,7 @@ D_{1n} = D_{2n}\text{（法向 } \vect{D} \text{ 连续）}
 
 \textbf{推导}：对药盒应用高斯定理 $\oint\vect{D}\cdot\diff\vect{S} = Q_{f,\text{enc}}$。当药盒厚度趋于零时，侧面贡献消失，只剩下两底面。$Q_{f,\text{enc}} = \sigma_f A$，$\vect{D}_2\cdot\unitvec{n}A - \vect{D}_1\cdot\unitvec{n}A = \sigma_f A$，即得结果。
 
-\begin{warning}{初学者易错 ⚠️：跃变只来自自由电荷}{d-normal-bc-error}
+\begin{warning}{初学者易错：跃变只来自自由电荷}{d-normal-bc-error}
 \textbf{最容易踩的坑}：$D_{2n} - D_{1n} = \sigma_f$ 中的 $\sigma_f$ 是\textbf{自由面电荷}，不是总面电荷！极化束缚电荷 $\sigma_b = \vect{P}\cdot\unitvec{n}$ \textbf{不会}出现在 $\vect{D}$ 的边界条件里——它已经被打包进 $\vect{D}$ 的定义（$\vect{D} = \eps_0\vecE + \vect{P}$）。
 
 \textit{反例}：介质-真空界面无自由电荷（$\sigma_f = 0$）时，$\vect{D}$ 法向连续，但 $\vecE$ 法向\textbf{不}连续（$E_{2n} - E_{1n} = \sigma_b/\eps_0$）——束缚电荷在 $\vecE$ 的边界条件里体现。初学者常把 $\sigma_b$ 代入 $\vect{D}$ 的公式，得到 $\vect{D}$ 法向不连续的错误结论。
@@ -3421,7 +3423,7 @@ $\eps_0 E = \sigma_f$（真空外），$E = \sigma_f/\eps_0$。\qedsymbol
 \chapter{静电学边值问题}
 \epigraph{简单是终极的复杂。}{--- 列奥纳多·达·芬奇}
 
-\hypertarget{ch3050-goal}{}\begin{insight}{本章核心目标}{ch4-goal-v2}
+\hypertarget{ch4-goal}{}\begin{insight}{本章核心目标}{ch4-goal-v2}
 掌握求解泊松方程/拉普拉斯方程的系统方法：镜像法、分离变量法和多极展开。
 \tcblower
 \textbf{本章学完你应该能够：}
@@ -3458,7 +3460,7 @@ $\eps_0 E = \sigma_f$（真空外），$E = \sigma_f/\eps_0$。\qedsymbol
 \difficulty{基础}
 在 $z > 0$ 的半空间，距接地导体平面（$z=0$）$d$ 处有一点电荷 $q$（位于 $(0,0,d)$）。求 $z>0$ 区域的电势。
 \tcblower
-\textbf{✨ 解题思路}：无限大接地平面的对称性极好——在平面另一侧对称位置放一个镜像电荷，平面就成了一个天然的"对称面"。要猜的镜像电荷大小和位置只需满足一个条件：\textbf{它在平面上产生的电势与原电荷等值反号}，使平面电势为零（接地条件）。坐标系选直角坐标（平面对称），$z$ 轴垂直平面。\textbf{已知}：$q$ 在 $(0,0,d)$，$z=0$ 接地；\textbf{求}：$z>0$ 区域 $\phi(\vect{r})$。
+\textbf{解题思路}：无限大接地平面的对称性极好——在平面另一侧对称位置放一个镜像电荷，平面就成了一个天然的"对称面"。要猜的镜像电荷大小和位置只需满足一个条件：\textbf{它在平面上产生的电势与原电荷等值反号}，使平面电势为零（接地条件）。坐标系选直角坐标（平面对称），$z$ 轴垂直平面。\textbf{已知}：$q$ 在 $(0,0,d)$，$z=0$ 接地；\textbf{求}：$z>0$ 区域 $\phi(\vect{r})$。
 
 \textbf{解答：}
 
@@ -3491,7 +3493,7 @@ r_+ = \sqrt{x^2+y^2+d^2} = r_-
 
 总感应电荷：$\int\sigma\,\diff S = -q$（用极坐标积分验证）——感应电荷总量等于镜像电荷，符合电荷守恒。
 
-\textbf{💡 结果解读}：(1) 电势只对 $z>0$ 有效——镜像电荷在"镜子"后面，物理空间里不存在；(2) 极限校验 $d\to\infty$ 时 $\sigma\to 0$（电荷离平面越远感应越弱），$d\to 0$ 时 $\sigma \to -\infty\cdot$点状分布（点电荷贴近导体）；(3) 受力验证：$q$ 受到指向平面的吸引力 $F = -q^2/(16\pi\eps_0 d^2)$（等效于相距 $2d$ 的异号电荷间作用力除以 4）——这正是"镜像"名字的由来。这道题考察\textbf{唯一性定理}的应用：猜对边界条件就赢了。
+\textbf{结果解读}：(1) 电势只对 $z>0$ 有效——镜像电荷在"镜子"后面，物理空间里不存在；(2) 极限校验 $d\to\infty$ 时 $\sigma\to 0$（电荷离平面越远感应越弱），$d\to 0$ 时 $\sigma \to -\infty\cdot$点状分布（点电荷贴近导体）；(3) 受力验证：$q$ 受到指向平面的吸引力 $F = -q^2/(16\pi\eps_0 d^2)$——与相距 $2d$ 的异号电荷间作用力相同，这正是"镜像"名字的由来。这道题考察\textbf{唯一性定理}的应用：猜对边界条件就赢了。
 \end{example}
 
 % ---------- 镜像电荷示意图 ----------
@@ -3555,6 +3557,8 @@ q' = -\frac{R}{a}q, \quad b = \frac{R^2}{a}
 \[
 \phi = \frac{1}{4\pi\eps_0}\left(\frac{q}{|\vect{r} - a\unitvec{z}|} - \frac{Rq/a}{|\vect{r} - (R^2/a)\unitvec{z}|}\right)
 \]
+
+[量纲校验] $[q/|\vect{r}-\vect{r}'|] = \mathrm{C}/\mathrm{m}$，乘 $[1/(4\pi\eps_0)] = \mathrm{N\cdot m^2/C^2}$ 得 $\mathrm{N\cdot m/C} = \mathrm{V}$，电势量纲一致。\checkmark（极限校验：$a\to\infty$ 时 $q' \to 0$，退化为点电荷电势）
 \end{example}
 
 \toggleButton{挑战题}{ocg挑战2}
@@ -3796,7 +3800,7 @@ $J_0(x)$ 具有振荡衰减特性（类似衰减的余弦函数），在 $x=0$ �
 \toggleButton{挑战题}{ocg挑战3}
 \begin{ocg}{挑战}{ocg挑战3}{off}
 \begin{example}{无限长圆柱面的电势问题}{cylinder-potential-ex-v2}
-\difficulty{挑战}
+\difficulty{提高}
 半径为 $R$ 的无限长圆柱面，其表面电势分布为 $\phi(R,\varphi) = V_0\cos\varphi$（与 $z$ 无关）。求柱面外（$\rho > R$）的电势分布。
 
 \tcblower
@@ -3908,14 +3912,14 @@ E_\varphi = -\frac{1}{\rho}\frac{\partial\phi}{\partial\varphi} = \frac{V_0 R}{\
 因此：
 \[
 \phi(z) = \frac{Q}{2\pi\eps_0 R^2}\left(z + \frac{R^2}{2z} - \frac{R^4}{8z^3} + \cdots - z\right)
-= \frac{Q}{4\pi\eps_0 z} + \frac{Q R^2}{16\pi\eps_0 z^3} + O(z^{-5})
+= \frac{Q}{4\pi\eps_0 z} - \frac{Q R^2}{16\pi\eps_0 z^3} + O(z^{-5})
 \]
 
 \textbf{与标准多极展开对照}：
 \begin{align*}
 \text{单极项：} &\quad \frac{Q}{4\pi\eps_0 z} \quad\checkmark \\
 \text{偶极项：} &\quad 0 \quad\text{（圆盘关于中心对称，偶极矩为零）} \\
-\text{四极项：} &\quad \frac{QR^2}{16\pi\eps_0 z^3} = \frac{1}{4\pi\eps_0}\frac{1}{2z^3}Q_{zz}
+\text{四极项：} &\quad -\frac{QR^2}{16\pi\eps_0 z^3} = \frac{1}{4\pi\eps_0}\frac{1}{2z^3}Q_{zz}
 \end{align*}
 
 其中圆盘的电四极矩张量（取 $z$ 轴为对称轴）：
@@ -3925,15 +3929,7 @@ Q_{zz} = \int(3z'^2 - r'^2)\sigma\,\diff S = -\int\rho'^2\sigma\,\diff S
 = -\frac{Q}{\pi R^2}\cdot 2\pi\cdot\frac{R^4}{4} = -\frac{QR^2}{2}
 \]
 
-验证：标准四极势在轴线上为 $\dfrac{1}{4\pi\eps_0}\dfrac{Q_{zz}}{2z^3} = \dfrac{1}{4\pi\eps_0}\dfrac{-QR^2/2}{2z^3} = -\dfrac{QR^2}{16\pi\eps_0 z^3}$。
-
-符号差异提醒：多极展开中四极项的具体系数依赖于定义约定。不同教材对 $Q_{ij}$ 的定义可能相差一个符号或因子。关键是：多极展开的\textbf{结构}（$1/z^3$ 衰减）是正确的，具体系数依赖于约定。对于本教材的定义 $Q_{ij} = \int(3x'_i x'_j - r'^2\delta_{ij})\rho\,\diff^3r'$，代入 $Q_{zz} = -QR^2/2$ 后，标准公式 $\phi_{quad} = \dfrac{1}{4\pi\eps_0}\dfrac{1}{2r^3}\sum Q_{ij}\hat{r}_i\hat{r}_j$ 给出 $\phi_{quad} = \dfrac{Q_{zz}}{8\pi\eps_0 z^3} = -\dfrac{QR^2}{16\pi\eps_0 z^3}$。这与直接展开结果符号相反。
-
-解决这一矛盾需要更仔细的处理：实际上，直接展开的结果是正确定，而问题在于标准多极展开公式中的求和项。对于轴线上 $\hat{r}_z = 1$，标准四极项为 $\dfrac{1}{2r^3}(Q_{xx}\hat{r}_x^2 + Q_{yy}\hat{r}_y^2 + Q_{zz}\hat{r}_z^2) = \dfrac{Q_{zz}}{2z^3}$（因为 $Q_{xx} = Q_{yy} = -Q_{zz}/2$，且 $\hat{r}_x = \hat{r}_y = 0$）。代入 $Q_{zz} = -QR^2/2$ 得 $\phi_{quad} = -\dfrac{QR^2}{16\pi\eps_0 z^3}$。
-
-但直接展开得到的是 $+\dfrac{QR^2}{16\pi\eps_0 z^3}$。这说明：对于二维圆盘（厚度为零），其四极矩张量的定义需要更仔细处理。实际上，圆盘上的电荷满足 $z' = 0$，所以 $Q_{zz} = \int(-r'^2)\sigma\,\diff S = -\int\rho'^2\sigma\,\diff S = -QR^2/2$，而 $Q_{xx} = Q_{yy} = \int(3x'^2 - r'^2)\sigma\,\diff S$。
-
-更简洁的理解：两种方法都是正确的，直接展开给出了精确的远场行为 $\phi \sim Q/(4\pi\eps_0 z) + QR^2/(16\pi\eps_0 z^3)$。多极展开系数上的差异仅反映不同约定，不影响物理结果。
+两种方法完全自洽：直接展开给出 $-QR^2/(16\pi\eps_0 z^3)$；标准四极势公式在轴线上（$\hat{r}_z = 1$，$Q_{xx} = Q_{yy} = -Q_{zz}/2$）为 $\dfrac{1}{4\pi\eps_0}\dfrac{Q_{zz}}{2z^3} = -\dfrac{QR^2}{16\pi\eps_0 z^3}$。负号来自 $Q_{zz} < 0$——圆盘电荷分布在垂直于 $z$ 的平面内"压扁"，沿轴方向的四极势因此为负。
 \end{example}
 
 \toggleButton{挑战题}{ocg挑战4}
@@ -4106,6 +4102,17 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \end{miniquiz}
 \toggleButton{显示答案}{ocg答案4}
 
+\begin{warning}{第4章常见误区}{ch4-warnings}
+\begin{enumerate}
+\item 镜像电荷\textbf{不在求解区域内}——接地导体球问题中镜像电荷在球内，计算球外电势时才能使用；误把镜像电荷算进区域内会重复计数。
+\item 镜像电荷的大小\textbf{不等于} $-q$（球面问题中 $q' = -qR/a$），只有无限大平面才是 $q' = -q$。
+\item 分离变量的级数系数由\textbf{边界条件}（而非初始条件）确定——忘记归一化或漏掉正交性积分是最常见错误。
+\item 多极展开的适用条件是 $r \gg r'$（远场）——近距离使用多极展开会得到错误结论。
+\item 唯一性定理只保证"解唯一"，不提供解本身——它验证猜测，不产生猜测（镜像电荷仍要靠对称性去猜）。
+\item 格林函数法的完整推导见第 1 章 $\delta$ 函数与格林函数部分；本章直接使用其结论。
+\end{enumerate}
+\end{warning}
+
 \begin{chapterreview}
 \begin{itemize}[nosep]
 \item \textbf{核心方法}：分离变量法（直角/柱/球）、镜像法、格林函数法、多极展开。
@@ -4252,7 +4259,7 @@ $q_1$ 对 $y=0$ 镜像：$q_3 = +q$ 在 $(-a,-b)$；$q_2$ 对 $x=0$ 镜像：$q_
 \chapter{静磁学}
 \epigraph{想象力比知识更重要。}{--- 阿尔伯特·爱因斯坦}
 
-\hypertarget{ch3824-goal}{}\begin{insight}{本章核心目标}{ch5-goal-v2}
+\hypertarget{ch5-goal}{}\begin{insight}{本章核心目标}{ch5-goal-v2}
 建立静磁学的完整框架：毕奥-萨伐尔定律、安培环路定理、磁矢势，以及磁偶极子的性质。注意静磁学与静电学的深刻类比和本质区别——磁场是有旋无源场，不存在磁单极子。
 \end{insight}
 
@@ -4323,22 +4330,29 @@ B = \frac{\muz I\rho}{4\pi} \cdot \frac{2}{\rho^2} = \frac{\muz I}{2\pi\rho}
 
 由对称性，只有 $z$ 分量非零。电流元产生的磁场 $d\vecB$ 垂直于 $\diff\vect{l}'$ 和 $\vect{R}$。
 
-设 $\vect{R} = z\unitvec{z} - R\unitvec{\rho}$，$R = \sqrt{R^2+z^2}$。
+设源点到场点的矢量 $\vect{R} = z\unitvec{z} - R\unitvec{\rho}$，其模长 $R_{\!d} = \sqrt{R^2+z^2}$。电流元 $\diff\vect{l}' = \diff l'\,\unitvec{\phi}$ 沿切向，与 $\vect{R}$ \textbf{垂直}（$\unitvec{\phi}\cdot\vect{R} = 0$），故叉积的模长：
 
-$|\diff\vect{l}' \times \unitvec{R}| = \diff l' \cdot 1 \cdot \sin\alpha = \diff l' \cdot \dfrac{R}{\sqrt{R^2+z^2}}$（因为 $\alpha$ 是电流元与 $\vect{R}$ 的夹角，$\sin\alpha = R/\sqrt{R^2+z^2}$）
+$|\diff\vect{l}' \times \vect{R}| = \diff l'\, R_{\!d}$
 
-$dB = \dfrac{\muz I}{4\pi} \dfrac{\diff l' \cdot R}{(R^2+z^2)^{3/2}}$
+毕奥--萨伐尔定律给出电流元磁场的大小：
+\[
+dB = \dfrac{\muz I}{4\pi} \dfrac{|\diff\vect{l}' \times \vect{R}|}{R_{\!d}^3} = \dfrac{\muz I}{4\pi} \dfrac{\diff l'}{R^2+z^2}
+\]
 
-只有 $z$ 分量保留：$dB_z = dB \cdot \dfrac{R}{\sqrt{R^2+z^2}} = \dfrac{\muz I R^2\diff l'}{4\pi(R^2+z^2)^{3/2}}$
+$d\vecB$ 的方向垂直于 $\unitvec{\phi}$ 与 $\vect{R}$ 张成的平面，与 $z$ 轴夹角等于 $\vect{R}$ 与 $\unitvec{\rho}$ 的夹角——投影到 $z$ 轴的因子为 $\cos\angle(\vect{R},\unitvec{\rho}) = R/R_{\!d}$：
+
+$dB_z = dB \cdot \dfrac{R}{R_{\!d}} = \dfrac{\muz I R\,\diff l'}{4\pi(R^2+z^2)^{3/2}}$
 
 积分一圈（$\oint\diff l' = 2\pi R$）：
 \[
-B_z = \frac{\muz I R^2}{4\pi(R^2+z^2)^{3/2}} \cdot 2\pi R \cdot \frac{1}{R} = \frac{\muz I R^2}{2(R^2+z^2)^{3/2}}
+B_z = \frac{\muz I R}{4\pi(R^2+z^2)^{3/2}} \cdot 2\pi R = \frac{\muz I R^2}{2(R^2+z^2)^{3/2}}
 \]
 
 在圆心处（$z=0$）：$B = \dfrac{\muz I}{2R}$
 
-远处（$z \gg R$）：$B \approx \dfrac{\muz I R^2}{2z^3} = \dfrac{\muz}{4\pi} \dfrac{2\mu}{z^3}$，其中 $\mu = I\pi R^2$ 是磁偶极矩。
+远处（$z \gg R$）：$B \approx \dfrac{\muz I R^2}{2z^3} = \dfrac{\muz}{4\pi} \dfrac{2m}{z^3}$，其中 $m = I\pi R^2$ 是磁偶极矩。
+
+[量纲校验] $[\muz I R^2/R_{\!d}^3] = (\mathrm{H/m})(\mathrm{A})(\mathrm{m^2})/\mathrm{m^3} = \mathrm{H\cdot A/m^2} = \mathrm{T}$，与磁场量纲一致。\checkmark
 \end{example}
 
 \section{安培环路定理}
@@ -4809,7 +4823,7 @@ B \cdot 2\pi\rho = \muz I\rho^2/R^2 \quad\Rightarrow\quad B = \frac{\muz I\rho}{
 
 偶极项：$\vecA_1 = \dfrac{\muz}{4\pi r^3}\int\vecJ(\vect{r}')(\vect{r}\cdot\vect{r}')\,\diff^3r'$。
 
-利用矢量恒等式：$\int\vecJ(\vect{r}\cdot\vect{r}')\,\diff^3r' = \vect{r}\times\int\dfrac{1}{2}(\vect{r}'\times\vecJ)\,\diff^3r' = \vect{r}\times\vect{m}$。
+利用矢量恒等式：$\int\vecJ(\vect{r}\cdot\vect{r}')\,\diff^3r' = -\vect{r}\times\int\dfrac{1}{2}(\vect{r}'\times\vecJ)\,\diff^3r' = \vect{m}\times\vect{r}$。
 
 其中 $\vect{m} = \dfrac{1}{2}\int\vect{r}'\times\vecJ\,\diff^3r'$ 是磁偶极矩。
 
@@ -4838,7 +4852,7 @@ B \cdot 2\pi\rho = \muz I\rho^2/R^2 \quad\Rightarrow\quad B = \frac{\muz I\rho}{
 \chapter{磁介质}
 \epigraph{没有磁单极子，是这个世界的缺憾，也是它的美妙之处。}{--- 保罗·狄拉克（意译）}
 
-\hypertarget{ch4381-goal}{}\begin{insight}{本章核心目标}{ch6-goal-v2}
+\hypertarget{ch6-goal}{}\begin{insight}{本章核心目标}{ch6-goal-v2}
 理解磁介质在磁场中的响应机制——磁化。引入磁场强度 $\vect{H}$ 简化方程，建立磁学边界条件。区分顺磁性、抗磁性和铁磁性三种磁性机制。
 \end{insight}
 
@@ -5010,50 +5024,28 @@ $H_{1t} = H_{2t}$（无自由面电流）：$\dfrac{B_1\sin\theta_1}{\mu} = \dfr
 \textbf{结论}：铁磁材料表面的磁场线几乎\textbf{垂直}于表面射出——这与导体表面电场线垂直于表面类似！这一性质被广泛用于磁路设计和磁屏蔽。
 \end{example}
 
-\begin{example}{铁磁--真空分界面的场计算}{ferro-vacuum-bc-ex-v2}
+\begin{example}{铁磁--真空分界面的数值变式}{ferro-vacuum-bc-ex-v2}
 \difficulty{提高}
-铁磁材料（介质1，磁导率 $\mu$）与真空（介质2，$\muz$）的分界面为平面。已知铁磁体内 $\vect{H}_1$ 与法向成 $\theta_1$ 角，大小为 $H_1$。分界面无自由面电流。求真空侧的 $\vecB_2$ 和 $\vect{H}_2$，并给出 $\theta_2$。
+上例取具体数值：铁磁材料 $\mu = 2000\muz$，$\vect{H}_1$ 大小 $H_1 = \SI{100}{A/m}$、与法向成 $\theta_1 = 60^\circ$。求真空侧的 $H_{2n}$、$H_{2t}$、$H_2$ 和角度 $\theta_2$。
 \tcblower
 \textbf{解答：}
 
-建立坐标系：$z$ 轴沿法向（从铁磁指向真空），$\vect{H}_1$ 在 $xz$ 平面内。
-
-\textbf{分解已知场}：
+由边界条件（沿用上例记号）：
 \begin{align*}
-H_{1n} &= H_1 \cos\theta_1 \\
-H_{1t} &= H_1 \sin\theta_1
+H_{2t} &= H_{1t} = H_1\sin\theta_1 = 100\sin 60^\circ = \SI{86.6}{A/m} \\
+H_{2n} &= \frac{\mu}{\muz}H_1\cos\theta_1 = 2000 \times 100 \times \cos 60^\circ = \SI{1.0e5}{A/m}
 \end{align*}
 
-由 $\vecB_1 = \mu\vect{H}_1$：
-\begin{align*}
-B_{1n} &= \mu H_1 \cos\theta_1 \\
-B_{1t} &= \mu H_1 \sin\theta_1
-\end{align*}
-
-\textbf{应用边界条件}（无自由面电流，$K_f=0$）：
-\begin{enumerate}
-\item $\vecB$ 法向连续：$B_{2n} = B_{1n} = \mu H_1 \cos\theta_1$
-\item $\vect{H}$ 切向连续：$H_{2t} = H_{1t} = H_1 \sin\theta_1$
-\end{enumerate}
-
-在真空侧，$\vecB_2 = \muz\vect{H}_2$，因此：
-\begin{align*}
-B_{2t} &= \muz H_{2t} = \muz H_1 \sin\theta_1 \\
-H_{2n} &= \frac{B_{2n}}{\muz} = \frac{\mu}{\muz} H_1 \cos\theta_1
-\end{align*}
-
-\textbf{合成真空侧场}：
-\begin{align*}
-B_2 &= \sqrt{B_{2n}^2 + B_{2t}^2} = H_1 \sqrt{\mu^2\cos^2\theta_1 + \muz^2\sin^2\theta_1} \\
-H_2 &= \sqrt{H_{2n}^2 + H_{2t}^2} = H_1 \sqrt{\left(\frac{\mu}{\muz}\right)^2\cos^2\theta_1 + \sin^2\theta_1}
-\end{align*}
-
-\textbf{求角度}：
+合成：
 \[
-\tan\theta_2 = \frac{H_{2t}}{H_{2n}} = \frac{H_1\sin\theta_1}{\frac{\mu}{\muz}H_1\cos\theta_1} = \frac{\muz}{\mu}\tan\theta_1
+H_2 = \sqrt{H_{2n}^2 + H_{2t}^2} = \sqrt{(1.0\times10^5)^2 + (86.6)^2} \approx \SI{1.0e5}{A/m}
 \]
 
-当 $\mu \gg \muz$ 时，$\tan\theta_2 \ll \tan\theta_1$，即 $\theta_2 \approx 0$。真空侧磁场线几乎垂直于表面——这与例题\ref{ex:ferromagnet-bc-ex-v2}的结论一致。
+\[
+\tan\theta_2 = \frac{H_{2t}}{H_{2n}} = \frac{86.6}{1.0\times10^5} = 8.66\times10^{-4} \quad\Rightarrow\quad \theta_2 \approx 0.05^\circ
+\]
+
+\textbf{结论}：真空侧磁场几乎完全垂直于表面（偏角仅 $0.05^\circ$）。数值验证了铁磁界面"磁场线垂直射出"的性质——$\mu/\muz$ 越大偏角越小，磁路设计中正是利用这一点把磁通"约束"在铁芯内。
 \end{example}
 
 \subsection{磁多极展开}
@@ -5334,7 +5326,7 @@ B_{2n}A - B_{1n}A = 0 \quad\Rightarrow\quad B_{1n} = B_{2n}
 \chapter{麦克斯韦方程组}
 \epigraph{光就是电磁场的扰动。}{--- 詹姆斯·克拉克·麦克斯韦}
 
-\hypertarget{ch4839-goal}{}\begin{insight}{本章核心目标}{ch7-goal-v2}
+\hypertarget{ch7-goal}{}\begin{insight}{本章核心目标}{ch7-goal-v2}
 将静电学和静磁学的方程推广到随时间变化的一般情形，引入位移电流和法拉第电磁感应定律，完成经典电磁理论的统一框架。理解麦克斯韦方程组的物理内涵、对称性和完备性。
 \end{insight}
 
@@ -5458,7 +5450,7 @@ B_{2n}A - B_{1n}A = 0 \quad\Rightarrow\quad B_{1n} = B_{2n}
 \[
 \nabla\cdot\vecA + \muz\eps_0\frac{\partial\phi}{\partial t} = 0
 \]
-则上式左边的时间导数项恰好被抵消，标势方程与矢势方程将被完全解耦。这就是\textbf{洛伦兹规范}（Lorentz gauge）。
+则上式左边的时间导数项恰好被抵消，标势方程与矢势方程将被完全解耦。这就是\textbf{洛伦兹规范}（Lorenz gauge\footnote{注意两人之别：洛伦兹规范以丹麦物理学家 Ludvig Lorenz（1829--1891）命名，他早于（且独立于）Hendrik Lorentz 提出该规范；而\textbf{洛伦兹变换、洛伦兹力}以荷兰物理学家 Hendrik Lorentz（1853--1928）命名。第8章的"洛伦兹色散模型"（Lorentz model）也是 Hendrik Lorentz 的工作。中文都译作"洛伦兹"，英文文献中 Lorenz 与 Lorentz 是两个人，极易混淆。}）。
 
 \begin{definition}{洛伦兹规范}{lorentz-gauge-def}
 \textbf{洛伦兹规范}定义为：
@@ -5533,7 +5525,7 @@ B_{2n}A - B_{1n}A = 0 \quad\Rightarrow\quad B_{1n} = B_{2n}
 \end{align*}
 
 \begin{theorem}{达朗贝尔方程}{d-alembert-eqs}
-\begin{impEqbox}{★ 时变电磁场的核心方程}
+\begin{impEqbox}{时变电磁场的核心方程}
 在洛伦兹规范下，标势 $\phi$ 和矢势 $\vecA$ 满足\textbf{达朗贝尔方程}（非齐次波动方程）：
 \begin{align}
 \lap\phi - \muz\eps_0\frac{\partial^2\phi}{\partial t^2} &= -\frac{\rho}{\eps_0} \label{eq:d-alembert-phi} \\
@@ -5722,7 +5714,7 @@ $B = \dfrac{\muz I r}{2\pi R^2}$（$r < R$）
 \section{麦克斯韦方程组的完整形式}
 
 \begin{theorem}{麦克斯韦方程组}{maxwell-eqs-v2}
-\begin{impEqbox}{★ 全书最重要的方程（SI 单位制）}
+\begin{impEqbox}{全书最重要的方程（SI 单位制）}
 \textbf{积分形式}：
 \begin{align}
 \oint_S \vect{D} \cdot \diff\vect{S} &= Q_{f,\text{enc}} \label{eq:M1} \\
@@ -5947,9 +5939,9 @@ T_{zz} &= T_{zz}^{(E)} + T_{zz}^{(B)} = -\frac{1}{2}\eps_0 E_x^2 - \frac{1}{2\mu
 
 所有非对角元均为零。取时间平均，利用 $\langle\cos^2(kz-\omega t)\rangle = 1/2$，得：
 \[
-\langle T_{zz}\rangle = -\frac{1}{2}\eps_0 E_0^2 = -u
+\langle T_{zz}\rangle = -\frac{1}{2}\eps_0 E_0^2 = -\langle u\rangle
 \]
-其中 $u = \frac{1}{2}\eps_0 E_0^2 + \frac{1}{2\muz}B_0^2 = \eps_0 E_0^2$ 是电磁能量密度。负号表示沿传播方向 $+z$ 存在\textbf{辐射压强}（压力），这正是光压的微观起源。
+其中 $\langle u\rangle = \frac{1}{2}\eps_0 E_0^2$ 是\textbf{时间平均}能量密度。平面波的能量密度瞬时值 $u = \eps_0 E^2$（电场 $\frac12\eps_0 E^2$ 与磁场 $\frac{B^2}{2\muz} = \frac{\eps_0 E^2}{2}$ 之和，对行波恒成立），时间平均 $\langle u\rangle = \eps_0\langle E^2\rangle = \frac12\eps_0 E_0^2$——与 $\langle T_{zz}\rangle$ 恰好差一个负号，即时间平均的动量流大小等于能量密度。负号表示沿传播方向 $+z$ 存在\textbf{辐射压强}（压力），这正是光压的微观起源。
 \end{example}
 
 \begin{review}{第7章要点回顾}{ch7-review}
@@ -6194,7 +6186,7 @@ $B = \muz\eps_0\omega V_0\rho\sin\omega t/(2d)$（$\rho < R$）。
 \chapter{电磁波的传播}
 \epigraph{波是自然界传递信息的通用语言。}{--- 佚名}
 
-\hypertarget{ch5671-goal}{}\begin{insight}{本章核心目标}{ch8-goal-v2}
+\hypertarget{ch8-goal}{}\begin{insight}{本章核心目标}{ch8-goal-v2}
 从麦克斯韦方程组导出电磁波方程，研究平面波在真空、介质和导体中的传播特性，掌握反射、折射和波导等基本现象。理解电磁波是电磁场的自维持振荡——电场和磁场相互激发、共同传播。
 \end{insight}
 
@@ -6323,7 +6315,7 @@ I = \langle S \rangle = \frac{1}{2}c\eps_0 E_0^2
       \fill[blue!70!black] (\x,{-1.0-\bsep}) circle (0.035);
     \fi
   }
-  \node[blue, font=\Large] at (0,-1.9) {$\vecB$（⊙出纸 / ⊗入纸）};
+  \node[blue, font=\Large] at (0,-1.9) {$\vecB$（$\odot$ 出纸 / $\otimes$ 入纸）};
 
   % Labels and annotations
   \node[green!60!black, font=\large] at (4.2,-0.4) {传播方向};
@@ -6475,7 +6467,7 @@ f_{c,10} = \frac{c}{2a}
 这与光纤中的全反射导光、以及量子力学中势阱中的束缚态有深刻的数学同构性。
 \end{insight}
 
-\subsection{TE$_{10}$主模的场分布}
+\subsection{TE\texorpdfstring{$_{10}$}{10}主模的场分布}
 
 $\text{TE}_{10}$ 模式的电磁场分量为：
 \begin{align}
@@ -6527,7 +6519,7 @@ H_z &= \frac{\ii\pi}{\omega\muz a} E_0 \cos\left(\frac{\pi x}{a}\right) \ee^{\ii
 \difficulty{提高}
 设计一个矩形波导，要求在 \SI{3}{\giga\hertz} 到 \SI{5}{\giga\hertz} 频段内单模（$\text{TE}_{10}$）工作。已知宽边 $a = \SI{5}{\cm}$，求窄边 $b$ 的取值范围。
 \tcblower
-\textbf{✨ 解题思路}：单模工作 = 主模 $\text{TE}_{10}$ 传播 + \textbf{所有高阶模截止}。审题分三步：(1) 算出 $\text{TE}_{10}$ 截止频率（由宽边 $a$ 决定），确认它在频段下限之下；(2) 算出最邻近的高阶模 $\text{TE}_{20}$（由 $a$）和 $\text{TE}_{01}$（由 $b$）的截止频率，确认它们在频段上限之上；(3) 由 $\text{TE}_{01}$ 的条件反解 $b$ 的范围。\textbf{已知}：频段 3--5 GHz，$a = 5$ cm；\textbf{求}：$b$ 取值范围。
+\textbf{解题思路}：单模工作 = 主模 $\text{TE}_{10}$ 传播 + \textbf{所有高阶模截止}。审题分三步：(1) 算出 $\text{TE}_{10}$ 截止频率（由宽边 $a$ 决定），确认它在频段下限之下；(2) 算出最邻近的高阶模 $\text{TE}_{20}$（由 $a$）和 $\text{TE}_{01}$（由 $b$）的截止频率，确认它们在频段上限之上；(3) 由 $\text{TE}_{01}$ 的条件反解 $b$ 的范围。\textbf{已知}：频段 3--5 GHz，$a = 5$ cm；\textbf{求}：$b$ 取值范围。
 
 \textbf{解答：}
 
@@ -6557,7 +6549,7 @@ f_{c,01} = \frac{c}{2b}
 
 \textbf{结论}：窄边应满足 $b < \SI{3}{\cm}$，工程上常取 $b = \SI{2.5}{\cm}$ 左右。
 
-\textbf{💡 结果解读}：(1) 结论中 $b$ 只设上限不设下限，但工程上 $b$ 太小会降低功率容量、增大壁损耗——所以实际取 $b\approx a/2$；(2) 极限校验 $b\to a/2 = 2.5$ cm 时 $\text{TE}_{01}$ 与 $\text{TE}_{10}$ 简并（$f_{c,01} = f_{c,10}$），多模风险最大，这就是工程上避开 $b = a/2$ 的原因；(3) 本题考察\textbf{截止频率公式的反向使用}——由"哪个模必须截止"反推几何尺寸，这是微波工程设计的标准思路。
+\textbf{结果解读}：(1) 结论中 $b$ 只设上限不设下限，但工程上 $b$ 太小会降低功率容量、增大壁损耗——所以实际取 $b\approx a/2$；(2) 极限校验 $b\to a/2 = 2.5$ cm 时 $\text{TE}_{01}$ 与 $\text{TE}_{10}$ 简并（$f_{c,01} = f_{c,10}$），多模风险最大，这就是工程上避开 $b = a/2$ 的原因；(3) 本题考察\textbf{截止频率公式的反向使用}——由"哪个模必须截止"反推几何尺寸，这是微波工程设计的标准思路。
 
 \begin{insight}{为什么空心金属波导不能传TEM波}{tem-no-propagation-v2}
 上面的设计中我们默认只有 TE/TM 模式——为什么 TEM 波在空心波导中不存在？
@@ -6922,7 +6914,7 @@ $\dfrac{dn}{d\omega} = \dfrac{Ne^2}{2\eps_0 m}\dfrac{2\omega}{((\omega_0^2 - \om
 \chapter{电磁波的辐射}
 \epigraph{加速的电荷会辐射——这是电动力学对宇宙最慷慨的馈赠。}{--- 本书作者}
 
-\hypertarget{ch6289-goal}{}\begin{insight}{本章核心目标}{ch9-goal-v2}
+\hypertarget{ch9-goal}{}\begin{insight}{本章核心目标}{ch9-goal-v2}
 理解加速运动的电荷如何产生电磁辐射。掌握推迟势的概念，学会计算电偶极辐射的场和功率。理解天线辐射的基本原理。
 \end{insight}
 
@@ -7071,9 +7063,10 @@ G(\vect{r}, t) = \frac{\delta(t - r/c)}{4\pi r}
 \begin{theorem}{磁偶极辐射场}{mag-dipole-rad-v2}
 磁偶极矩 $\vect{m}(t)$ 产生的辐射场（远场区）：
 \begin{align}
-\vecE &= \frac{\muz k^2}{4\pi r} \, (\unitvec{r} \times \vect{m}) \, \ee^{\ii(kr - \omega t)} \\
-\vecB &= \frac{\muz k^2}{4\pi r} \, \unitvec{r} \times (\unitvec{r} \times \vect{m}) \, \ee^{\ii(kr - \omega t)}
+\vecE &= \frac{\muz k\omega}{4\pi r} \, (\unitvec{r} \times \vect{m}) \, \ee^{\ii(kr - \omega t)} = \frac{\muz\omega^2}{4\pi c r} \, (\unitvec{r} \times \vect{m}) \, \ee^{\ii(kr - \omega t)} \\
+\vecB &= \frac{1}{c}\,\unitvec{r} \times \vecE = \frac{\muz k^2}{4\pi r} \, \unitvec{r} \times (\unitvec{r} \times \vect{m}) \, \ee^{\ii(kr - \omega t)}
 \end{align}
+其中用到 $k = \omega/c$，保证 $\vecE = c\vecB$（真空辐射场关系）。
 \end{theorem}
 
 \begin{insight}{电偶极与磁偶极辐射的对比}{dipole-compare-v2}
@@ -7426,7 +7419,7 @@ $\lap G = \dfrac{1}{4\pi r}\delta''(t - r/c)/c^2 - \dfrac{2}{4\pi r^2}\delta'(t 
 \chapter{相对论电动力学}
 \epigraph{时间和空间不是绝对的，但物理定律是。}{--- 阿尔伯特·爱因斯坦}
 
-\hypertarget{ch6671-goal}{}\begin{insight}{本章核心目标}{ch10-goal-v2}
+\hypertarget{ch10-goal}{}\begin{insight}{本章核心目标}{ch10-goal-v2}
 将电动力学纳入狭义相对论框架，揭示电场和磁场是同一物理实体——电磁场张量——的不同表现。理解洛伦兹变换下的场变换规律，掌握四维形式的麦克斯韦方程组。
 \end{insight}
 
@@ -7544,9 +7537,9 @@ x^\mu x_\mu = x^0 x_0 + x^1 x_1 + x^2 x_2 + x^3 x_3 = ct\cdot ct + x\cdot(-x) + 
 
 取 $\mu=0, \nu=i$（$i=1,2,3$对应 $x,y,z$）：
 \[
-F^{0i} = \partial^0 A^i - \partial^i A^0 = \frac{1}{c}\frac{\partial A_i}{\partial t} + \frac{1}{c}\frac{\partial\phi}{\partial x_i} = \frac{E_i}{c}
+F^{0i} = \partial^0 A^i - \partial^i A^0 = \frac{1}{c}\frac{\partial A_i}{\partial t} + \frac{1}{c}\frac{\partial\phi}{\partial x_i} = -\frac{E_i}{c}
 \]
-其中用到了 $\vecE=-\nabla\phi-\partial\vecA/\partial t$ 的分量形式，即 $E_i = -\partial_i\phi - \partial_t A_i = \partial^i\phi/c + \partial^0 A_i c$。注意 $\partial^i=-\partial_i$，整理后即得 $F^{0i}=E_i/c$。
+其中用到了 $\vecE=-\nabla\phi-\partial\vecA/\partial t$ 的分量形式 $E_i = -\partial_i\phi - \partial_t A_i$，故 $\partial_t A_i + \partial_i\phi = -E_i$。注意 $\partial^i = -\partial_i$（度规 $(+,-,-,-)$ 升指标），得 $F^{0i} = -E_i/c$——与 $F^{\mu\nu}$ 矩阵第一行 $F^{01} = -E_x/c$ 等一致。
 
 \textbf{步骤2：计算 $F^{ij}$（空间-空间分量）}
 
@@ -7619,6 +7612,8 @@ I_1 &= \frac{1}{2}F_{\mu\nu}F^{\mu\nu} = B^2 - \frac{E^2}{c^2} \label{eq:invaria
 I_2 &= \frac{1}{4}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma} = \frac{\vecE\cdot\vecB}{c} \label{eq:invariant2}
 \end{align}
 其中 $\epsilon_{\mu\nu\lambda\sigma}$ 是四维 Levi-Civita 符号（$\epsilon_{0123}=+1$），在洛伦兹变换下按赝张量规律变换，保证 $I_2$ 为真标量。
+
+\textbf{符号约定（全书统一）}：度规 $(+,-,-,-)$、$A^\mu = (\phi/c, \vecA)$ 下 $F^{0i} = -E_i/c$、$F^{ij} = -\varepsilon_{ijk}B_k$；由此 $F_{\mu\nu}F^{\mu\nu} = 2(B^2 - E^2/c^2)$、$\frac12 F_{\mu\nu}F^{\mu\nu} = B^2 - E^2/c^2$。$\epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = -8\vecE\cdot\vecB/c$（Jackson 记号），本书 $I_2$ 按上式定义使 $I_2 = \vecE\cdot\vecB/c$。注意：其他教材（如 Griffiths）可能定义 $I_1$ 不带 $1/2$ 系数或 $I_2$ 反号——物理结论（$I_1$ 判场型、$I_2$ 判正交性）不受影响，对照阅读时以定义式为准。
 \end{theorem}
 
 \begin{insight}{两个不变量的物理意义}{invariant-physics-v2}
@@ -7646,33 +7641,25 @@ E'_z &= \gamma(E_z + vB_y), \quad B'_z = \gamma(B_z - vE_y/c^2)
 
 \begin{example}{纯电场在运动参考系中感应出磁场}{em-transform-ex-v2}
 \difficulty{提高}
-在参考系 $S$ 中，空间某区域只有均匀电场 $\vecE = E_0 \unitvec{x}$，$\vecB = \vect{0}$。求相对于 $S$ 以速度 $v\unitvec{x}$ 运动的参考系 $S'$ 中的电磁场。
+在参考系 $S$ 中，空间某区域只有均匀电场 $\vecE = E_0 \unitvec{y}$，$\vecB = \vect{0}$。求相对于 $S$ 以速度 $v\unitvec{x}$ 运动的参考系 $S'$ 中的电磁场。
 \tcblower
 \textbf{解答：}
 
-使用电磁场的洛伦兹变换公式，代入 $E_x = E_0$，$E_y = E_z = 0$，$B_x = B_y = B_z = 0$：
+使用电磁场的洛伦兹变换公式，代入 $E_y = E_0$，$E_x = E_z = 0$，$B_x = B_y = B_z = 0$：
 \begin{align*}
-E'_x &= E_x = E_0 \\
-E'_y &= \gamma(E_y - vB_z) = 0 \\
+E'_x &= E_x = 0 \\
+E'_y &= \gamma(E_y - vB_z) = \gamma E_0 \\
 E'_z &= \gamma(E_z + vB_y) = 0 \\
 B'_x &= B_x = 0 \\
 B'_y &= \gamma\left(B_y + \frac{vE_z}{c^2}\right) = 0 \\
-B'_z &= \gamma\left(B_z - \frac{vE_y}{c^2}\right) = 0
+B'_z &= \gamma\left(B_z - \frac{vE_y}{c^2}\right) = -\gamma \frac{vE_0}{c^2}
 \end{align*}
-
-等等——这似乎表明 $S'$ 中仍然没有磁场！但这与题目所说的"出现磁场"矛盾。问题出在哪里？
-
-\textbf{关键修正}：上述公式中的速度 $\vect{v}$ 是 $S'$ 相对于 $S$ 的速度。如果 $S'$ 沿 $x$ 方向运动，而电场也沿 $x$ 方向，那么确实 $B'_z = \gamma(0 - vE_y/c^2) = 0$ 因为 $E_y = 0$。
-
-让我们换一个方向：设 $S'$ 以速度 $v\unitvec{y}$ 沿 $y$ 方向运动（相对于 $S$）。此时需要使用一般的洛伦兹变换，或理解为：对于沿 $y$ 方向的洛伦兹变换，$E_x$ 会混合到 $B_z$ 中：
-\[
-B'_z = \gamma\left(B_z - \frac{vE_x}{c^2}\right) = -\gamma \frac{vE_0}{c^2}
-\]
 因此：
 \[
-\vecB' = -\gamma \frac{v}{c^2} E_0 \, \unitvec{z}
+\vecE' = \gamma E_0\,\unitvec{y}, \qquad \vecB' = -\gamma \frac{v E_0}{c^2}\,\unitvec{z}
 \]
-\textbf{结论}：在一个参考系中纯粹的静电场，在另一个垂直于电场方向运动的参考系中，会表现出\textbf{非零的磁场}。这直观地证明了 $\vecE$ 和 $\vecB$ 不是独立的物理实体，而是同一电磁场张量的不同分量。
+
+\textbf{结论}：在一个参考系中纯粹的静电场，在\textbf{垂直于电场方向}运动的参考系中会表现出\textbf{非零的磁场}（$\vecB' \neq 0$）。注意：若 $S'$ 沿电场方向（$y$）运动，则电场不混合出磁场——只有\textbf{横向}运动才产生感应磁场。这直观地证明了 $\vecE$ 和 $\vecB$ 不是独立的物理实体，而是同一电磁场张量的不同分量。
 \end{example}
 
 \begin{example}{低速极限退化}{low-speed-limit-v2}
@@ -7942,7 +7929,7 @@ $\mathcal{I}_2 = 0$ 时，$\vecE\perp\vecB$，也是平面波的特征。
 时空坐标 & $\vect{r}, t$ & $x^\mu = (ct, \vect{r})$ \\
 电流 & $\rho, \vecJ$ & $j^\mu = (c\rho, \vecJ)$ \\
 电磁势 & $\phi, \vecA$ & $A^\mu = (\phi/c, \vecA)$ \\
-电场 & $\vecE = -\grad\phi - \partial\vecA/\partial t$ & $F^{0i} = E^i/c$ \\
+电场 & $\vecE = -\grad\phi - \partial\vecA/\partial t$ & $F^{0i} = -E^i/c$ \\
 磁场 & $\vecB = \curl\vecA$ & $F^{ij} = -\epsilon_{ijk}B^k$ \\
 高斯定理 & $\divg\vecE = \rho/\eps_0$ & $\partial_\mu F^{\mu 0} = \mu_0 j^0$ \\
 法拉第定律 & $\curl\vecE = -\partial\vecB/\partial t$ & $\partial_\mu F^{\nu\rho} + \partial_\nu F^{\rho\mu} + \partial_\rho F^{\mu\nu} = 0$ \\
@@ -8158,12 +8145,11 @@ B'_z &= \gamma(B_z - vE_y/c^2) = -\gamma v E_0/c^2
 
 [分析] 本题考查电磁场张量的洛伦兹不变量，以及这两个不变量的物理意义。
 
-[解答] 展开 $F_{\mu\nu}F^{\mu\nu}$：
+[解答] 展开 $F_{\mu\nu}F^{\mu\nu}$。由 $F^{0i} = -E_i/c$ 与 $F_{0i} = -F^{0i} = E_i/c$（度规 $(+,-,-,-)$ 降指标），时间-空间分量的贡献：
 \begin{align*}
-F_{\mu\nu}F^{\mu\nu} &= F_{0\nu}F^{0\nu} + F_{i\nu}F^{i\nu} + \cdots \\
-&= 2\left(F_{01}F^{01} + F_{02}F^{02} + F_{03}F^{03}\right) + 2\left(F_{12}F^{12} + F_{23}F^{23} + F_{31}F^{31}\right) \\
-&= 2\left(\frac{E_x}{c}\frac{E_x}{c} + \frac{E_y}{c}\frac{E_y}{c} + \frac{E_z}{c}\frac{E_z}{c}\right) + 2\left((-B_z)(-B_z) + (-B_x)(-B_x) + (-B_y)(-B_y)\right) \\
-&= 2\frac{E^2}{c^2} + 2B^2 = 2\left(B^2 - \frac{E^2}{c^2}\right)
+F_{\mu\nu}F^{\mu\nu} &= 2\left(F_{01}F^{01} + F_{02}F^{02} + F_{03}F^{03}\right) + 2\left(F_{12}F^{12} + F_{23}F^{23} + F_{31}F^{31}\right) \\
+&= 2\left(\frac{E_x}{c}\cdot\frac{-E_x}{c} + \frac{E_y}{c}\cdot\frac{-E_y}{c} + \frac{E_z}{c}\cdot\frac{-E_z}{c}\right) + 2\left((-B_z)(-B_z) + (-B_x)(-B_x) + (-B_y)(-B_y)\right) \\
+&= -2\frac{E^2}{c^2} + 2B^2 = 2\left(B^2 - \frac{E^2}{c^2}\right)
 \end{align*}
 因此 $\frac{1}{2}F_{\mu\nu}F^{\mu\nu} = B^2 - E^2/c^2 \equiv I_1$。
 
@@ -8239,13 +8225,15 @@ F_{\mu\nu}F^{\mu\nu} &= F_{0\nu}F^{0\nu} + F_{i\nu}F^{i\nu} + \cdots \\
 \midrule
 真空光速 & $c$ & $2.998 \times 10^8 \, \si{m/s}$ \\
 真空介电常数 & $\eps_0$ & $8.854 \times 10^{-12} \, \si{F/m}$ \\
-真空磁导率 & $\muz$ & $4\pi \times 10^{-7} \, \si{H/m}$ \\
+真空磁导率 & $\muz$ & $4\pi \times 10^{-7} \, \si{H/m}$（近似） \\
 基本电荷 & $e$ & $1.602 \times 10^{-19} \, \si{C}$ \\
 电子质量 & $m_e$ & $9.109 \times 10^{-31} \, \si{kg}$ \\
 精细结构常数 & $\alpha$ & $1/137.036$ \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+\noindent{\small 注：2019 年 SI 修订后，$\eps_0$ 与 $\muz$ 不再是精确定义值（$\muz = 4\pi\times10^{-7}$ H/m 在旧 SI 中为精确定义），改为由精细结构常数 $\alpha$、基本电荷 $e$、普朗克常数 $h$、光速 $c$ 推导的\textbf{测量值}（与 $4\pi\times10^{-7}$ 的偏差约 $2\times10^{-9}$ 量级）。本书作为教学用书统一沿用 $4\pi\times10^{-7}$ 近似值，对全部计算结果的影响可忽略。}
 
 
 % ============================================================
@@ -8327,7 +8315,7 @@ SI制中 $F = q_1 q_2 / (4\pi\eps_0 r^2)$，力的单位是牛顿（N）。
 
 因此：$F_{\text{SI}} = \dfrac{1}{4\pi\eps_0}\dfrac{q_{\text{SI},1}q_{\text{SI},2}}{r^2}$，其中 $1/(4\pi\eps_0) \approx 8.99\times 10^9\,\text{N}\cdot\text{m}^2/\text{C}^2$。
 
-\textbf{验证}：量纲 $[q_{\text{SI}}] = \text{C}$，$[\eps_0] = \text{F/m} = \text{C}^2/(\text{N}\cdot\text{m}^2)$，则 $[q^2/(\eps_0 r^2)] = \text{C}^2/[\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}^2] = \text{N}$ ✓
+\textbf{验证}：量纲 $[q_{\text{SI}}] = \text{C}$，$[\eps_0] = \text{F/m} = \text{C}^2/(\text{N}\cdot\text{m}^2)$，则 $[q^2/(\eps_0 r^2)] = \text{C}^2/[\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}^2] = \text{N}$ \checkmark
 
 \textbf{(2) 点电荷电势的转换}
 
@@ -8339,7 +8327,7 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 
 因此：$\phi_{\text{SI}} = \dfrac{1}{4\pi\eps_0}\dfrac{q_{\text{SI}}}{r}$，单位是伏特（V）。
 
-\textbf{量纲验证}：$[q/(\eps_0 r)] = \text{C}/[\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}] = \text{N}\cdot\text{m}/\text{C} = \text{J}/\text{C} = \text{V}$ ✓
+\textbf{量纲验证}：$[q/(\eps_0 r)] = \text{C}/[\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}] = \text{N}\cdot\text{m}/\text{C} = \text{J}/\text{C} = \text{V}$ \checkmark
 \end{example}
 
 \chapter{全书高频易错点汇总}
@@ -8740,8 +8728,6 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 \textbf{阅读提示}：郭硕鸿篇幅紧凑、推导精炼，适合对照复习；Griffiths 例题丰富、物理图像详尽，适合第一遍学习卡壳时查阅。两书的符号约定与本书基本一致（SI 单位制），但 Griffiths 的四维记号用 $x^\mu = (ct, \vect{r})$ 排列顺序与本书 $(\phi/c, \vect{A})$ 略有差异，对照时注意指标位置。
 \end{tip}
 
-
-\printindex
 
 \begin{center}\small \hyperlink{ch9-goal}{上一章：第9章}\end{center}
 
