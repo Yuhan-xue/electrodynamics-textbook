@@ -40,7 +40,6 @@
 \usepackage{makeidx}
 \usepackage{ocgx2}           % 可折叠内容（线上PDF交互）
 \usepackage{pdfcomment}       % PDF tooltip注释
-\makeindex
 
 % ---------- marginnote 设置 ----------
 \setlength{\marginparwidth}{1.2cm}
@@ -298,7 +297,7 @@
 \toprule
 \textbf{符号} & \textbf{含义} & \textbf{说明} \\
 \midrule
-\hypertarget{symA}{$\vecA, \bm{A}$} & 矢量 & 粗体或带箭头 \\
+\hypertarget{symA}{$\vecA, \bm{A}$} & 一般矢量 / 磁矢势（上下文区分） & 粗体或带箭头；磁矢势时 $\vecB = \curl\vecA$，单位 \si{T.m} = \si{Wb/m} \\
 \hypertarget{symScalarA}{$A$} & 标量 & 斜体 \\
 \hypertarget{symnhat}{$\hat{\vect{n}}, \unitvec{n}$} & 单位矢量 & 模长为1 \\
 \hypertarget{symr}{$\vect{r}$} & 场点位置矢量 & 观察点的坐标 \\
@@ -325,7 +324,6 @@
 \midrule
 \multicolumn{3}{l}{\textit{—— 势与能量（第 2、5、7 章引入）——}} \\
 \hypertarget{symphi}{$\phi$} & 标量电势 & $\vecE = -\grad\phi - \partial\vecA/\partial t$，单位 \si{V} \\
-\hypertarget{symA4}{$\vecA$} & 磁矢势 & $\vecB = \curl\vecA$，单位 \si{T.m} = \si{Wb/m}，深蓝标注 \\
 \hypertarget{symu}{$u$} & 电磁场能量密度 & $u = \frac{1}{2}(\eps_0 E^2 + B^2/\mu_0)$，单位 \si{J/m^3} \\
 \hypertarget{symS}{$\vect{S}$} & 坡印廷矢量（能流密度） & $\vecE \times \vect{H}$，单位 \si{W/m^2} \\
 \hypertarget{symchi}{$\chi_e,\ \chi_m$} & 电极化率 / 磁化率 & 无量纲，$\eps_r = 1+\chi_e$，$\mu_r = 1+\chi_m$ \\
@@ -2675,7 +2673,7 @@ $\lap\phi = 0$ & 拉普拉斯方程 \\
 \addcontentsline{toc}{section}{第2章综合练习题}
 \begin{enumerate}[label=\textbf{\arabic*.}]
 \item \textbf{基础} 半径为 $R$ 的均匀带电球体（总电荷 $Q$），用高斯定理求球内外电场分布。
-\item \textbf{基础} 求无限大均匀带电平面（面密度 $\sigma$）的电场，并证明两侧电场跃变 $2\sigma/\eps_0$。
+\item \textbf{基础} 求无限大均匀带电平面（面密度 $\sigma$）的电场，并证明两侧电场跃变 $\sigma/\eps_0$。
 \item \textbf{提高} 证明：若 $\rho(\vect{r})$ 已知且满足 $r^3\rho(\vect{r})\to 0$（当 $r\to\infty$），则泊松方程的解唯一。
 \item \textbf{提高} 一个电偶极子 $\vect{p}$ 位于均匀外电场 $\vecE_0$ 中，求其受力、力矩和势能。
 \item \textbf{挑战} 用格林定理证明静电学的唯一性定理（同时覆盖Dirichlet和Neumann边界条件）。
@@ -3048,9 +3046,11 @@ $\vect{D}_2 = \eps_0\eps_r\vecE_2 = \eps_0\eps_r E_0\sin\theta\,\unitvec{x} + \e
 \sigma_b = \vect{P}\cdot\unitvec{n} = P_z = \eps_0(\eps_r-1)\frac{E_0\cos\theta}{\eps_r}
 \]
 
-注意 $\sigma_b > 0$（因为 $\eps_r > 1$），这与物理直觉一致：外加电场的 $z$ 分量指向 $+z$，正极板在上，极化电荷在电介质上表面为负、下表面为正。等等——这里 $\unitvec{n}$ 从真空指向电介质（$+z$），所以 $P_z$ 正是电介质上表面的束缚电荷。由于 $E_{2z} < E_{1z}$（被极化场削弱），且 $\vect{P}$ 指向 $+z$，则上表面 $\sigma_b = P_z > 0$（正束缚电荷）。这与"靠近正极板的表面出现负束缚电荷"的直觉是否矛盾？
+其中 $\unitvec{n}$ 取介质上表面的\textbf{外法向}（$+z$，从介质指向真空）。结论唯一：上表面 $\sigma_b > 0$（正束缚电荷），下表面 $\sigma_b < 0$（负束缚电荷），与 $\eps_r > 1$、$E_{0z} > 0$ 一致。
 
-实际上，这里 $\vecE_1$ 的 $z$ 分量为正意味着上极板（$z>0$ 方向的源头）带正电。电介质靠近正极板的表面应该出现负束缚电荷。问题出在法向定义。如果从电介质指向真空（$-\unitvec{z}$）计算，则 $\sigma_b = -P_z < 0$。这提醒我们：\textbf{面束缚电荷的定义依赖于法向的选择}。
+\textbf{物理解读}：$\vecE_1$ 的 $z$ 分量为正意味着场线指向 $+z$——场由下方的正源发出、终止于上方的负源。介质中分子偶极沿场排列（正端指向 $+z$），因此介质\textbf{上表面}露出的是偶极的\textbf{正端}：$\sigma_b = +P_z > 0$，下表面为负端 $\sigma_b = -P_z < 0$。上表面正束缚电荷面向的正是上方的负源侧（场线终止处），电荷符号完全自洽。
+
+\textbf{易混淆点}："靠近正极板的表面出现负束缚电荷"的直觉对\textbf{极化同样成立}——正极板是场线的发出侧，介质中偶极沿场排列，靠近发出侧的表面露出偶极负端（$\vect{P}$ 与外法向反向，$\sigma_b < 0$），靠近终止侧露出正端（$\sigma_b > 0$）。判断符号的可靠方法永远是 $\sigma_b = \vect{P}\cdot\unitvec{n}$（$\unitvec{n}$ 取该表面的介质外法向），但用直觉前必须先分清\textbf{场的源头在哪一侧}：本题 $\vecE_1$ 的 $z$ 分量为正，场由下方正源发出、指向 $+z$，介质\textbf{下}表面靠近正源（负束缚电荷）、\textbf{上}表面靠近负源（正束缚电荷）——若想当然把正源放在上方，就会得出"上表面应为负"的假矛盾。
 \end{example}
 
 \begin{warning}{边界条件的符号约定}{bc-sign-warning}
@@ -8025,7 +8025,7 @@ $\mathcal{I}_2 = 0$ 时，$\vecE\perp\vecB$，也是平面波的特征。
 \addcontentsline{toc}{section}{第10章综合练习题}
 \begin{enumerate}[label=\textbf{\arabic*.}]
 \item \textbf{基础} 设 $x^\mu=(ct,x,y,z)$，$\eta_{\mu\nu}=\text{diag}(1,-1,-1,-1)$。计算 $x_\mu=\eta_{\mu\nu}x^\nu$ 的各分量，并验证 $x^\mu x_\mu=c^2t^2-x^2-y^2-z^2$。
-\item \textbf{基础} 在静止系中只有电场 $\vecE=(E_0,0,0)$，求沿 $x$ 方向以速度 $v$ 运动的参考系中的 $\vecE'$ 和 $\vecB'$。
+\item \textbf{基础} 在静止系 $S$ 中只有电场 $\vecE=(0,E_0,0)$，求沿 $x$ 方向以速度 $v$ 运动的参考系 $S'$ 中的 $\vecE'$ 和 $\vecB'$。
 \item \textbf{提高} 写出四维电磁势 $A^\mu=(\phi/c,\vecA)$，证明在洛伦兹规范下 $\partial_\mu A^\mu=0$ 等价于 $\nabla\cdot\vecA+\muz\eps_0\partial\phi/\partial t=0$。
 \item \textbf{提高} 从协变麦克斯韦方程 $\partial_\mu F^{\mu\nu}=\muz j^\nu$ 出发，取 $\nu=0$ 和 $\nu=i$，分别还原高斯定律和安培-麦克斯韦定律的三维形式。
 \item \textbf{挑战} 证明：电磁场张量 $F^{\mu\nu}$ 的两个洛伦兹不变量 $\frac{1}{2}F_{\mu\nu}F^{\mu\nu}=B^2-E^2/c^2$ 和 $\frac{1}{4}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma}=\vecE\cdot\vecB/c$ 在任何惯性系中取值相同。讨论 $\vecE\perp\vecB$ 和 $\vecE\parallel\vecB$ 的物理意义。
@@ -8062,25 +8062,20 @@ x^\mu x_\mu &= x^0 x_0 + x^1 x_1 + x^2 x_2 + x^3 x_3 \\
 
 [分析] 本题考查电磁场在洛伦兹变换下的混合效应——纯电场在运动参考系中会感应出磁场。
 
-[解答] 已知 $S$ 系中只有 $\vecE=(E_0,0,0)$，$\vecB=\vect{0}$。$S'$ 系以速度 $v$ 沿 $x$ 方向运动。
+[解答] 已知 $S$ 系中只有 $\vecE=(0,E_0,0)$，$\vecB=\vect{0}$。$S'$ 系以速度 $v$ 沿 $x$ 方向运动。
 
 利用电磁场洛伦兹变换（$\gamma = 1/\sqrt{1-v^2/c^2}$）：
 \begin{align*}
-E'_x &= E_x = E_0 \\
-E'_y &= \gamma(E_y - vB_z) = 0 \\
+E'_x &= E_x = 0 \\
+E'_y &= \gamma(E_y - vB_z) = \gamma E_0 \\
 E'_z &= \gamma(E_z + vB_y) = 0 \\
 B'_x &= B_x = 0 \\
 B'_y &= \gamma(B_y + vE_z/c^2) = 0 \\
-B'_z &= \gamma(B_z - vE_y/c^2) = 0
-\end{align*}
-
-等等——$B'_z = 0$？这是因为电场沿 $x$ 方向，而运动也沿 $x$ 方向。沿运动方向的电场分量不会在运动参考系中产生磁场。
-
-若要看到磁场效应，需要让运动方向垂直于电场。设 $S'$ 以速度 $v$ 沿 $y$ 方向运动：
-\begin{align*}
 B'_z &= \gamma(B_z - vE_y/c^2) = -\gamma v E_0/c^2
 \end{align*}
-此时 $S'$ 中观察到 $\vecB' = -\gamma vE_0/c^2 \,\unitvec{z}$。物理上，这是因为在 $S$ 系中静止的电荷在 $S'$ 系中以速度 $-v$ 运动，形成等效电流，从而激发磁场。
+即 $S'$ 中观察到 $\vecE' = \gamma E_0\,\unitvec{y}$，$\vecB' = -\gamma vE_0/c^2\,\unitvec{z}$。物理上，这是因为在 $S$ 系中静止的电荷在 $S'$ 系中以速度 $-v\unitvec{x}$ 运动，形成等效电流，从而激发磁场。
+
+注意：若 $S'$ 沿电场方向（$y$）运动，则沿运动方向的电场分量不混合出磁场（$B'_z = 0$）——只有\textbf{横向}运动才产生感应磁场。
 
 [量纲校验] $[B] = [MT^{-2}I^{-1}]$，$[vE/c^2] = [LT^{-1}][MLT^{-3}I^{-1}]/[L^2T^{-2}] = [MT^{-2}I^{-1}]$，一致。\qedsymbol
 
@@ -8157,7 +8152,7 @@ F_{\mu\nu}F^{\mu\nu} &= 2\left(F_{01}F^{01} + F_{02}F^{02} + F_{03}F^{03}\right)
 
 物理意义：
 \begin{itemize}
-\item 若 $I_2 = 0$（$\vecE\perp\vecB$），则存在一个参考系使得 $I_1 < 0$ 时纯电场变为零，只剩纯磁场；$I_1 > 0$ 时纯磁场变为零，只剩纯电场。
+\item 若 $I_2 = 0$（$\vecE\perp\vecB$），则存在一个参考系使场变为纯场：$I_1 < 0$（即 $E > cB$）时纯\textbf{磁场}变为零，只剩纯电场；$I_1 > 0$（即 $E < cB$）时纯\textbf{电场}变为零，只剩纯磁场。验证：纯电场系中 $I_1 = -E^2/c^2 < 0$，纯磁场系中 $I_1 = B^2 > 0$，与不变量取值一致。
 \item 若 $I_2 \neq 0$（$\vecE$ 与 $\vecB$ 不垂直），则不存在任何参考系能使其中一个为零。
 \item 当 $\vecE\parallel\vecB$ 时，$I_2$ 取最大值，电磁场结构最"稳定"。
 \end{itemize}
