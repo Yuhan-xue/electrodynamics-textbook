@@ -529,6 +529,8 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 
 \subsection*{阅读建议}
 
+\textbf{零基础读者的最小可行动路径}：第1章只看 \S1.1+\S1.2（矢量与梯度/散度/旋度）$\to$ 第2章（高斯定理、唯一定理）$\to$ 第3章（电介质与边界条件）$\to$ 第4章（边值问题）$\to$ 第5章（静磁学）$\to$ 第7章（麦克斯韦方程组）$\to$ 第8章（电磁波）$\to$ 按需回看其余（第6章磁介质、第9章辐射、第10章相对论可最后补）。第1章开头的"快速通道"盒给出了同样路径与三档划分。
+
 \begin{itemize}
 \item \textbf{数学预备}：第1章是后续所有内容的基石，务必扎实掌握。特别要理解梯度、散度、旋度的几何意义。
 \item \textbf{循序渐进}：静电学和静磁学是理解麦克斯韦方程组的必要阶梯，不可跳过。
@@ -579,6 +581,21 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 
 \textbf{自学提示}：如果你被数学"卡住"了，\textbf{可以先跳过并矢和$\delta$函数的进阶内容}，直接进入第2章。后续章节用到时会提醒你"复习第1.X节"，届时带着具体需求回来补即可。
 \end{insight}
+
+\begin{tip}{快速通道：最小可行动阅读路径}{ch1-fast-track}
+只想要"最快看到电磁波"？按下表走，其余内容用到时再回看：
+
+\textbf{最小路径}：\S1.1 标量/矢量基础 $\to$ \S1.2 梯度/散度/旋度 $\to$ \S1.4 高斯/斯托克斯定理 $\to$ 直接进\textbf{第2章}。
+
+\textbf{三档划分}：
+\begin{itemize}[nosep]
+\item \textcolor{green}{\textbf{必看}}：\S1.1、\S1.2、\S1.4（后续每一章都在用）
+\item \textcolor{orange}{\textbf{用到再看}}：\S1.3 曲线坐标系（第2--4章计算需要时回看）、\S1.5.1--1.5.2 $\delta$ 函数基本性质（第2章点电荷要用）
+\item \textcolor{red}{\textbf{可跳}}：\S1.6 并矢（第4/10章用到）、\S1.5.3 $\delta$ 函数傅里叶表示（第8/9章用到）
+\end{itemize}
+
+被卡住就跳——本书会在用到跳过内容的地方标注"回顾 §X.Y"，届时带着具体需求回来，学习效率最高。
+\end{tip}
 
 电动力学处理的核心对象是电场 $\vecE(\vect{r},t)$ 和磁场 $\vecB(\vect{r},t)$，它们是随空间和时间变化的\textbf{矢量场}。为了精确描述这些场及其演化规律，我们需要一套系统的数学工具——矢量分析与场论。
 
@@ -2792,6 +2809,16 @@ Neumann条件：$\partial\psi/\partial n|_S = 0$，右端同样为0，故 $\grad
 
 前几章讨论的是真空（或空气近似）中的静电场。然而，实际的电场几乎总是在某种物质中存在。当电场作用于物质时，物质中的电荷会重新分布，反过来又影响电场。本章研究这种相互作用的最简单形式——\textbf{电介质}中的静电场。
 
+\begin{tip}{本章新符号}{ch3-new-symbols}
+\begin{tabular}{@{}ll@{}}
+$\vect{P}$ & 极化强度（偶极矩密度，单位 \si{C/m^2}） \\
+$\vect{D}$ & 电位移矢量（$\vect{D} = \eps_0\vecE + \vect{P}$，单位 \si{C/m^2}） \\
+$\chi_e$ & 电极化率（无量纲，$\eps_r = 1 + \chi_e$） \\
+$\eps_r,\ \eps$ & 相对/绝对介电常数（$\eps = \eps_0\eps_r$） \\
+$\sigma_f,\ \sigma_b$ & 自由/束缚面电荷密度 \\
+\end{tabular}
+\end{tip}
+
 \begin{history}{电介质研究的历史}{dielectric-history}
 电介质的系统研究始于法拉第。他在1837年发现，插入绝缘材料（如玻璃或硫磺）后，电容器的电容会增大。他将这种现象归因于材料"极化"——内部电荷在电场作用下发生微小位移，产生与外加电场相反的极化场。\textbf{法拉第}引入了"介电常数"的概念，但数学描述要等到\textbf{麦克斯韦}才完善。现代对电介质的理解基于原子尺度的极化机制，包括电子极化、离子极化和取向极化。
 \end{history}
@@ -4265,6 +4292,13 @@ $q_1$ 对 $y=0$ 镜像：$q_3 = +q$ 在 $(-a,-b)$；$q_2$ 对 $x=0$ 镜像：$q_
 
 静磁学研究\textbf{恒定电流}产生的磁场。虽然静磁学在结构上与静电学有许多相似之处，但磁场的有旋性（$\curl\vecB \neq 0$）使其数学性质与静电场截然不同。
 
+\begin{tip}{本章新符号}{ch5-new-symbols}
+\begin{tabular}{@{}ll@{}}
+$\vecA$ & 磁矢势（$\vecB = \curl\vecA$，单位 \si{T.m} = \si{Wb/m}） \\
+$\vect{\mu}$ & 磁偶极矩（$\vect{\mu} = I\vect{S}$，单位 \si{A.m^2}） \\
+\end{tabular}
+\end{tip}
+
 \begin{history}{静磁学的发展}{magnetostatics-history}
 磁现象的发现远早于电——天然磁石在古代中国和希腊就被制成指南针。定量研究始于 1820 年：\textbf{奥斯特}发现电流使磁针偏转，首次揭示电与磁的联系；\textbf{毕奥}和\textbf{萨伐尔}随后给出电流元磁场的定量规律；\textbf{安培}在 1820--1825 年间建立电流间作用力的完整理论并提出"分子电流"假说。1831 年\textbf{法拉第}发现电磁感应，为麦克斯韦的统一理论铺平了道路。
 \end{history}
@@ -4858,6 +4892,16 @@ B \cdot 2\pi\rho = \muz I\rho^2/R^2 \quad\Rightarrow\quad B = \frac{\muz I\rho}{
 
 磁介质与电介质类似，但磁现象更为复杂。除了与电极化类似的\textbf{磁化}效应外，磁介质还表现出顺磁性、抗磁性和铁磁性等不同的响应行为。
 
+\begin{tip}{本章新符号}{ch6-new-symbols}
+\begin{tabular}{@{}ll@{}}
+$\vect{M}$ & 磁化强度（磁偶极矩密度，单位 \si{A/m}） \\
+$\vect{H}$ & 磁场强度（$\vect{H} = \vecB/\muz - \vect{M}$，单位 \si{A/m}） \\
+$\chi_m$ & 磁化率（无量纲，$\mu_r = 1 + \chi_m$） \\
+$\mu_r,\ \mu$ & 相对/绝对磁导率（$\mu = \muz\mu_r$） \\
+$\vecJ_M,\ \vect{K}_M$ & 体/面磁化电流密度 \\
+\end{tabular}
+\end{tip}
+
 \section{磁介质的磁化}
 
 \subsection{磁化的物理机制}
@@ -5331,6 +5375,15 @@ B_{2n}A - B_{1n}A = 0 \quad\Rightarrow\quad B_{1n} = B_{2n}
 \end{insight}
 
 麦克斯韦方程组是经典物理学的巅峰成就之一。它不仅统一了电学和磁学，预言了电磁波的存在，揭示了光的电磁本质，更为狭义相对论的诞生埋下了种子。本章将系统推导这组方程，并讨论其物理意义。
+
+\begin{tip}{本章新符号}{ch7-new-symbols}
+\begin{tabular}{@{}ll@{}}
+$\vecJ_D$ & 位移电流密度（$\vecJ_D = \partial\vect{D}/\partial t$） \\
+$\vect{S}$ & 坡印廷矢量（能流密度，$\vect{S} = \vecE \times \vect{H}$，单位 \si{W/m^2}） \\
+$u$ & 电磁场能量密度（$u = \frac{1}{2}(\eps_0 E^2 + B^2/\muz)$，单位 \si{J/m^3}） \\
+$\chi$ & 规范函数（$\vecA' = \vecA + \grad\chi$） \\
+\end{tabular}
+\end{tip}
 
 \begin{history}{麦克斯韦与电磁理论统一}{maxwell-history}
 \textbf{麦克斯韦}（James Clerk Maxwell，1831--1879）在 1865 年的《电磁场的动力学理论》中引入"位移电流"，把电磁学定律统一为自洽的方程组，并算出电磁波速恰等于光速——"光是一种电磁振动"。23 年后\textbf{赫兹}在实验室中产生并检测到电磁波，证实了这一预言。
@@ -8636,6 +8689,38 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 真空磁导率 & vacuum permeability & $\mu_0=4\pi\times 10^{-7}\,\text{H/m}$ \\
 元电荷 & elementary charge & $e=1.602\times 10^{-19}\,\text{C}$ \\
 电子质量 & electron mass & $m_e=9.109\times 10^{-31}\,\text{kg}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% ============================================================
+% 附录：随堂自测答案速查
+% ============================================================
+\chapter{随堂自测答案速查}
+
+本附录汇总全书 10 章随堂自测的答案，供\textbf{打印版读者}和离线阅读时快速自检使用（PDF 电子版可用正文中的折叠按钮展开详解）。
+
+\begin{tip}{使用说明}{quiz-answer-tip}
+建议先独立完成各章随堂自测，再对照本表核对。选择题给出选项字母，判断题给出"正确/错误"，填空题给出答案关键词。详细解析见各章正文自测框。
+\end{tip}
+
+\begin{center}
+\small
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{章} & \textbf{选择题} & \textbf{判断题} & \textbf{填空题} \\
+\midrule
+第1章 矢量分析 & 1-B \quad 2-C \quad 3-C & 4-正确 \quad 5-错误 \quad 6-错误 & — \\
+第2章 静电学 & 1-B \quad 2-A \quad 3-B & — & — \\
+第3章 电介质与边界 & 1-B \quad 2-C \quad 3-B & 4-正确 \quad 5-错误 & — \\
+第4章 边值问题 & 1-C \quad 2-C \quad 3-B & — & 4-电势/电势梯度 \quad 5-贝塞尔 \\
+第5章 静磁学 & 1-A \quad 2-B \quad 3-B & 4-正确 \quad 5-错误 & — \\
+第6章 磁介质 & 1-B \quad 2-B \quad 3-A & — & — \\
+第7章 麦克斯韦方程组 & 1-B \quad 2-B \quad 3-A & 4-正确 \quad 5-错误 & — \\
+第8章 电磁波传播 & 1-B \quad 2-A \quad 3-B & 4-垂直（$\vecE$、$\vecB$ 均垂直于 $\vecK$） & — \\
+第9章 电磁波辐射 & 1-C \quad 2-B \quad 3-B & 4-正确 \quad 5-错误 & — \\
+第10章 相对论电动力学 & 1-C \quad 2-A \quad 3-B & — & — \\
 \bottomrule
 \end{tabular}
 \end{center}
