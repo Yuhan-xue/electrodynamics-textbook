@@ -1594,6 +1594,8 @@ f'(x) = 2x \quad\Rightarrow\quad f'(a) = 2a, \quad f'(-a) = -2a
 \phi(\vect{r}) = \frac{1}{4\pi\eps_0} \int \frac{\rho(\vect{r}')}{|\vect{r} - \vect{r}'|} \, \diff^3r'
 \]
 即把电荷分布分解为无数点电荷的叠加，每个点电荷贡献 $1/r$ 势。
+
+\textbf{格林函数的构造（提高）}：上面的 $1/|\vect{r}-\vect{r}'|$ 是\textbf{自由空间}格林函数。带边界条件时，格林函数要"加上齐次解"来满足边界：$G = \dfrac{1}{|\vect{r}-\vect{r}'|} + F(\vect{r},\vect{r}')$，其中 $F$ 满足拉普拉斯方程、恰好使边界条件成立。镜像法构造的正是这个 $F$——例如接地导体平面：$G = \dfrac{1}{|\vect{r}-\vect{r}'|} - \dfrac{1}{|\vect{r}-\vect{r}'_{\text{镜像}}|}$（镜像点在边界另一侧对称位置）。格林函数的完整构造方法是提高内容，初学时掌握"镜像法 = 最简单的格林函数构造"这一对应即可。
 \end{insight}
 
 \toggleButton{挑战题}{ocg挑战1}
@@ -2161,7 +2163,7 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \item \textbf{$\nabla$ 算子不是普通矢量}！$\nabla\cdot\vecA$（散度，标量）$\neq$ $\vecA\cdot\nabla$（算子，作用于其右侧的场）。$\nabla\times\vecA$（旋度，矢量）$\neq$ $-\vecA\times\nabla$（算子）。
 \item $\nabla\cdot(\nabla\times\vecA) \equiv 0$ 和 $\nabla\times(\nabla\psi) \equiv \vect{0}$ 是恒等式，但 $\nabla\cdot\nabla\psi = \lap\psi$ 不是恒等式——它定义了拉普拉斯算子。
 \item 高斯定理要求曲面\textbf{闭合}；斯托克斯定理要求曲线\textbf{闭合}。
-\item $\delta$ 函数不是普通函数，是广义函数（分布）。严格说它只在积分号下有意义。
+\item $\delta$ 函数不是普通函数，是广义函数（分布）。严格说它只在积分号下有意义——脱离积分号直接做"$\delta(x) = 0$、$\delta^2(x)$"之类的等式运算属于形式简写，没有严格数学意义。本书习题中大量对 $\delta$ 直接做代数运算，都是这种简写；正确做法是两边同乘检验函数并积分。
 \end{enumerate}
 \end{warning}
 
@@ -2522,6 +2524,8 @@ E_z = -\frac{\partial\phi}{\partial z} = \frac{Qz}{4\pi\eps_0 (R^2+z^2)^{3/2}}
 
 \begin{tip}{通俗类比：为什么镜像法靠的就是唯一性定理}{uniqueness-analogy}
 唯一性定理听起来抽象，物理含义一句话就能说清：\textbf{"边条件定了，解就定了——不管你怎么找出来的"}。
+
+\textbf{前提条件不要丢}：唯一性定理要求\textbf{求解区域内的电荷分布 $\rho(\vect{r})$ 全部给定}。如果区域内部还有未知的电荷（如未标注的感应电荷分布），仅有边界条件不能唯一确定场——这正是镜像法必须把感应电荷"换成"已知镜像电荷的原因。初学者做题时若发现"边界条件够了解却不唯一"，先检查是否漏给了内部电荷。
 
 一个类比：给定"山谷的地形边界"，山谷里的水系（等高线）就完全确定。你可以用任何方法猜出一张水系图，只要它满足边界条件，它就是\textbf{唯一正确的那张}。
 
@@ -3739,6 +3743,12 @@ $l=1$ 项对应\textbf{偶极子}的角向分布——正北极、负南极（�
 $l=2$ 项对应\textbf{四极子}，描述电荷分布偏离球对称的更精细结构。
 
 在量子力学中，$l$ 对应角动量量子数；在经典电动力学中，$l$ 表征多极展开的阶数。不必深究量子力学的诠释，只需记住：每一项 $l$ 对应一种特定的角向"图案"。
+
+\textbf{正交归一}：$P_l(\cos\theta)$ 在 $[-1,1]$ 上满足正交归一条件
+\[
+\int_{-1}^{1} P_l(\mu)\,P_{l'}(\mu)\,\diff\mu = \frac{2}{2l+1}\,\delta_{ll'}
+\]
+这就是"级数系数怎么算"的来源：把边界条件两边乘以 $P_{l'}(\cos\theta)\sin\theta\,\diff\theta$（即 $\diff\mu$）并对 $\mu\in[-1,1]$ 积分，正交性使求和只剩 $l = l'$ 一项，系数即可解出。第 4 章均匀外场导体球、电介质球两例正是这样定出 $B_1 = E_0R^3$、球内 $A_1$ 系数的——做题时若边界条件含 $\cos\theta$，只有 $l=1$ 项非零，可直接比较系数（等价于利用正交性）。
 \end{insight}
 
 \begin{example}{均匀外场中的导体球}{conductor-sphere-uniform-field-v2}
@@ -5585,6 +5595,8 @@ $\chi$ & 规范函数（$\vecA' = \vecA + \grad\chi$） \\
 \lap\vecA - \muz\eps_0\frac{\partial^2\vecA}{\partial t^2} &= -\muz\vecJ \label{eq:d-alembert-A}
 \end{align}
 两式具有相同的微分算符结构——\textbf{达朗贝尔算符} $\Box = \lap - \muz\eps_0\,\dfrac{\partial^2}{\partial t^2} = \dfrac{1}{c^2}\dfrac{\partial^2}{\partial t^2} - \lap$（全书统一用 $\Box$ 记号，两种写法等价，因 $\muz\eps_0 = 1/c^2$），这保证了电磁势在四维时空中具有统一的协变描述。
+
+\textbf{跨教材核对提醒}：本书的 $\Box$ 定义为 $\frac{1}{c^2}\partial_t^2 - \nabla^2$；部分教材（如 Jackson 某些章节、朗道《场论》）把达朗贝尔算符定义为 $\nabla^2 - \frac{1}{c^2}\partial_t^2$——\textbf{两者差一个负号}，相应波动方程右边符号也随之相反。参考外文教材做题时，先核对该书 $\Box$ 的定义，不要直接照搬方程两边的符号。
 \end{impEqbox}
 \end{theorem}
 \end{ocg}
@@ -7146,6 +7158,8 @@ G(\vect{r}, t) = \frac{\delta(t - r/c)}{4\pi r}
 \end{center}
 
 \textbf{易错点}：两者角分布相同但\textbf{极化方向旋转了 $90^\circ$}。强度上磁偶极辐射通常比同尺寸的电偶极辐射弱 $(v/c)^2$ 量级——这就是为什么实用天线几乎都是电偶极型（如半波天线），磁偶极天线只在小尺寸（如 NFC 线圈）或特殊场合使用。
+
+\textbf{适用条件}：$P_M/P_E \sim (v/c)^2$ 这一比例\textbf{只对相同几何尺度的源}成立（推导中用到 $m_0 \sim qva$、$p_0 \sim qa$，即电流环与电荷对尺度相同）。如果电流环很大或电荷分布尺度不同，该比例不再成立——例如大环天线配合谐振匹配可以有很高的效率。记忆结论时务必连同适用条件一起记。
 
 \textbf{学习预警}：本小节公式推导用到推迟势展开（$\ee^{\ii kr}$ 的多极展开），第一次阅读可以只记结论表，推导细节留到复习时再看。
 \end{insight}
