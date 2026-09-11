@@ -18,7 +18,7 @@
 \usepackage{siunitx}
 \usepackage{tikz,pgfplots}
 \pgfplotsset{compat=1.18}
-\usetikzlibrary{arrows.meta,decorations.pathmorphing,patterns,calc,positioning,shapes}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,patterns,calc,positioning,shapes,fadings}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{enumitem}
@@ -32,7 +32,7 @@
 \usepackage{subcaption}
 \usepackage{hyperref}
 \hypersetup{
-  pdftitle={电动力学 v2.13（2026-09）},
+  pdftitle={电动力学 v2.15（2026-09）},
   pdfauthor={Han \& Kimi \& glm},
   pdfsubject={电动力学自学教材},
   pdfkeywords={电动力学, 电磁场, 麦克斯韦方程组, 相对论, 自学教材}
@@ -167,110 +167,145 @@
   boxrule=1.2pt,arc=2mm,
   left=6pt,right=6pt,top=5pt,bottom=5pt}
 
-% ---------- 图片路径 ----------
-\graphicspath{{C:\\Users\\53150\\Documents\\kimi\\workspace}}
 
 \begin{document}
 
 % ============ 封面 ============
 \thispagestyle{empty}
 \begin{tikzpicture}[remember picture, overlay]
-% 深色背景渐变
-\shade[top color=blue!5!black, bottom color=black!80!blue] 
-  (current page.north west) rectangle (current page.south east);
 
-% ===== 顶部装饰：电场线发散 =====
-\foreach \a in {15,30,45,60,75,90,105,120,135,150,165} {
-  \draw[white!20, line width=0.3pt] 
-    (current page.north) -- ++(\a-90:12cm);
+% ---------- 封面配色 ----------
+\definecolor{covTop}{RGB}{26,50,108}
+\definecolor{covMid}{RGB}{10,20,52}
+\definecolor{covBot}{RGB}{2,3,10}
+\definecolor{covGlow}{RGB}{80,205,255}
+
+% ---------- 背景：三段竖向渐变（对比更强） ----------
+\shade[top color=covTop, bottom color=covMid]
+  (current page.north west) rectangle ([yshift=-0.40\paperheight]current page.north east);
+\shade[top color=covMid, bottom color=covBot]
+  ([yshift=-0.40\paperheight]current page.north west) rectangle (current page.south east);
+
+% ---------- 中央冷光晕（分层同心圆模拟柔光） ----------
+\foreach \r/\o in {12/0.009, 10/0.012, 8.5/0.015, 7/0.018, 5.8/0.022, 4.6/0.027, 3.5/0.033, 2.5/0.039, 1.6/0.045, 0.9/0.054} {
+  \fill[covGlow, opacity=\o] ($(current page.center)+(0,3.0)$) circle (\r);
 }
 
-% ===== 底部装饰：同心圆弧（法拉第感应线） =====
-\foreach \r in {1,1.5,2,2.5,3,3.5,4} {
-  \draw[white!15, line width=0.3pt] 
-    ([yshift=\r*0.6cm]current page.south west) arc (180:0:\r*2.1cm);
+% ---------- 背景网格 ----------
+\foreach \x in {-9,-8,...,9} {
+  \draw[white, opacity=0.030, line width=0.25pt]
+    ($(current page.center)+(\x,-13.5)$) -- ($(current page.center)+(\x,13.5)$);
+}
+\foreach \y in {-13,-12,...,13} {
+  \draw[white, opacity=0.030, line width=0.25pt]
+    ($(current page.center)+(-9.5,\y)$) -- ($(current page.center)+(9.5,\y)$);
 }
 
-% ===== 中心大图：电偶极子场线 + 电磁波传播 =====
-\begin{scope}[shift={($(current page.center)+(0,0.5cm)$)}]
+% ---------- 星点（固定坐标） ----------
+\foreach \p in {(-8.4,8.6),(-7.2,6.4),(-8.9,4.2),(-6.3,9.4),(-5.1,7.1),(-3.4,8.9),(-1.8,6.6),(-0.6,9.8),(0.9,7.8),(2.3,9.1),(3.6,6.3),(5.2,8.4),(6.7,5.6),(8.1,7.9),(-8.2,-3.4),(-6.8,-5.2),(-5.4,-2.8),(-3.9,-4.6),(-2.2,-6.4),(-0.8,-3.8),(1.4,-5.6),(2.9,-3.3),(4.4,-6.0),(6.1,-3.1),(7.6,-4.9),(8.8,-2.4)} {
+  \fill[white, opacity=0.5] \p circle (0.55pt);
+}
 
-% ---- 左半：电偶极子场线（场的源） ----
-\begin{scope}[shift={(-6.6,0)}, scale=1.0]
-  % 偶极子电荷（上下分开，场线以原点为中心）
-  \fill[red!70!white] (0,0.42) circle (0.12);
-  \node[black, font=\footnotesize] at (0,0.42) {$+$};
-  \fill[blue!60!white] (0,-0.42) circle (0.12);
-  \node[white, font=\footnotesize] at (0,-0.42) {$-$};
+% ---------- 主视觉：三维透视电磁波 ----------
+\begin{scope}[shift={($(current page.center)+(0,3.0)$)}]
 
-  % 偶极子场线：r = a sin^2(theta)，x = a sin^3, y = a sin^2 cos（右半 + 镜像左半）
-  \foreach \a in {0.9, 1.6, 2.5, 3.6} {
-    \draw[white!45, line width=0.8pt, domain=0.15:179.85, samples=70, smooth]
-      plot ({\a*sin(\x)*sin(\x)*sin(\x)}, {\a*sin(\x)*sin(\x)*cos(\x)});
-    \draw[white!45, line width=0.8pt, domain=0.15:179.85, samples=70, smooth]
-      plot ({-\a*sin(\x)*sin(\x)*sin(\x)}, {\a*sin(\x)*sin(\x)*cos(\x)});
+  % 底纹一：偶极辐射角分布 sin^2(theta)
+  \begin{scope}[scale=3.3, opacity=0.15]
+    \draw[covGlow, line width=0.9pt, samples=220, domain=0:360, smooth]
+      plot ({sin(\x)*sin(\x)*sin(\x)}, {sin(\x)*sin(\x)*cos(\x)});
+    \draw[covGlow, line width=0.35pt, samples=220, domain=0:360, smooth]
+      plot ({1.26*sin(\x)*sin(\x)*sin(\x)}, {1.26*sin(\x)*sin(\x)*cos(\x)});
+  \end{scope}
+
+  % 底纹二：极坐标网格（辐射图风格）
+  \begin{scope}[opacity=0.085]
+    \foreach \rr in {1.5,2.4,3.3,4.2,5.1} { \draw[covGlow, line width=0.3pt] (0,0) circle (\rr); }
+    \foreach \ang in {0,30,...,330} { \draw[covGlow, line width=0.3pt] (0,0) -- (\ang:5.1); }
+  \end{scope}
+
+  % 波前弧（自源点向外扩散）
+  \foreach \rr in {4.4,5.3,6.2,7.1} {
+    \draw[covGlow, opacity=0.10, line width=0.5pt] (-8.6,0) ++(22:\rr) arc (22:-22:\rr);
   }
 
-  % 方向箭头（从 + 指向 -，取赤道附近点）
-  \draw[->, white!55, line width=0.9pt] (2.5,0.12) -- (2.5,-0.12);
-  \draw[->, white!55, line width=0.9pt] (-2.5,0.12) -- (-2.5,-0.12);
+  % 传播轴
+  \draw[green!70!white, opacity=0.85, line width=1.2pt, -{Latex[length=5.5mm,width=3.2mm]}]
+    (-8.6,0) -- (8.6,0);
+  \node[green!80!white, font=\normalsize, anchor=west] at (8.65,0) {$\vecK$};
 
-  \node[white!60, font=\footnotesize] at (0,-3.1) {场};
-\end{scope}
+  % 偶极源（+ / - 一对电荷）
+  \fill[red!70!white] (-8.6,0.32) circle (0.13);
+  \node[black, font=\tiny] at (-8.6,0.32) {$+$};
+  \fill[blue!60!white] (-8.6,-0.32) circle (0.13);
+  \node[white, font=\tiny] at (-8.6,-0.32) {$-$};
 
-% ---- 中间：连接箭头（麦克斯韦方程组统一） ----
-\draw[->, line width=1.2pt, white!40] (-2.6,0) -- (-1.2,0);
-\node[white!50, font=\footnotesize] at (-1.9,0.75) {$\divg\vecE = \tfrac{\rho}{\eps_0}$};
-\node[white!50, font=\footnotesize] at (-1.9,-0.75) {$\curl\vecB = \muz\eps_0\tfrac{\partial\vecE}{\partial t}$};
-
-% ---- 右半：电磁波 E/B/k（场的传播） ----
-\begin{scope}[shift={(4.6,0)}]
-  % 传播方向
-  \draw[->, line width=1.6pt, green!60!white] (-2.8,0) -- (3.4,0) node[right, font=\small] {$\vecK$};
-
-  % E场 - 红色正弦波
-  \draw[line width=1.6pt, red!75!white, domain=-2.6:3.2, samples=90] plot(\x, {0.85*sin(2.2*\x r)});
-  \foreach \x in {-2.2,-1.4,-0.6,0.2,1.0,1.8,2.6} {
-    \pgfmathsetmacro{\ey}{0.85*sin(2.2*\x r)}
-    \draw[->, line width=0.9pt, red!55!white] (\x,0) -- (\x,\ey);
+  % ---- E 波（红，竖直振荡，带辉光） ----
+  \foreach \lw/\op in {12pt/0.05, 6.5pt/0.09, 3.4pt/0.16, 1.8pt/0.96} {
+    \draw[red!70!white, opacity=\op, line width=\lw, samples=150, domain=-7.7:7.7, smooth]
+      plot (\x, {2.45*sin(52*\x)});
   }
-  \node[red!75!white, font=\large] at (2.9,1.15) {$\vecE$};
-
-  % B场 - ⊙/⊗ 符号（相位与 E 对齐）
-  \foreach \x in {-2.2,-1.4,-0.6,0.2,1.0,1.8,2.6} {
-    \pgfmathsetmacro{\ey}{0.85*sin(2.2*\x r)}
-    \ifdim\ey pt>0pt
-      \draw[blue!60!white, line width=0.9pt] (\x,-1.0) circle (0.11);
-      \fill[blue!60!white] (\x,-1.0) circle (0.028);
-    \else
-      \draw[blue!60!white, line width=0.9pt] (\x,-1.0) circle (0.11);
-      \draw[blue!60!white, line width=0.9pt] (\x-0.078,-1.078) -- (\x+0.078,-0.922);
-      \draw[blue!60!white, line width=0.9pt] (\x-0.078,-0.922) -- (\x+0.078,-1.078);
-    \fi
+  \foreach \x in {-7.2,-6.6,...,7.2} {
+    \draw[red!60!white, opacity=0.32, line width=0.55pt] (\x,0) -- (\x,{2.45*sin(52*\x)});
   }
-  \node[blue!60!white, font=\large] at (2.9,-1.0) {$\vecB$};
+  \node[red!80!white, font=\large, anchor=south] at (0.95,2.35) {$\vecE$};
 
-  % E⊥B⊥k 标注
-  \node[white!60, font=\footnotesize] at (0.2,-1.9) {波};
-\end{scope}
-
-% ---- 装饰圆环（科技感） ----
-\draw[white!25, line width=0.5pt] (0,0) circle (4.6);
-\draw[white!15, line width=0.5pt] (0,0) circle (4.9);
+  % ---- B 波（蓝，斜向进纸平面，带辉光） ----
+  \foreach \lw/\op in {12pt/0.05, 6.5pt/0.09, 3.4pt/0.16, 1.8pt/0.96} {
+    \draw[blue!60!white, opacity=\op, line width=\lw, samples=150, domain=-7.7:7.7, smooth]
+      plot ({\x+1.30*sin(52*\x)}, {-0.68*sin(52*\x)});
+  }
+  \foreach \x in {-7.2,-6.6,...,7.2} {
+    \draw[blue!55!white, opacity=0.30, line width=0.55pt]
+      (\x,0) -- ({\x+1.30*sin(52*\x)},{-0.68*sin(52*\x)});
+  }
+  \node[blue!70!white, font=\large, anchor=north] at (-4.3,-1.30) {$\vecB$};
 
 \end{scope}
 
-% ===== 书名 =====
-\node[anchor=north, align=center] at ([yshift=-3.2cm]current page.north) {
-  {\fontsize{48}{56}\selectfont\bfseries\textcolor{white}{电动力学}}\\[0.35cm]
-  {\fontsize{13}{16}\selectfont\textcolor{white!65}{从矢量分析到相对论协变的完整电磁理论}}
+% ---------- 四角暗角（艺术收边） ----------
+\fill[black, opacity=0.55, path fading=south]
+  ($(current page.north west)$) rectangle ($(current page.north east)+(0,-3.2cm)$);
+\fill[black, opacity=0.55, path fading=north]
+  ($(current page.south west)$) rectangle ($(current page.south east)+(0,3.2cm)$);
+\fill[black, opacity=0.45, path fading=east]
+  ($(current page.north west)$) rectangle ($(current page.north west)+(3.0cm,-29.7cm)$);
+\fill[black, opacity=0.45, path fading=west]
+  ($(current page.north east)$) rectangle ($(current page.north east)+(-3.0cm,-29.7cm)$);
+
+% ---------- 四角径向弧线（辐射纹理） ----------
+\begin{scope}[opacity=0.075]
+  \foreach \rr in {3.6,5.0,6.4,7.8} {
+    \draw[covGlow, line width=0.5pt] ($(current page.south west)+(0,0)$) ++(8:\rr) arc (8:82:\rr);
+    \draw[covGlow, line width=0.5pt] ($(current page.north east)+(0,0)$) ++(188:\rr) arc (188:262:\rr);
+  }
+\end{scope}
+
+% ---------- 书名（柔光 + 主标题） ----------
+\foreach \rr/\oo in {3.6/0.018, 2.8/0.022, 2.1/0.026, 1.4/0.030} {
+  \fill[white, opacity=\oo] ([yshift=-2.3cm]current page.north) ellipse ({\rr*3.6} and {\rr*0.9});
+}
+\node[anchor=north, align=center] at ([yshift=-2.4cm]current page.north) {
+  {\fontsize{50}{58}\selectfont\bfseries\textcolor{white}{电动力学}}\\[0.32cm]
+  {\fontsize{12.5}{15}\selectfont\textcolor{white!78}{从矢量分析到相对论协变的完整电磁理论}}
 };
 
-% ===== 作者 =====
-\node[anchor=south, align=center] at ([yshift=2.6cm]current page.south) {
+% ---------- 标题下的渐变装饰线 ----------
+\draw[white, opacity=0.10, line width=1.6pt] ([yshift=-5.7cm]current page.north) ++(-3.6,0) -- ++(1.9,0);
+\draw[covGlow, opacity=0.50, line width=1.6pt] ([yshift=-5.7cm]current page.north) ++(-1.7,0) -- ++(1.9,0);
+\draw[white, opacity=0.10, line width=1.6pt] ([yshift=-5.7cm]current page.north) ++(0.2,0) -- ++(1.9,0);
+
+% ---------- 麦克斯韦方程组（全书灵魂） ----------
+\node[anchor=south, align=center] at ([yshift=9.6cm]current page.south) {
+  {\footnotesize\textcolor{white!66}{$\divg\vecE=\dfrac{\rho}{\eps_0}$\quad$\divg\vecB=0$\quad$\curl\vecE=-\dfrac{\partial\vecB}{\partial t}$\quad$\curl\vecB=\muz\vecJ+\muz\eps_0\dfrac{\partial\vecE}{\partial t}$}}
+};
+\draw[white, opacity=0.13, line width=0.5pt] ([yshift=8.9cm]current page.south) ++(-6.4,0) -- ++(12.8,0);
+
+% ---------- 作者与版本 ----------
+\node[anchor=south, align=center] at ([yshift=2.7cm]current page.south) {
   {\LARGE\bfseries\textcolor{white}{Han \& Kimi \& glm}}\\[0.3cm]
-  {\footnotesize\textcolor{white!50}{AI 协作生成 · 人工审校}}\\[0.45cm]
-  {\small\bfseries\textcolor{white!70}{v2.13}}\\[0.15cm]
-  {\scriptsize\textcolor{white!45}{2026 年 9 月}}
+  {\footnotesize\textcolor{white!58}{AI 协作生成 · 人工审校}}\\[0.45cm]
+  {\small\bfseries\textcolor{white!80}{v2.15}}\\[0.15cm]
+  {\scriptsize\textcolor{white!48}{2026 年 9 月}}
 };
 
 \end{tikzpicture}
@@ -301,7 +336,8 @@
 \addcontentsline{toc}{chapter}{符号说明}
 
 \begin{center}
-\begin{tabular}{lll}
+\small
+\begin{tabular}{@{}llp{0.38\textwidth}@{}}
 \toprule
 \textbf{符号} & \textbf{含义} & \textbf{说明} \\
 \midrule
@@ -537,7 +573,7 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 
 \subsection*{阅读建议}
 
-\textbf{零基础读者的最小可行动路径}：第1章只看 \S1.1+\S1.2（矢量与梯度/散度/旋度）$\to$ 第2章（高斯定理、唯一定理）$\to$ 第3章（电介质与边界条件）$\to$ 第4章（边值问题）$\to$ 第5章（静磁学）$\to$ 第7章（麦克斯韦方程组）$\to$ 第8章（电磁波）$\to$ 按需回看其余（第6章磁介质、第9章辐射、第10章相对论可最后补）。第1章开头的"快速通道"盒给出了同样路径与三档划分。
+\textbf{零基础读者的最小可行动路径}：第1章只看 \S1.1+\S1.2（矢量与梯度/散度/旋度）$\to$ 第2章（高斯定理、唯一性定理）$\to$ 第3章（电介质与边界条件）$\to$ 第4章（边值问题）$\to$ 第5章（静磁学）$\to$ 第7章（麦克斯韦方程组）$\to$ 第8章（电磁波）$\to$ 按需回看其余（第6章磁介质、第9章辐射、第10章相对论可最后补）。第1章开头的"快速通道"盒给出了同样路径与三档划分。
 
 \begin{itemize}
 \item \textbf{数学预备}：第1章是后续所有内容的基石，务必扎实掌握。特别要理解梯度、散度、旋度的几何意义。
@@ -805,7 +841,7 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 
 \textbf{一个并矢}带\textbf{两个}方向——$\vecA\vecB$ 说"左方向来自 $\vecA$、右方向来自 $\vecB$"。它回答的问题是："\textbf{沿} $\vecB$ 方向\textbf{看过去}，什么量沿 $\vecA$ 方向？"
 
-最常用的物理例子：\textbf{麦克斯韦应力张量} $T_{ij} = \eps_0(E_iE_j - \frac{1}{2}\delta_{ij}E^2)$ 就是一个并矢结构——它回答"沿 $\unitvec{n}$ 方向穿过一个面，电磁场沿哪个方向、传递多大的动量"。左指标 $i$ 是"传递方向"，右指标 $j$ 是"穿面方向"。两个方向缺一不可，这正是为什么需要两个指标的量（张量/并矢），而不是矢量。
+最常用的物理例子：\textbf{麦克斯韦应力张量} $T_{ij} = \eps_0(E_iE_j - \frac{1}{2}\delta_{ij}E^2) + \frac{1}{\muz}(B_iB_j - \frac{1}{2}\delta_{ij}B^2)$ 就是一个并矢结构（完整式含磁场项，见第7章 §7.4.3）——它回答"沿 $\unitvec{n}$ 方向穿过一个面，电磁场沿哪个方向、传递多大的动量"。左指标 $i$ 是"传递方向"，右指标 $j$ 是"穿面方向"。两个方向缺一不可，这正是为什么需要两个指标的量（张量/并矢），而不是矢量。
 
 \textbf{一句话}：矢量 = 1 个方向的数；并矢 = 2 个方向的数；点乘缩掉一个方向（$\vecA\vecB\cdot\vect{C} = \vecA(\vecB\cdot\vect{C})$，剩 1 个方向）。下面的正式定义只是把这套图像写成 $(\vecA\vecB)_{ij} = A_iB_j$ 的分量形式。
 \end{tip}
@@ -841,7 +877,7 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \begin{insight}{并矢的物理意义}{dyadic-phy-v2}
 并矢在电动力学中有重要应用：
 \begin{itemize}
-\item \textbf{麦克斯韦应力张量}可以表示为电磁场的并矢组合（详见第4章）
+\item \textbf{麦克斯韦应力张量}可以表示为电磁场的并矢组合（详见第7章 §7.4.3）
 \item \textbf{四极矩}：第4章多极展开中的电四极矩 $Q_{ij}$ 本质上是一个并矢结构，描述电荷分布偏离球对称的程度
 \item 在各向异性介质中，介电张量 $\varepsilon_{ij}$ 也可以用并矢基展开
 \end{itemize}
@@ -862,7 +898,7 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \begin{insight}{并矢缩并的物理意义}{dyadic-trace-phy-v2}
 并矢的缩并（迹）在电动力学中频繁出现：
 \begin{itemize}
-\item \textbf{麦克斯韦应力张量} $T_{ij}$ 是一个二阶张量（并矢结构），通过适当的缩并可得到电磁场对物体施加的应力分量（详见第4章）。
+\item \textbf{麦克斯韦应力张量} $T_{ij}$ 是一个二阶张量（并矢结构），通过适当的缩并可得到电磁场对物体施加的应力分量（详见第7章 §7.4.3）。
 \item \textbf{电四极矩} $Q_{ij}$ 本质上是一个对称并矢，其迹的形式出现在多极展开中，描述电荷分布偏离球对称的程度。
 \item 在连续介质力学中，应力张量的迹（即压力的三倍）与体积膨胀直接相关；在电磁场中，$T_{ij}$ 的迹与电磁场的能量密度密切相关。
 \end{itemize}
@@ -1679,7 +1715,7 @@ r^2 \frac{\partial f}{\partial r} = -1
 \draw[->,thick,blue] (1.2,0.8) -- (0.6,1.4) node[above] {$\unitvec{\phi}$};
 \draw[->,thick] (1.2,0.8) -- (1.2,1.6) node[right] {$\unitvec{z}$};
 \node at (1,-1.2) {\textbf{(b) 柱坐标系}};
-\node[align=center,font=\small] at (1,-2.0) {$(r,\phi,z)$\\$\unitvec{r},\unitvec{\phi}$随位置变化};
+\node[align=center,font=\small] at (1,-2.0) {$(\rho,\phi,z)$\\$\unitvec{\rho},\unitvec{\phi}$随位置变化};
 \end{scope}
 
 % 球坐标系
@@ -2110,8 +2146,11 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \int_V 3\,\diff V = 3 \cdot \frac{4}{3}\pi R^3 = 4\pi R^3
 \]
 
-直接验证：球面上 $\diff\vect{S} = R^2\sin\theta\,\diff\theta\,\diff\phi\,\unitvec{r}$，$\vect{r}\cdot\diff\vect{S} = R^3\sin\theta\,\diff\theta\,\diff\phi$。
-积分：$\displaystyle\int_0^{2\pi}\diff\phi\int_0^\pi R^3\sin\theta\,\diff\theta = 2\pi R^3 \cdot 2 = 4\pi R^3$。\qedsymbol
+直接验证：在球面上 $\diff\vect{S} = R^2\sin\theta\,\diff\theta\,\diff\phi\,\unitvec{r}$，于是
+\[
+\vect{r}\cdot\diff\vect{S} = R^3\sin\theta\,\diff\theta\,\diff\phi
+\]
+积分得 $\displaystyle\int_0^{2\pi}\diff\phi\int_0^\pi R^3\sin\theta\,\diff\theta = 2\pi R^3 \cdot 2 = 4\pi R^3$。\qedsymbol
 
 [量纲校验] $[\oint\vect{r}\cdot\diff\vect{S}] = [L][L^2] = [L^3]$，$[4\pi R^3] = [L^3]$，一致。\qedsymbol
 
@@ -2403,7 +2442,7 @@ $E(\rho) = \dfrac{\lambda}{2\pi\eps_0 \rho}$
 \[
 \curl\vecE = \vect{0}
 \]
-这是麦克斯韦方程组的第二个方程（在静电学极限下）。
+这是麦克斯韦方程组中法拉第定律在静电学极限（$\partial\vecB/\partial t = \vect{0}$）下的形式。
 \end{theorem}
 
 \subsection{电势}
@@ -2783,7 +2822,7 @@ Neumann条件：$\partial\psi/\partial n|_S = 0$，右端同样为0，故 $\grad
 
 [解答] 设 $\phi_1$ 和 $\phi_2$ 满足 $\lap\phi = -\rho/\eps_0$。令 $\psi = \phi_1 - \phi_2$，则 $\lap\psi = 0$。
 
-考虑格林第二恒等式：$\int_V (\psi\lap\psi - \psi\lap\psi)\diff V = \oint_S (\psi\partial\psi/\partial n' - \psi\partial\psi/\partial n)\diff S = 0$。
+考虑格林第二恒等式：$\int_V (\psi\lap\varphi - \varphi\lap\psi)\diff V = \oint_S \left(\psi\frac{\partial\varphi}{\partial n} - \varphi\frac{\partial\psi}{\partial n}\right)\diff S$（$\varphi$ 为任一光滑函数）。
 
 更直接地，用格林第一恒等式：$\int_V |\grad\psi|^2\diff V = \oint_S \psi\partial\psi/\partial n\,\diff S$。
 
@@ -2921,7 +2960,7 @@ $\vect{D}$ 是一个\textbf{辅助场量}，它的引入是为了简化方程—
 \begin{tip}{E、D、P 三场完整对比表}{edp-compare-table}
 \begin{center}
 \small
-\begin{tabular}{@{}p{2.2cm}p{3.6cm}p{3.2cm}p{3.6cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{3.6cm}@{}}
 \toprule
  & $\vecE$（电场强度） & $\vect{D}$（电位移矢量） & $\vect{P}$（极化强度） \\
 \midrule
@@ -3082,14 +3121,14 @@ $\vect{D}_2 = \eps_0\eps_r\vecE_2 = \eps_0\eps_r E_0\sin\theta\,\unitvec{x} + \e
 
 界面束缚电荷面密度：
 \[
-\sigma_b = \vect{P}\cdot\unitvec{n} = P_z = \eps_0(\eps_r-1)\frac{E_0\cos\theta}{\eps_r}
+\sigma_b = \vect{P}\cdot\unitvec{n} = -P_z = -\eps_0(\eps_r-1)\frac{E_0\cos\theta}{\eps_r} \qquad (\unitvec{n} = -\unitvec{z}\ \text{为介质的外法向})
 \]
 
-其中 $\unitvec{n}$ 取介质上表面的\textbf{外法向}（$+z$，从介质指向真空）。结论唯一：上表面 $\sigma_b > 0$（正束缚电荷），下表面 $\sigma_b < 0$（负束缚电荷），与 $\eps_r > 1$、$E_{0z} > 0$ 一致。
+其中 $\unitvec{n}$ 取\textbf{介质的外法向}——介质占据 $z>0$，界面 $z=0$ 处的外法向是 $-\unitvec{z}$（由介质指向真空），而不是 $+\unitvec{z}$。因此当 $E_0\cos\theta>0$ 时，界面上出现的是\textbf{负}束缚电荷：$\sigma_b = -P_z < 0$。
 
-\textbf{物理解读}：$\vecE_1$ 的 $z$ 分量为正意味着场线指向 $+z$——场由下方的正源发出、终止于上方的负源。介质中分子偶极沿场排列（正端指向 $+z$），因此介质\textbf{上表面}露出的是偶极的\textbf{正端}：$\sigma_b = +P_z > 0$，下表面为负端 $\sigma_b = -P_z < 0$。上表面正束缚电荷面向的正是上方的负源侧（场线终止处），电荷符号完全自洽。
+\textbf{物理解读}：$\vecE_1$ 的 $z$ 分量为正意味着真空侧场线指向 $+z$。介质中分子偶极沿场排列（偶极正端朝 $+z$），而界面 $z=0$ 是介质朝向真空的那一侧表面，露出的正是偶极的\textbf{负端}，故 $\sigma_b = \vect{P}\cdot(-\unitvec{z}) = -P_z < 0$。这与介质内场被削弱（$E_{2z} = E_{1z}/\eps_r < E_{1z}$）完全自洽：界面上的负束缚电荷在介质内产生与 $\vecE_1$ 反向的场。
 
-\textbf{易混淆点}："靠近正极板的表面出现负束缚电荷"的直觉对\textbf{极化同样成立}——正极板是场线的发出侧，介质中偶极沿场排列，靠近发出侧的表面露出偶极负端（$\vect{P}$ 与外法向反向，$\sigma_b < 0$），靠近终止侧露出正端（$\sigma_b > 0$）。判断符号的可靠方法永远是 $\sigma_b = \vect{P}\cdot\unitvec{n}$（$\unitvec{n}$ 取该表面的介质外法向），但用直觉前必须先分清\textbf{场的源头在哪一侧}：本题 $\vecE_1$ 的 $z$ 分量为正，场由下方正源发出、指向 $+z$，介质\textbf{下}表面靠近正源（负束缚电荷）、\textbf{上}表面靠近负源（正束缚电荷）——若想当然把正源放在上方，就会得出"上表面应为负"的假矛盾。
+\textbf{易混淆点}：判断 $\sigma_b$ 符号的可靠方法永远是 $\sigma_b = \vect{P}\cdot\unitvec{n}$，且 $\unitvec{n}$ 必须取\textbf{该表面的介质外法向}——本例中介质在 $z>0$、界面处外法向为 $-\unitvec{z}$；若误取 $+\unitvec{z}$（那是真空侧的外法向），符号就会弄反。一个可靠的自检：束缚电荷总要\textbf{削弱介质内的场}——本题 $E_{2z} = E_{1z}/\eps_r < E_{1z}$，故界面必带负束缚电荷。
 \end{example}
 
 \begin{warning}{边界条件的符号约定}{bc-sign-warning}
@@ -4040,7 +4079,7 @@ Q_{ij} = 2qd^2\begin{pmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & -1 \end{pmatrix
 \end{ocg}
 
 \begin{tip}{四极矩定义差异对照表}{quadrupole-def-table}
-不同教材对四极矩张量的定义可能有系数差异，阅读文献时需注意：
+不同教材对四极矩张量的定义可能有系数差异，阅读文献时需注意（下表第三种的迹为 $\int r'^2\rho\,\diff^3r'$，一般不为零，此即未减迹之意）：
 \begin{center}
 \begin{tabular}{lll}
 \toprule
@@ -4048,11 +4087,11 @@ Q_{ij} = 2qd^2\begin{pmatrix} -1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & -1 \end{pmatrix
 \midrule
 本书 & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & Jackson 4th ed. 标准定义 \\
 Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackson 一致 \\
-部分教材 & $\tilde{Q}_{ij}=\int x'_ix'_j\rho\,\diff^3r'$（无迹形式） & 需额外减去迹项 \\
+部分教材 & $\tilde{Q}_{ij}=\int x'_ix'_j\rho\,\diff^3r'$（未减迹形式） & 需额外减去迹项 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\textbf{关键}：远场电势公式 $4\pi\eps_0\phi\approx Q_{ij}\hat{r}_i\hat{r}_j/(3r^3)$ 中的系数与定义方式匹配。使用不同定义时，展开系数需相应调整。
+\textbf{关键}：按本书定义（$Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$），四极势为 $4\pi\eps_0\phi = \dfrac{1}{2r^3}Q_{ij}\hat{r}_i\hat{r}_j$，即 $4\pi\eps_0\phi\approx Q_{ij}\hat{r}_i\hat{r}_j/(2r^3)$——系数与定义方式严格配对。若采用下表第三种（未减迹）定义，展开系数需相应调整。
 \end{tip}
 
 
@@ -4284,7 +4323,7 @@ $\phi(z) \approx \dfrac{\sigma}{2\eps_0}\left(|z| + \dfrac{a^2}{2|z|} - \dfrac{a
 对 $x=0$ 镜像：$q_1 = -q$ 在 $(-a,b)$；对 $y=0$ 镜像：$q_2 = -q$ 在 $(a,-b)$；
 $q_1$ 对 $y=0$ 镜像：$q_3 = +q$ 在 $(-a,-b)$；$q_2$ 对 $x=0$ 镜像：$q_4 = +q$ 在 $(-a,-b)$（与 $q_3$ 重合）。
 
-实际上，第一象限内需要4个镜像：$q' = -q$ 在 $(-a,b)$，$q'' = -q$ 在 $(a,-b)$，$q''' = +q$ 在 $(-a,-b)$。
+实际上，求解区域（第一象限）之外只需 \textbf{3} 个镜像电荷：$q' = -q$ 在 $(-a,b)$，$q'' = -q$ 在 $(a,-b)$，$q''' = +q$ 在 $(-a,-b)$。
 
 验证：在 $x=0$ 上，$q$ 与 $q'$ 抵消，$q''$ 与 $q'''$ 抵消；在 $y=0$ 上，$q$ 与 $q''$ 抵消，$q'$ 与 $q'''$ 抵消。
 
@@ -5003,7 +5042,7 @@ $\vect{D} = \eps\vecE$ & $\longleftrightarrow$ & $\vecB = \mu\vect{H}$ \\
 \textbf{三个磁学量的完整对比}：
 \begin{center}
 \small
-\begin{tabular}{@{}p{2.2cm}p{3.6cm}p{3.2cm}p{3.6cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{3.6cm}@{}}
 \toprule
  & $\vecB$（磁感应强度） & $\vect{H}$（磁场强度） & $\vect{M}$（磁化强度） \\
 \midrule
@@ -5352,7 +5391,7 @@ $\vect{H}_{\text{in}} = \vecB_{\text{in}}/\muz - \vect{M} = \dfrac{2}{3}\vect{M}
 
 为满足球面 $B_r = 0$，需要感应偶极子项：$\phi_m = -H_0\left(r + \dfrac{R^3}{2r^2}\right)\cos\theta$。
 
-球外磁场：$\vecB = \muz\vect{H}_0 + \dfrac{\muz R^3}{r^3}[3(\vect{H}_0\cdot\unitvec{r})\unitvec{r} - \vect{H}_0]$。\qedsymbol
+球外磁场：$\vecB = \muz\vect{H}_0 - \dfrac{\muz R^3}{2r^3}[3(\vect{H}_0\cdot\unitvec{r})\unitvec{r} - \vect{H}_0]$（感应磁偶极矩 $\vect{m} = -2\pi R^3\vect{H}_0$；截面校验：赤道面上 $r=R$ 处 $B = \frac{3}{2}\muz H_0$）。\qedsymbol
 
 [量纲校验] $[\phi_m] = [A]$，$[Hr] = [A/m][L] = [A]$，一致。\qedsymbol
 
@@ -5602,9 +5641,9 @@ $\chi$ & 规范函数（$\vecA' = \vecA + \grad\chi$） \\
 \lap\phi - \muz\eps_0\frac{\partial^2\phi}{\partial t^2} &= -\frac{\rho}{\eps_0} \label{eq:d-alembert-phi} \\
 \lap\vecA - \muz\eps_0\frac{\partial^2\vecA}{\partial t^2} &= -\muz\vecJ \label{eq:d-alembert-A}
 \end{align}
-两式具有相同的微分算符结构——\textbf{达朗贝尔算符} $\Box = \lap - \muz\eps_0\,\dfrac{\partial^2}{\partial t^2} = \dfrac{1}{c^2}\dfrac{\partial^2}{\partial t^2} - \lap$（全书统一用 $\Box$ 记号，两种写法等价，因 $\muz\eps_0 = 1/c^2$），这保证了电磁势在四维时空中具有统一的协变描述。
+两式具有相同的微分算符结构——\textbf{达朗贝尔算符} 全书统一取 $\Box \equiv \lap - \muz\eps_0\,\dfrac{\partial^2}{\partial t^2} = -\partial_\mu\partial^\mu$（因 $\muz\eps_0 = 1/c^2$；另一常见写法 $\dfrac{1}{c^2}\dfrac{\partial^2}{\partial t^2} - \lap$ 与本书 $\Box$ \textbf{相差一个整体负号}，见下方提醒），这保证了电磁势在四维时空中具有统一的协变描述。
 
-\textbf{跨教材核对提醒}：本书的 $\Box$ 定义为 $\frac{1}{c^2}\partial_t^2 - \nabla^2$；部分教材（如 Jackson 某些章节、朗道《场论》）把达朗贝尔算符定义为 $\nabla^2 - \frac{1}{c^2}\partial_t^2$——\textbf{两者差一个负号}，相应波动方程右边符号也随之相反。参考外文教材做题时，先核对该书 $\Box$ 的定义，不要直接照搬方程两边的符号。
+\textbf{跨教材核对提醒}：本书的 $\Box$ 定义为 $\nabla^2 - \frac{1}{c^2}\partial_t^2 = -\partial_\mu\partial^\mu$；部分教材（如 Jackson 某些章节、朗道《场论》）把达朗贝尔算符定义为 $\frac{1}{c^2}\partial_t^2 - \nabla^2 = \partial_\mu\partial^\mu$——\textbf{两者差一个负号}，相应波动方程右边符号也随之相反。参考外文教材做题时，先核对该书 $\Box$ 的定义，不要直接照搬方程两边的符号。
 \end{impEqbox}
 \end{theorem}
 \end{ocg}
@@ -6147,7 +6186,9 @@ $\vect{S} = \vecE \times \vect{H}$ & 坡印廷矢量（能流密度） \\
 
 即：$\vecE = -\grad\phi - \partial\vecA/\partial t$。\qedsymbol
 
-[量纲校验] $[\partial\vecA/\partial t] = [MLT^{-2}I^{-1}]/[T] = [MLT^{-3}I^{-1}] = [E]$，$[\grad\phi] = [V/m] = [MLT^{-3}I^{-1}]$，一致。\qedsymbol
+[量纲校验] $[\partial\vecA/\partial t] = [MLT^{-2}I^{-1}]/[T] = [MLT^{-3}I^{-1}] = [E]$；
+
+$[\grad\phi] = [V/m] = [MLT^{-3}I^{-1}]$，两者一致。\qedsymbol
 
 \textbf{题2解析：}
 
@@ -6194,8 +6235,14 @@ $\vecE$ 沿径向，$\vecB$ 沿 $\unitvec{\phi}$，故 $\vect{S}$ 沿 $+z$ 方�
 
 [解答] 极板间电场：$E = V/d = V_0\cos\omega t/d$。
 
-位移电流密度：$j_D = \eps_0\partial E/\partial t = -\eps_0\omega V_0\sin\omega t/d$。
-总位移电流：$I_D = j_D A = -\eps_0 A\omega V_0\sin\omega t/d$。
+位移电流密度：
+\[
+j_D = \eps_0\partial E/\partial t = -\frac{\eps_0\omega V_0\sin\omega t}{d}
+\]
+总位移电流：
+\[
+I_D = j_D A = -\frac{\eps_0 A\omega V_0\sin\omega t}{d}
+\]
 
 由修正安培定理（轴对称），取半径为 $\rho$ 的圆形回路：
 \[
@@ -6203,10 +6250,16 @@ B \cdot 2\pi\rho = \muz I_{D,\text{enc}} = \muz j_D \pi\rho^2
 \]
 $I_{D,\text{enc}}$ 是位移电流在半径 $\rho$ 内的部分（$\rho < R$ 时，$R$ 为极板半径）。
 
-$B = \muz\eps_0\omega V_0\rho\sin\omega t/(2d)$（$\rho < R$）。
+$B = -\muz\eps_0\omega V_0\rho\sin\omega t/(2d)$（$\rho < R$；负号由 $j_D$ 的负号带入，它决定能流方向，不可略去）。
 
-坡印廷矢量：$S = EB/\muz = \eps_0\omega V_0^2\rho\cos\omega t\sin\omega t/(2d^2)$。
-流入功率：$P = \int_0^R S \cdot 2\pi\rho\,\diff\rho = \dfrac{\pi\eps_0\omega V_0^2R^2\sin\omega t\cos\omega t}{4d^2}$。\qedsymbol
+坡印廷矢量（径向分量）：$S = EB/\muz = \eps_0\omega V_0^2\rho\cos\omega t\sin\omega t/(2d^2)$——正值表示此刻能流由极板间沿 $+\unitvec{\rho}$ 向外流出。
+穿出柱侧面的功率（侧面积 $2\pi R d$）：$P = S(R)\cdot 2\pi R d = \dfrac{\pi\eps_0\omega V_0^2R^2\sin\omega t\cos\omega t}{d}$。\qedsymbol
+
+\textbf{能量守恒校验}：电容器储能
+\[
+U = \frac{1}{2}CV^2 = \dfrac{\eps_0\pi R^2V_0^2\cos^2\omega t}{2d}
+\]
+故 $\dfrac{\diff U}{\diff t} = -\dfrac{\pi\eps_0\omega R^2V_0^2\sin\omega t\cos\omega t}{d} = -P$，即流出的功率恰等于储能的减少率。
 
 [量纲校验] $[B] = [\muz\eps_0\omega V\rho/d] = [H/m][F/m][T^{-1}][V][L]/[L] = [MT^{-2}I^{-1}]$，一致。\qedsymbol
 
@@ -6554,7 +6607,7 @@ H_z &= \frac{\ii\pi}{\omega\muz a} E_0 \cos\left(\frac{\pi x}{a}\right) \ee^{\ii
 \item 电场只有 $y$ 分量，沿 $x$ 方向呈半正弦分布，在波导宽边中央最强
 \item 电场在窄边（$y$ 方向）上均匀——与 $y$ 无关
 \item 磁场有 $x$ 和 $z$ 两个分量
-\item 表面电流在宽边中央为零，在宽边边缘最强
+\item 表面电流在宽边中央呈\textbf{纵向}（沿 $z$），向窄边方向连续转为\textbf{横向}并接到窄边上——宽边中央的电流并不为零（$x=a/2$ 处 $H_x$ 取极大）
 \end{itemize}
 
 % ---------- 波导模式示意图（横截面场分布） ----------
@@ -6944,9 +6997,9 @@ $\theta_i = 50° > \theta_c$，发生全反射。
 \kappa = k_1\sqrt{\sin^2\theta_i - (n_2/n_1)^2} = \frac{2\pi n_1}{\lambda_0}\sqrt{\sin^2 50° - (2/3)^2}
 \]
 
-取 $\lambda_0 = 500$ nm（可见光），$\kappa \approx \dfrac{2\pi\times 1.5}{500\times 10^{-9}}\sqrt{0.587 - 0.444} \approx 1.9\times 10^7$ m$^{-1}$。
+取 $\lambda_0 = 500$ nm（可见光），$\kappa \approx \dfrac{2\pi\times 1.5}{500\times 10^{-9}}\sqrt{0.587 - 0.444} \approx 1.885\times 10^{7}\times 0.377 \approx 7.1\times 10^{6}$ m$^{-1}$。
 
-透射深度（振幅降至 $1/e$）：$\delta = 1/\kappa \approx 1.9\times 10^{-7}$ m $= 0.19$ $\mu$m。\qedsymbol
+透射深度（振幅降至 $1/e$）：$\delta = 1/\kappa \approx 1.4\times 10^{-7}$ m $= 0.14$ $\mu$m（$\kappa$ 与 $k_1$ 同量级但更小，符合预期）。\qedsymbol
 
 [量纲校验] $[\kappa] = [L^{-1}]$，$[k] = [L^{-1}]$，一致；$[\delta] = [L]$，一致。\qedsymbol
 
@@ -6968,8 +7021,8 @@ $\chi_e = P/(\eps_0 E) = \dfrac{Ne^2}{\eps_0 m(\omega_0^2 - \omega^2 - i\gamma\o
 
 $\dfrac{dn}{d\omega} = \dfrac{Ne^2}{2\eps_0 m}\dfrac{2\omega}{((\omega_0^2 - \omega^2)^2 + \gamma^2\omega^2)}$（实部近似）。
 
-当 $\omega < \omega_0$（正常色散区）：$dn/d\omega > 0$；
-当 $\omega > \omega_0$（反常色散区）：$dn/d\omega < 0$。
+远离共振（$\omega\ll\omega_0$ 或 $\omega\gg\omega_0$）：$dn/d\omega > 0$，\textbf{正常色散}；
+共振附近（$|\omega-\omega_0|\lesssim\gamma$，且必须保留阻尼项）：$dn/d\omega < 0$，\textbf{反常色散}。\textbf{注意}：上式分母 $(\omega_0^2-\omega^2)^2+\gamma^2\omega^2$ 恒正、分子 $2\omega>0$，故无阻尼近似下 $\diff n/\diff\omega$ 除共振点外处处为正——$\\omega>\\omega_0$ 同样属于正常色散，反常色散只出现在共振的邻域内（与 §8.6.2 正文一致）。
 
 反常色散意味着群速度可以超过相速度，但信号速度不超过 $c$（因果性限制）。\qedsymbol
 
@@ -7338,11 +7391,11 @@ $P \propto \omega^4$ & 辐射功率频率依赖 \\
 \begin{ocg}{答案}{ocg答案9}{off}
   \textit{解答：} $\omega = 2\pi f = 6.28\times 10^8 \,\si{rad/s}$。
 
-  $\langle P \rangle = \dfrac{\muz p_0^2\omega^4}{12\pi c} = \dfrac{4\pi\times 10^{-7} \times (10^{-9})^2 \times (6.28\times 10^8)^4}{12\pi \times 3\times 10^8} \approx \SI{1.7e-8}{W}$
+  $\langle P \rangle = \dfrac{\muz p_0^2\omega^4}{12\pi c} = \dfrac{4\pi\times 10^{-7} \times (10^{-9})^2 \times (6.28\times 10^8)^4}{12\pi \times 3\times 10^8} = \dfrac{1.96\times 10^{11}}{1.13\times 10^{10}} \approx \SI{17}{W}$
 
   \textit{量纲校验}：$[\mu_0 p_0^2 \omega^4/c] = (\mathrm{H/m})(\mathrm{C\cdot m})^2\mathrm{s}^{-4}/(\mathrm{m/s}) = \mathrm{W}$。$\checkmark$
 
-  \textit{物理解读}：功率虽小，但以球面波扩散，在 1 km 处的能流密度 $\langle S\rangle = \langle P\rangle/(4\pi r^2) \approx 10^{-15}\,\si{W/m^2}$——接收机灵敏度（约 $10^{-15}\sim10^{-13}\,\si{W/m^2}$）恰好能捕捉到这个量级，这就是无线通信可行的物理基础。
+  \textit{物理解读}：按球面扩散，$1$ km 处能流密度 $\langle S\rangle = \langle P\rangle/(4\pi r^2) \approx 1.4\times10^{-6}\,\si{W/m^2}$，仍远高于典型接收机灵敏度（$10^{-15}\sim10^{-13}\,\si{W/m^2}$）——这正是 100 MHz 波段通信覆盖半径可达数十公里的原因；真正苛刻的是深空通信：距离增到 $10^{6}$ km 量级时 $\langle S\rangle$ 才降到 $10^{-18}\,\si{W/m^2}$ 上下。
 \end{ocg}
 
 \item 电偶极子 $\vect{p}(t) = p_0\ee^{-\ii\omega t}\unitvec{z}$ 沿 $z$ 轴放置。求辐射最强的方向和辐射为零的方向，并说明 $\theta = \pi/2$ 处 $\vecE$ 的振动方向。
@@ -7461,7 +7514,7 @@ $\lap G = \dfrac{1}{4\pi r}\lap\delta(t - r/c) + 2\grad\left(\dfrac{1}{4\pi r}\r
 
 利用 $\lap(1/r) = -4\pi\delta^{(3)}(\vect{r})$：
 
-$\lap G = \dfrac{1}{4\pi r}\delta''(t - r/c)/c^2 - \dfrac{2}{4\pi r^2}\delta'(t - r/c)/c - 4\pi\delta^{(3)}(\vect{r})\delta(t - r/c)$。
+$\lap G = \dfrac{1}{4\pi r}\dfrac{\delta''(t - r/c)}{c^2} - \dfrac{2}{4\pi r^2 c}\delta'(t - r/c) + \dfrac{2}{4\pi r^2 c}\delta'(t - r/c) - \delta^{(3)}(\vect{r})\delta(t - r/c)$（两个含 $\delta'$ 的项相互抵消）。
 
 时间导数：$\partial_t^2 G = \delta''(t - r/c)/(4\pi r)$。
 
@@ -7479,7 +7532,7 @@ $\lap G = \dfrac{1}{4\pi r}\delta''(t - r/c)/c^2 - \dfrac{2}{4\pi r^2}\delta'(t 
 
 拉莫尔公式：$P = \dfrac{e^2 a^2}{6\pi\eps_0 c^3} = \dfrac{e^4 B^2 v^2}{6\pi\eps_0 m^2 c^3}$。
 
-辐射频率：基频为回旋频率 $\omega_c$，但由于相对论性聚束效应（即使非相对论也有高次谐波），辐射谱包含 $\omega_c$ 的整数倍。对于非相对论电子，辐射功率主要集中在基频 $\omega_c$ 附近。\qedsymbol
+辐射频率：非相对论电子做匀速圆周运动，其偶极矩按单一频率 $\omega_c$ 振荡（$|\vect{v}|$ 恒定），辐射谱就是\textbf{单频} $\omega_c$，不存在高次谐波——谐波只出现在相对论情形（同步辐射的聚束效应）或磁场非均匀时，本题范围内不涉及。\qedsymbol
 
 [量纲校验] $[P] = [W]$，$[e^2 a^2/(\eps_0 c^3)] = [C^2][L^2T^{-4}]/([F/m][L^3T^{-3}]) = [ML^2T^{-3}] = [W]$，一致。\qedsymbol
 
@@ -7598,7 +7651,7 @@ x^\mu x_\mu = x^0 x_0 + x^1 x_1 + x^2 x_2 + x^3 x_3 = ct\cdot ct + x\cdot(-x) + 
 \]
 于是达朗贝尔算子可写成：
 \[
-\Box = \partial_\mu\partial^\mu = \frac{1}{c^2}\frac{\partial^2}{\partial t^2} - \lap
+\Box = \lap - \frac{1}{c^2}\frac{\partial^2}{\partial t^2} = -\partial_\mu\partial^\mu
 \]
 \end{example}
 
@@ -7641,7 +7694,7 @@ E_y/c & B_z & 0 & -B_x \\
 E_z/c & -B_y & B_x & 0
 \end{pmatrix}
 \]
-这正是定义\ref{def:field-tensor-v2}中给出的矩阵形式。可见电磁场张量将六个独立的场分量（$E_x,E_y,E_z,B_x,B_y,B_z$）编码为一个紧凑的反对称四维二阶张量。
+这正是定义\ref{def:field-tensor-v2}中给出的矩阵形式。可见，电磁场张量把六个独立分量（$E_x,E_y,E_z$ 与 $B_x,B_y,B_z$）统一编码为一个紧凑的反对称四维二阶张量。
 \end{example}
 
 \section{洛伦兹变换}
@@ -7684,18 +7737,18 @@ E_z/c & -B_y & B_x & 0
 电磁场张量 $F^{\mu\nu}$ 的两个独立洛伦兹不变量可构造如下：
 \begin{align}
 I_1 &= \frac{1}{2}F_{\mu\nu}F^{\mu\nu} = B^2 - \frac{E^2}{c^2} \label{eq:invariant1} \\
-I_2 &= \frac{1}{4}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma} = \frac{\vecE\cdot\vecB}{c} \label{eq:invariant2}
+I_2 &= \frac{1}{8}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma} = \frac{\vecE\cdot\vecB}{c} \label{eq:invariant2}
 \end{align}
 其中 $\epsilon_{\mu\nu\lambda\sigma}$ 是四维 Levi-Civita 符号（$\epsilon_{0123}=+1$），在洛伦兹变换下按赝张量规律变换，保证 $I_2$ 为真标量。
 
-\textbf{符号约定（全书统一）}：度规 $(+,-,-,-)$、$A^\mu = (\phi/c, \vecA)$ 下 $F^{0i} = -E_i/c$、$F^{ij} = -\varepsilon_{ijk}B_k$；由此 $F_{\mu\nu}F^{\mu\nu} = 2(B^2 - E^2/c^2)$、$\frac12 F_{\mu\nu}F^{\mu\nu} = B^2 - E^2/c^2$。$\epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = -8\vecE\cdot\vecB/c$（Jackson 记号），本书 $I_2$ 按上式定义使 $I_2 = \vecE\cdot\vecB/c$。注意：其他教材（如 Griffiths）可能定义 $I_1$ 不带 $1/2$ 系数或 $I_2$ 反号——物理结论（$I_1$ 判场型、$I_2$ 判正交性）不受影响，对照阅读时以定义式为准。
+\textbf{符号约定（全书统一）}：度规 $(+,-,-,-)$、$A^\mu = (\phi/c, \vecA)$ 下 $F^{0i} = -E_i/c$、$F^{ij} = -\varepsilon_{ijk}B_k$；由此 $F_{\mu\nu}F^{\mu\nu} = 2(B^2 - E^2/c^2)$、$\frac12 F_{\mu\nu}F^{\mu\nu} = B^2 - E^2/c^2$。按上述约定逐项展开得 $\epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = +8\vecE\cdot\vecB/c$（注意：Jackson 取 $F^{0i}=+E_i$，同一运算给出 $-8\vecE\cdot\vecB/c$，切勿混用），本书 $I_2$ 按上式定义（系数 $1/8$）使 $I_2 = \vecE\cdot\vecB/c$。注意：其他教材（如 Griffiths）可能定义 $I_1$ 不带 $1/2$ 系数或 $I_2$ 反号——物理结论（$I_1$ 判场型、$I_2$ 判正交性）不受影响，对照阅读时以定义式为准。
 \end{theorem}
 
 \begin{insight}{两个不变量的物理意义}{invariant-physics-v2}
 $I_1$ 和 $I_2$ 在所有惯性系中取值相同，这是电磁场最深刻的内禀性质之一。它们的符号和大小决定了场在不同参考系中的"可消除性"：
 \begin{itemize}
 \item \textbf{当 $I_1<0$（即 $E>cB$）}：场以电场为主导。总可以找到一个洛伦兹参考系，使得其中 $B=0$（纯电场）。这对应于 $E>cB$ 的类时场型。
-\item \textbf{当 $I_1>0$（即 $B>E/c$）}：场以磁场为主导。总可以找到一个洛伦兹参考系，使得其中 $E=0$（纯磁场）。这对应于 $B>E/c$ 的类离场型。
+\item \textbf{当 $I_1>0$（即 $B>E/c$）}：场以磁场为主导。总可以找到一个洛伦兹参考系，使得其中 $E=0$（纯磁场）。这对应于 $B>E/c$ 的类空场型（与上一条“类时场型”配对）。
 \item \textbf{当 $I_2=0$（即 $\vecE\perp\vecB$）}：电场与磁场互相垂直。由于 $I_2$ 是洛伦兹不变量，若在某一个参考系中 $\vecE\perp\vecB$，则在\textbf{任何}惯性参考系中二者都保持垂直。
 \item \textbf{当 $I_2\neq 0$（即 $\vecE$ 与 $\vecB$ 不垂直）}：总可以找到参考系使二者平行（$\vecE\parallel\vecB$）。当 $I_1<0$ 时，平行系中 $E>cB$；当 $I_1>0$ 时，平行系中 $B>E/c$。
 \end{itemize}
@@ -7866,13 +7919,13 @@ j^\mu = (c\rho, \vecJ)
 \]
 达朗贝尔方程可写成：
 \[
-\Box A^\mu = \muz j^\mu
+\Box A^\mu = -\muz j^\mu
 \]
-其中 $\Box = \partial_\mu \partial^\mu = \frac{1}{c^2}\frac{\partial^2}{\partial t^2} - \lap$ 是达朗贝尔算子。
+其中 $\Box = \lap - \frac{1}{c^2}\frac{\partial^2}{\partial t^2} = -\partial_\mu\partial^\mu$ 是达朗贝尔算子（本书统一约定，见第7章 §7.1.5）。
 \end{theorem}
 
 \begin{insight}{为什么四维势的协变形式如此优美}{4d-potential-beauty-v2}
-在三维语言中，洛伦兹规范 $\divg\vecA + \frac{1}{c^2}\frac{\partial\phi}{\partial t} = 0$ 看起来像是两个不同物理量之间的"拼凑"。但在四维语言中，它简化为 $\partial_\mu A^\mu = 0$——一个标量方程，在洛伦兹变换下保持不变。同样，两个达朗贝尔方程（一个标量、一个矢量）合并为一个四维矢量方程 $\Box A^\mu = \muz j^\mu$。这种简洁性正是协变形式的力量。
+在三维语言中，洛伦兹规范 $\divg\vecA + \frac{1}{c^2}\frac{\partial\phi}{\partial t} = 0$ 看起来像是两个不同物理量之间的"拼凑"。但在四维语言中，它简化为 $\partial_\mu A^\mu = 0$——一个标量方程，在洛伦兹变换下保持不变。同样，两个达朗贝尔方程（一个标量、一个矢量）合并为一个四维矢量方程 $\Box A^\mu = -\muz j^\mu$。这种简洁性正是协变形式的力量。
 \end{insight}
 
 \section{协变形式的麦克斯韦方程组}
@@ -7982,7 +8035,7 @@ $\vect{F} = q(\vecE + \vect{v}\times\vecB)$ & 洛伦兹力 \\
 由电磁场张量 $F^{\mu\nu}$ 可以构造两个洛伦兹不变量：
 \begin{align*}
 \mathcal{I}_1 &= F_{\mu\nu}F^{\mu\nu} = 2\left(\frac{E^2}{c^2} - B^2\right) \\
-\mathcal{I}_2 &= \epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = -\frac{8}{c}\vecE\cdot\vecB
+\mathcal{I}_2 &= \epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = +\frac{8}{c}\vecE\cdot\vecB
 \end{align*}
 \end{theorem}
 
@@ -8070,7 +8123,7 @@ $\mathcal{I}_2 = 0$ 时，$\vecE\perp\vecB$，也是平面波的特征。
 \textbf{二、填空题}
 \begin{enumerate}[label=\arabic*.,resume]
 \item 洛伦兹因子 $\gamma = $ \underline{$1/\sqrt{1-v^2/c^2}$}。
-\item 达朗贝尔算符 $\Box = $ \underline{$\partial^\mu\partial_\mu = \lap - \frac{1}{c^2}\frac{\partial^2}{\partial t^2}$}。
+\item 达朗贝尔算符 $\Box = $ \underline{$\lap - \frac{1}{c^2}\frac{\partial^2}{\partial t^2} = -\partial^\mu\partial_\mu$}。
 \item 洛伦兹规范在协变形式下写为 \underline{$\partial_\mu A^\mu = 0$}。
 \end{enumerate}
 \end{miniquiz}
@@ -8103,7 +8156,11 @@ $\mathcal{I}_2 = 0$ 时，$\vecE\perp\vecB$，也是平面波的特征。
 \item \textbf{基础} 在静止系 $S$ 中只有电场 $\vecE=(0,E_0,0)$，求沿 $x$ 方向以速度 $v$ 运动的参考系 $S'$ 中的 $\vecE'$ 和 $\vecB'$。
 \item \textbf{提高} 写出四维电磁势 $A^\mu=(\phi/c,\vecA)$，证明在洛伦兹规范下 $\partial_\mu A^\mu=0$ 等价于 $\nabla\cdot\vecA+\muz\eps_0\partial\phi/\partial t=0$。
 \item \textbf{提高} 从协变麦克斯韦方程 $\partial_\mu F^{\mu\nu}=\muz j^\nu$ 出发，取 $\nu=0$ 和 $\nu=i$，分别还原高斯定律和安培-麦克斯韦定律的三维形式。
-\item \textbf{挑战} 证明：电磁场张量 $F^{\mu\nu}$ 的两个洛伦兹不变量 $\frac{1}{2}F_{\mu\nu}F^{\mu\nu}=B^2-E^2/c^2$ 和 $\frac{1}{4}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma}=\vecE\cdot\vecB/c$ 在任何惯性系中取值相同。讨论 $\vecE\perp\vecB$ 和 $\vecE\parallel\vecB$ 的物理意义。
+\item \textbf{挑战} 证明：电磁场张量 $F^{\mu\nu}$ 的两个洛伦兹不变量
+\[
+\frac{1}{2}F_{\mu\nu}F^{\mu\nu}=B^2-\frac{E^2}{c^2}, \qquad \frac{1}{8}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma}=\frac{\vecE\cdot\vecB}{c}
+\]
+在任何惯性系中取值相同。讨论 $\vecE\perp\vecB$ 与 $\vecE\parallel\vecB$ 的物理意义。
 \end{enumerate}
 \newpage
 \begin{center}\small \hyperlink{ch9-goal}{上一章：第9章}\end{center}
@@ -8188,11 +8245,11 @@ B'_z &= \gamma(B_z - vE_y/c^2) = -\gamma v E_0/c^2
 \partial_\mu F^{\mu 0} &= \muz j^0 \\
 \partial_i F^{i0} &= \muz c\rho \quad (i=1,2,3)
 \end{align*}
-由 $F^{i0} = -E^i/c$（电磁场张量定义），得：
+由 $F^{i0} = -F^{0i} = +E^i/c$（场张量反对称性），得：
 \begin{align*}
-\partial_i \left(-\frac{E^i}{c}\right) &= \muz c\rho \\
--\frac{1}{c}\divg\vecE &= \muz c\rho \\
-\divg\vecE &= -\muz c^2\rho = \frac{\rho}{\eps_0}
+\partial_i \left(+\frac{E^i}{c}\right) &= \muz c\rho \\
+\frac{1}{c}\divg\vecE &= \muz c\rho \\
+\divg\vecE &= \muz c^2\rho = \frac{\rho}{\eps_0}
 \end{align*}
 这正是高斯定律。
 
@@ -8218,12 +8275,17 @@ B'_z &= \gamma(B_z - vE_y/c^2) = -\gamma v E_0/c^2
 [解答] 展开 $F_{\mu\nu}F^{\mu\nu}$。由 $F^{0i} = -E_i/c$ 与 $F_{0i} = -F^{0i} = E_i/c$（度规 $(+,-,-,-)$ 降指标），时间-空间分量的贡献：
 \begin{align*}
 F_{\mu\nu}F^{\mu\nu} &= 2\left(F_{01}F^{01} + F_{02}F^{02} + F_{03}F^{03}\right) + 2\left(F_{12}F^{12} + F_{23}F^{23} + F_{31}F^{31}\right) \\
-&= 2\left(\frac{E_x}{c}\cdot\frac{-E_x}{c} + \frac{E_y}{c}\cdot\frac{-E_y}{c} + \frac{E_z}{c}\cdot\frac{-E_z}{c}\right) + 2\left((-B_z)(-B_z) + (-B_x)(-B_x) + (-B_y)(-B_y)\right) \\
+&= 2\left(\frac{E_x}{c}\cdot\frac{-E_x}{c} + \frac{E_y}{c}\cdot\frac{-E_y}{c} + \frac{E_z}{c}\cdot\frac{-E_z}{c}\right) \\
+&\quad + 2\left((-B_z)(-B_z) + (-B_x)(-B_x) + (-B_y)(-B_y)\right) \\
 &= -2\frac{E^2}{c^2} + 2B^2 = 2\left(B^2 - \frac{E^2}{c^2}\right)
 \end{align*}
 因此 $\frac{1}{2}F_{\mu\nu}F^{\mu\nu} = B^2 - E^2/c^2 \equiv I_1$。
 
-第二个不变量利用Levi-Civita符号：$\frac{1}{4}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma} = \vecE\cdot\vecB/c \equiv I_2$。
+第二个不变量利用 Levi-Civita 符号计算：
+\[
+\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma} = +\frac{8\vecE\cdot\vecB}{c}
+\]
+故 $\frac{1}{8}\epsilon_{\mu\nu\lambda\sigma}F^{\mu\nu}F^{\lambda\sigma} = \vecE\cdot\vecB/c \equiv I_2$。
 
 物理意义：
 \begin{itemize}
@@ -8381,7 +8443,7 @@ $e$ & $1.602\times 10^{-19}\,\text{C}$ & $4.803\times 10^{-10}\,\text{esu}$ \\
 
 SI制中 $F = q_1 q_2 / (4\pi\eps_0 r^2)$，力的单位是牛顿（N）。
 
-转换关系：$1\,\text{N} = 10^5\,\text{dyn}$，$q_{\text{SI}} = q_{\text{G}}/\sqrt{4\pi\eps_0}$（静电单位换算）。
+转换关系：$1\,\text{N} = 10^5\,\text{dyn}$，$q_{\text{SI}} = q_{\text{G}}/\sqrt{4\pi\eps_0}$；电荷单位换算为 $1\,\text{esu} = 3.3356\times 10^{-10}\,\text{C}$（即 $q_{\text{SI}} = 3.3356\times10^{-10}\,q_{\text{G}}$）。
 
 因此：$F_{\text{SI}} = \dfrac{1}{4\pi\eps_0}\dfrac{q_{\text{SI},1}q_{\text{SI},2}}{r^2}$，其中 $1/(4\pi\eps_0) \approx 8.99\times 10^9\,\text{N}\cdot\text{m}^2/\text{C}^2$。
 
@@ -8466,7 +8528,7 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 \item \textbf{号差的统一性}：本书采用 $(+,-,-,-)$。若使用 $(-,+,+,+)$，度规分量的正负号全部反转，所有降标/升标的结果也会改变。\textbf{必须全教材统一}。
 \item \textbf{协变与逆变}：上标逆变（如 $x^\mu$），下标协变（如 $x_\mu=\eta_{\mu\nu}x^\nu$）。时空分量的逆变/协变只差一个负号，但混合指标的张量运算规则不变。
 \item \textbf{E和B的相对性}：在某一参考系中纯静电场，换到另一参考系会出现磁场；反之亦然。$\vecE$ 和 $\vecB$ 是统一的电磁场张量 $F^{\mu\nu}$ 的不同分量。
-\item \textbf{四维势的规范}：洛伦兹规范 $\partial_\mu A^\mu=0$ 在协变形式中极其简洁，但本质是三维库仑规范在相对论框架下的推广。
+\item \textbf{四维势的规范}：洛伦兹规范 $\partial_\mu A^\mu=0$ 在协变形式中极其简洁，是\textbf{相对论协变}的规范选择；库仑规范 $\nabla\cdot\vecA=0$ 反而\textbf{不是}协变的（其标势由电荷瞬时确定），两者是并列的两种规范而非推广关系，详见 §7.1.5。
 \item \textbf{光速不可超越}：任何携带信息或能量的传播速度均不能超过 $c$。电磁场本身以 $c$ 传播，但相速度（$v_p=\omega/k$）可以超光速（如波导中），这不携带信息。
 \end{enumerate}
 
@@ -8614,7 +8676,7 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 \textbf{中文} & \textbf{英文} & \textbf{符号} \\
 \midrule
 法拉第电磁感应定律 & Faraday's law of induction & $\curl\vecE=-\partial\vecB/\partial t$ \\
-位移电流 & displacement current & $\vecJ_D=\muz\eps_0\partial\vecE/\partial t$ \\
+位移电流 & displacement current & $\vecJ_D=\eps_0\partial\vecE/\partial t=\partial\vect{D}/\partial t$ \\
 坡印廷矢量 & Poynting vector & $\vect{S}=\vecE\times\vect{H}$ \\
 麦克斯韦应力张量 & Maxwell stress tensor & $T_{ij}$ \\
 电磁场动量 & electromagnetic momentum & $\vect{g}=\muz\eps_0\vect{S}$ \\
@@ -8729,20 +8791,20 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 
 \begin{center}
 \small
-\begin{tabular}{@{}clll@{}}
+\begin{tabular}{@{}cll>{\raggedright\arraybackslash}p{4.2cm}@{}}
 \toprule
 \textbf{章} & \textbf{选择题} & \textbf{判断题} & \textbf{填空题} \\
 \midrule
-第1章 矢量分析 & 1-B \quad 2-C \quad 3-C & 4-正确 \quad 5-错误 \quad 6-错误 & — \\
-第2章 静电学 & 1-B \quad 2-A \quad 3-B & — & — \\
+第1章 数学预备知识 & 1-B \quad 2-C \quad 3-C & 4-正确 \quad 5-错误 \quad 6-错误 & — \\
+第2章 静电学基础 & 1-B \quad 2-A \quad 3-B & — & 4-$\curl\vecE=\vect{0}$；5-$\vecE=-\grad\phi$；6-$\lap\phi=-\rho/\eps_0$；7-$\sigma/\eps_0$（法向） \\
 第3章 电介质与边界 & 1-B \quad 2-C \quad 3-B & 4-正确 \quad 5-错误 & — \\
 第4章 边值问题 & 1-C \quad 2-C \quad 3-B & — & 4-电势/电势梯度 \quad 5-贝塞尔 \\
 第5章 静磁学 & 1-A \quad 2-B \quad 3-B & 4-正确 \quad 5-错误 & — \\
 第6章 磁介质 & 1-B \quad 2-B \quad 3-A & — & — \\
 第7章 麦克斯韦方程组 & 1-B \quad 2-B \quad 3-A & 4-正确 \quad 5-错误 & — \\
-第8章 电磁波传播 & 1-B \quad 2-A \quad 3-B & 4-垂直（$\vecE$、$\vecB$ 均垂直于 $\vecK$） & — \\
+第8章 电磁波传播 & 1-B \quad 2-A \quad 3-B & — & 4-坡印廷（$\vecE\times\vecB/\muz$）；5-垂直、垂直 \\
 第9章 电磁波辐射 & 1-C \quad 2-B \quad 3-B & 4-正确 \quad 5-错误 & — \\
-第10章 相对论电动力学 & 1-C \quad 2-A \quad 3-B & — & — \\
+第10章 相对论电动力学 & 1-C \quad 2-A \quad 3-B & — & 4-$1/\sqrt{1-v^2/c^2}$；5-$\lap-\partial_t^2/c^2$；6-$\partial_\mu A^\mu=0$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -8827,7 +8889,7 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 \bottomrule
 \end{tabular}
 \end{center}
-\textbf{阅读提示}：郭硕鸿篇幅紧凑、推导精炼，适合对照复习；Griffiths 例题丰富、物理图像详尽，适合第一遍学习卡壳时查阅。两书的符号约定与本书基本一致（SI 单位制），但 Griffiths 的四维记号用 $x^\mu = (ct, \vect{r})$ 排列顺序与本书 $(\phi/c, \vect{A})$ 略有差异，对照时注意指标位置。
+\textbf{阅读提示}：郭硕鸿篇幅紧凑、推导精炼，适合对照复习；Griffiths 例题丰富、物理图像详尽，适合第一遍学习卡壳时查阅。两书的符号约定与本书基本一致（SI 单位制），$x^\mu=(ct,\vect{r})$ 与 $A^\mu=(\phi/c,\vecA)$ 的排列也相同；唯一要留心的是 $F^{\mu\nu}$ 中电场的符号约定（不同教材可能取 $F^{0i}=\pm E_i/c$），对照时一律以定义式为准。
 \end{tip}
 
 
