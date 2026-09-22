@@ -2,284 +2,541 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>电动力学 — 勘误与反馈</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { font-family: "微软雅黑", "Microsoft YaHei", "Segoe UI", sans-serif; background: #0b0f1a; color: #e0e0e0; min-height: 100vh; }
-
-.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 80% 20%, #0d1b3a 0%, transparent 60%), #0a0e1a; }
-.container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-/* 导航 */
-.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.nav-logo { font-size: 1.2rem; font-weight: 700; color: #2962FF; }
-.nav-links { display: flex; gap: 24px; }
-.nav-links a { color: #9ab; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
-.nav-links a:hover { color: #2962FF; }
-
-.page-title { text-align: center; padding: 40px 0 20px; }
-.page-title h1 { font-size: 1.8rem; color: #fff; }
-.page-title p { color: #789; margin-top: 8px; }
-
-/* 内容区域 */
-.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 20px 0 50px; }
-@media (max-width: 800px) { .content-grid { grid-template-columns: 1fr; } }
-
-.card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; }
-.card h2 { font-size: 1.2rem; color: #fff; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
-
-/* 勘误表格 */
-.errata-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.errata-table th { text-align: left; padding: 10px 12px; background: rgba(255,255,255,0.04); color: #abc; font-weight: 600; border-bottom: 1px solid #1f2937; }
-.errata-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #ccd; vertical-align: top; }
-.errata-table tr:last-child td { border-bottom: none; }
-.errata-table .err-sev { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-.sev-typo { background: rgba(41,98,255,0.15); color: #2962FF; }
-.sev-math { background: rgba(230,81,0,0.15); color: #E65100; }
-.sev-major { background: rgba(183,28,28,0.15); color: #B71C1C; }
-.errata-table .old { color: #B71C1C; text-decoration: line-through; }
-.errata-table .new { color: #2E7D32; }
-
-/* 表单 */
-.form-group { margin-bottom: 14px; }
-.form-group label { display: block; font-size: 0.9rem; color: #abc; margin-bottom: 6px; }
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #1f2937; background: #111827; color: #e0e0e0; font-size: 0.9rem; font-family: inherit; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2962FF; }
-.form-group textarea { min-height: 100px; resize: vertical; }
-.btn { padding: 10px 24px; border-radius: 8px; border: none; background: #2962FF; color: #fff; font-size: 0.95rem; cursor: pointer; transition: background 0.2s; }
-.btn:hover { background: #1e4bd8; }
-
-.submit-msg { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; }
-.submit-msg.success { background: rgba(46,125,50,0.15); color: #2E7D32; border: 1px solid rgba(46,125,50,0.3); display: block; }
-
-/* 版本历史 */
-.version-list { list-style: none; }
-.version-list li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-.version-list li:last-child { border-bottom: none; }
-.version-list .v-tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin-right: 8px; }
-.v-current { background: rgba(46,125,50,0.2); color: #2E7D32; }
-.v-old { background: rgba(255,255,255,0.06); color: #789; }
-.version-list .v-date { color: #678; font-size: 0.8rem; margin-left: 8px; }
-.version-list .v-desc { color: #abc; font-size: 0.85rem; margin-top: 4px; }
-
-.footer { text-align: center; padding: 30px 0; color: #567; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 20px; }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>勘误记录 — 电动力学 · 自学教材</title>
+<meta name="description" content="《电动力学》自学教材勘误记录：逐条列出已核实的问题，含位置、原文、问题分析与修正方案。">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<div class="bg"></div>
-<div class="container">
 
-  <nav class="nav-bar">
-    <div class="nav-logo">📝 勘误</div>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="reader.html">阅读</a>
-      <a href="tools.html">工具</a>
-      <a href="roadmap.html">路线</a>
-      <a href="appendix-nav.html">附录</a>
-    </div>
-  </nav>
+<a class="skip-link" href="#main">跳转到主内容</a>
 
-  <div class="page-title">
-    <h1>勘误与反馈</h1>
-    <p>已修正的错误列表 + 读者提交勘误通道</p>
+<header class="site-header">
+  <div class="wrap inner">
+    <a class="brand" href="index.html">
+      <span class="mark">电动力学</span>
+      <span class="sub">自学教材 · v2.15</span>
+    </a>
+    <nav class="site-nav" aria-label="站点导航">
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="reader.html">阅读</a></li>
+        <li><a href="roadmap.html">学习路线</a></li>
+        <li><a href="formulas.html">公式速查</a></li>
+        <li><a href="tools.html">计算工具</a></li>
+        <li><a href="errata.html" aria-current="page">勘误</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
 
-  <div class="content-grid">
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <h1>勘误记录</h1>
+      <p class="lede">
+        本页只收录<strong>经独立复核确认</strong>的问题。每条都给出源文件行号、所在页码、
+        问题分析与可直接采用的修正文本，便于逐条核对。
+      </p>
+    </div>
 
-    <!-- 勘误表 -->
-    <div class="card">
-      <h2>📋 已修正错误列表</h2>
-      <div style="overflow-x:auto;">
-        <table class="errata-table">
-          <thead>
-            <tr><th>位置</th><th>严重程度</th><th>原文</th><th>修正</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>第2章 p.47 式(2.31)</td>
-              <td><span class="err-sev sev-math">公式</span></td>
-              <td class="old">∇²φ = ρ/ε₀</td>
-              <td class="new">∇²φ = −ρ/ε₀</td>
-            </tr>
-            <tr>
-              <td>第4章 p.112 正文</td>
-              <td><span class="err-sev sev-typo">笔误</span></td>
-              <td class="old">位移电流密度 J_d = ε∂E/∂t</td>
-              <td class="new">位移电流密度 J_d = ∂D/∂t</td>
-            </tr>
-            <tr>
-              <td>第5章 p.156 式(5.14)</td>
-              <td><span class="err-sev sev-math">公式</span></td>
-              <td class="old">k = ω√(μ₀ε₀)</td>
-              <td class="new">k = ω√(με)</td>
-            </tr>
-            <tr>
-              <td>第6章 p.203 图6.7</td>
-              <td><span class="err-sev sev-typo">图示</span></td>
-              <td class="old">短路边标注为 z=0</td>
-              <td class="new">短路边标注为 z=L</td>
-            </tr>
-            <tr>
-              <td>第7章 p.245 式(7.8)</td>
-              <td><span class="err-sev sev-major">重要</span></td>
-              <td class="old">截止频率 f_c = c/(2a)</td>
-              <td class="new">截止频率 f_c = c/(2a√με)</td>
-            </tr>
-            <tr>
-              <td>附录 H p.382</td>
-              <td><span class="err-sev sev-typo">笔误</span></td>
-              <td class="old">μ₀ = 4π×10⁻⁷ H/m ≈ 1.257×10⁻⁶</td>
-              <td class="new">μ₀ = 4π×10⁻⁷ H/m ≈ 1.2566×10⁻⁶</td>
-            </tr>
-          </tbody>
-        </table>
+    <p class="note" style="margin-bottom:1.5rem">
+      <strong>复核方式：</strong>物理结论逐式与教材自身正文及其他章节对照；
+      数值结论用 Python（sympy / numpy）独立复算；可符号验证的恒等式一律做符号验算。
+      凡是教材自述「已修正」的项目，一律重新独立验证，不因其自述而采信。
+    </p>
+
+    <!-- 汇总 -->
+    <div class="card" style="margin-bottom:1.5rem">
+      <h2>汇总</h2>
+      <div class="grid grid-4" id="summaryStats" style="margin-top:.5rem"></div>
+      <p style="color:var(--ink-3);font-size:var(--step--1);margin-top:1rem" id="scopeNote"></p>
+    </div>
+
+    <!-- 筛选 -->
+    <div class="card" style="margin-bottom:1.25rem">
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end">
+        <div class="field" style="flex:1;min-width:200px;margin:0">
+          <label for="fScope">按范围筛选</label>
+          <select id="fScope"><option value="">全部范围</option></select>
+        </div>
+        <div class="field" style="flex:1;min-width:200px;margin:0">
+          <label for="fSev">按严重程度筛选</label>
+          <select id="fSev">
+            <option value="">全部级别</option>
+            <option value="blocker">blocker（会建立错误物理图像）</option>
+            <option value="high">high（公式 / 数值 / 概念错误）</option>
+            <option value="medium">medium（跳步、引用、表述缺失）</option>
+            <option value="low">low（笔误、排版、文字）</option>
+          </select>
+        </div>
+        <button class="btn" id="fReset" type="button">重置</button>
       </div>
     </div>
 
-    <!-- 提交勘误表单 -->
-    <div class="card">
-      <h2>✏️ 提交勘误</h2>
-      <form id="errataForm" onsubmit="return submitErrata(event)">
-        <div class="form-group">
-          <label>章节位置</label>
-          <select id="errChapter">
-            <option>第1章 矢量分析</option>
-            <option>第2章 静电场</option>
-            <option>第3章 静磁场</option>
-            <option>第4章 麦克斯韦方程</option>
-            <option>第5章 电磁波</option>
-            <option>第6章 传输线</option>
-            <option>第7章 波导</option>
-            <option>第8章 辐射</option>
-            <option>第9章 相对论电动力学</option>
-            <option>第10章 等离子体</option>
-            <option>附录</option>
-            <option>其他</option>
-          </select>
+    <!-- 列表 -->
+    <div id="errataList"></div>
+    <noscript>
+      <p class="note note-warn">
+        勘误列表需要 JavaScript 渲染。完整勘误报告同时保存在仓库的
+        <code>errata_report.md</code> 中，可直接查阅。
+      </p>
+    </noscript>
+
+    <!-- 提交 -->
+    <div class="card" style="margin-top:2.5rem">
+      <h2>提交新勘误</h2>
+      <p style="color:var(--ink-2);font-size:var(--step--1);margin-bottom:1rem">
+        本表单仅在本机记录（演示用途）。正式反馈请提交到 Git 仓库的 Issue。
+      </p>
+      <form id="errataForm">
+        <div class="grid grid-2">
+          <div class="field">
+            <label for="errChapter">章节位置</label>
+            <select id="errChapter"></select>
+          </div>
+          <div class="field">
+            <label for="errPage">页码 / 公式编号</label>
+            <input type="text" id="errPage" placeholder="例如：p.104 式(7.12)">
+          </div>
         </div>
-        <div class="form-group">
-          <label>页码 / 公式编号</label>
-          <input type="text" id="errPage" placeholder="例如：p.47 式(2.31)">
-        </div>
-        <div class="form-group">
-          <label>错误类型</label>
+        <div class="field">
+          <label for="errType">问题类型</label>
           <select id="errType">
-            <option>笔误/错别字</option>
             <option>公式错误</option>
+            <option>物理概念错误</option>
+            <option>数值 / 量纲错误</option>
+            <option>推导跳步</option>
+            <option>笔误 / 错别字</option>
             <option>图示错误</option>
-            <option>逻辑/推导问题</option>
+            <option>交叉引用错误</option>
             <option>其他</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>错误描述</label>
-          <textarea id="errDesc" placeholder="请描述发现的错误内容..."></textarea>
+        <div class="field">
+          <label for="errDesc">问题描述</label>
+          <textarea id="errDesc" rows="3" placeholder="请描述你发现的问题，尽可能给出原文与你的判断依据…"></textarea>
         </div>
-        <div class="form-group">
-          <label>建议修正（可选）</label>
-          <textarea id="errFix" placeholder="你认为应该如何修正..."></textarea>
+        <div class="field">
+          <label for="errFix">建议修正（可选）</label>
+          <textarea id="errFix" rows="2" placeholder="你认为应该如何修正…"></textarea>
         </div>
-        <div class="form-group">
-          <label>你的称呼（可选）</label>
-          <input type="text" id="errName" placeholder="匿名">
-        </div>
-        <button type="submit" class="btn">提交勘误</button>
-        <div class="submit-msg" id="submitMsg">✅ 勘误已记录，感谢你的反馈！（本地演示，未实际发送）</div>
+        <button class="btn btn-primary" type="submit">提交</button>
+        <p id="errataMsg" class="note" style="margin-top:1rem" hidden></p>
       </form>
     </div>
 
     <!-- 版本历史 -->
-    <div class="card" style="grid-column: 1 / -1;">
-      <h2>📜 版本历史</h2>
-      <ul class="version-list">
+    <div class="card" style="margin-top:1.25rem">
+      <h2>版本历史</h2>
+      <ul class="plain">
         <li>
-          <span class="v-tag v-current">v2.15</span>
-          <span class="v-date">2026-09-11</span>
-          <div class="v-desc">全书勘误（29 项）：物理错误 11 项（介质界面束缚电荷符号、超导球磁场、交流电容器功率、TE10 表面电流分布、色散区间判定、辐射功率数值等）、公式与推导缺陷 4 项、达朗贝尔算符记号统一、交叉引用与文字 12 项；详见仓库根目录 errata_report.md。</div>
+          <strong>v2.15</strong>
+          <span style="color:var(--ink-3);font-size:var(--step--1)">　2026-09</span>
+          <div style="color:var(--ink-2);font-size:var(--step--1)">
+            全书勘误、封面重设计与排版清理。详细清单见仓库 <code>errata_report.md</code>。
+          </div>
         </li>
         <li>
-          <span class="v-tag v-old">v2.14</span>
-          <span class="v-date">2026-09-10</span>
-          <div class="v-desc">仓库整理（清理编译中间产物）、封面版本号、PDF 元数据、勘误页版本历史更新。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.13</span>
-          <span class="v-date">2026-09-06</span>
-          <div class="v-desc">物理专业角度审查落实：磁偶极辐射适用条件、唯一性定理前提、勒让德正交归一推导、达朗贝尔算符跨教材提醒、格林函数构造。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.12</span>
-          <span class="v-date">2026-09-05</span>
-          <div class="v-desc">初学者建议落地：快速通道盒、随堂自测答案速查附录、本章新符号表。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.11</span>
-          <span class="v-date">2026-09-05</span>
-          <div class="v-desc">全书题目第二轮全覆盖重算：49道例题+50道习题解答逐道验算，全部通过。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.10</span>
-          <span class="v-date">2026-09-05</span>
-          <div class="v-desc">二轮审查修复：第2章题设跃变、第10章题设对齐、束缚电荷符号段重写。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.9</span>
-          <span class="v-date">2026-09-04</span>
-          <div class="v-desc">一轮审查修复：四极项符号、电流环推导、Lorenz/Lorentz辨名、相对论符号统一、缺字形替换。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.8</span>
-          <span class="v-date">2026-09-03</span>
-          <div class="v-desc">初学者体验优化：封面重绘（偶极场线-方程-电磁波）、版面密度11pt、引入动机框、解题思路三段式。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.7</span>
-          <span class="v-date">2026-09-03</span>
-          <div class="v-desc">六大维度优化：E/D/P与B/H/M对比表、章末自检清单、速查表前置、李纳-维谢尔势选学。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.6</span>
-          <span class="v-date">2026-09-02</span>
-          <div class="v-desc">全面质检与配图优化：11张TikZ图重绘、31处\par残留修复、sin²θ花瓣物理错误修复。</div>
-        </li>
-        <li>
-          <span class="v-tag v-old">v2.5</span>
-          <span class="v-date">2025-07-05</span>
-          <div class="v-desc">网络出版物专属版：彩色符号、可折叠内容、超链接系统、6个配套HTML页面。</div>
+          <strong>当前轮次</strong>
+          <span style="color:var(--ink-3);font-size:var(--step--1)">　进行中</span>
+          <div style="color:var(--ink-2);font-size:var(--step--1)">
+            对 v2.15 全文做独立复核（含对 v2.15 自述修正项的再验证），并重建配套站点。
+            本页列出的即为本轮已确认的结果。
+          </div>
         </li>
       </ul>
     </div>
-
   </div>
+</main>
 
-  <footer class="footer">
-    <p>电动力学自学教材 · 勘误与反馈 · 你的反馈帮助更多读者</p>
-  </footer>
-</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>《电动力学》自学教材 · 勘误记录</p>
+  </div>
+</footer>
 
+<script src="book-data.js"></script>
+<script src="assets/site.js"></script>
 <script>
-function submitErrata(e) {
-  e.preventDefault();
-  const data = {
-    chapter: document.getElementById('errChapter').value,
-    page: document.getElementById('errPage').value,
-    type: document.getElementById('errType').value,
-    desc: document.getElementById('errDesc').value,
-    fix: document.getElementById('errFix').value,
-    name: document.getElementById('errName').value || '匿名',
-    time: new Date().toISOString()
-  };
-  // 本地存储（演示）
-  const history = JSON.parse(localStorage.getItem('errataSubmissions') || '[]');
-  history.push(data);
-  localStorage.setItem('errataSubmissions', JSON.stringify(history));
-  document.getElementById('submitMsg').classList.add('success');
-  document.getElementById('errataForm').reset();
-  setTimeout(function() { document.getElementById('submitMsg').classList.remove('success'); }, 4000);
-  return false;
-}
+/* ------------------------------------------------------------------
+   勘误数据。字段说明：
+     id      唯一编号
+     scope   所属范围（用于筛选）
+     page    教材页码
+     line    源文件 electrodynamics_textbook_v2.tex 行号
+     sev     blocker | high | medium | low
+     title   一句话摘要
+     orig    原文
+     issue   问题分析
+     fix     建议修正
+   ------------------------------------------------------------------ */
+window.ERRATA = [
+  {
+    "id": "CH10-01",
+    "scope": "第10章 相对论电动力学",
+    "page": "p.150 附近",
+    "line": null,
+    "sev": "blocker",
+    "status": "fixed",
+    "title": "同一章内 F_μνF^μν 给出两个相反的值，连带「不变量符号→场型」结论表整表反向",
+    "orig": "（重复定理 lorentz-invariants）\n𝒥₁ = F_μνF^μν = 2(E²/c² − B²)\n且紧随其后的洞见写：「𝒥₁>0 ⇒ 存在参考系使 B=0；𝒥₁<0 ⇒ 使 E=0」",
+    "issue": "本章对同一个量给出两个相反的表达式。规范定义（本章前述定理、逐项展开的推导、本章核心公式小结、三维/四维对照表、附录）一致为 F_μνF^μν = 2(B² − E²/c²)，½F_μνF^μν = B² − E²/c²；而这个重复定理却写成 2(E²/c² − B²)，恰为其负值。更严重的是，随后的物理结论表也整体反向：按正确的不变量 I₁ = B² − E²/c²，应是「I₁>0（cB>E，磁场占优）⇒ 可使 E=0」，而原文写的是「I₁>0 ⇒ 使 B=0」，两条结论全部颠倒，与同章前述洞见直接冲突。",
+    "fix": "已修正：把重复定理改回与全书一致的约定（带 ½ 系数、取 B²−E²/c²），并把随后的三条结论按正确逻辑重写（I₁>0 ⇒ 可消去 E；I₁<0 ⇒ 可消去 B；I₁=0 ⇒ E=cB 无法消去任一场），同时加注与本章定义式的交叉引用。",
+    "evidence": "逐项展开复核：F_μνF^μν = 2Σ(F_0iF^0i) + 2Σ(F_ijF^ij) = 2(3·(−E²/c²)) + 2(3B²) = 2(B² − E²/c²)，与定理 8301 行的展开结果一致。另 5 处独立转述均为 B²−E²/c²，故错的是那一处重复定理。"
+  },
+  {
+    "id": "UI-01",
+    "scope": "配套站点 · 计算工具",
+    "page": "—",
+    "line": null,
+    "sev": "blocker",
+    "status": "fixed",
+    "title": "单位换算器 8 个量中 5 个因子错了量级（我自己引入的缺陷）",
+    "orig": "site.js: E 用 1/(100c)、D 与 P 共用同一个 4π·C/100、H 与 M 共用 1000/(4π)",
+    "issue": "本站在重建时自行推导的 SI⇄高斯换算因子有 5 个错误：E 小 10⁶ 倍；D 大 100 倍；P 既错 4π 又错 100 倍（P 在高斯制中不带 4π，不能与 D 合并）；H 取了倒数（错 6332 倍）；M 错 79577 倍。这会让读者用工具核对作业时得到完全错误的数值。",
+    "fix": "已修正：按基本定义重新推导全部 8 个因子，并在脚本加载时加入自检——任一因子偏离预期即在控制台报错，防止再次出现量级错误。同时修正工具页的「换算因子一览」表（原先 H/M 方向写反、D 与 P 错误合并）。",
+    "evidence": "独立推导并交叉验证（.build/verify_units.py）：电荷因子由「两个 1 statC 电荷相距 1 cm 斥力 1 dyn」定出，得 1 C = 2.99792458×10⁹ statC，与 e = 4.803205×10⁻¹⁰ esu 比对比值 1.000000；再用 σ=1 C/m² 的无限大带电面做物理自检，「SI 算完再换算」与「高斯制直接 4πσ」两条路径比值 1.00000000。"
+  },
+  {
+    "id": "OCG-01",
+    "scope": "第7章 麦克斯韦方程组",
+    "page": "p.103",
+    "line": 5555,
+    "sev": "high",
+    "status": "fixed",
+    "title": "§7.1.5 整节（含小节标题）被包在默认关闭的可折叠图层内",
+    "orig": "\\toggleButton{展开推导}{ocg推导}\n\\begin{ocg}{推导}{ocg推导}{off}\n\\subsection{规范条件与达朗贝尔方程}\n…（洛伦兹规范定义、两规范对比、达朗贝尔方程）…",
+    "issue": "§7.1.5 的整节内容连同小节标题本身都在一个默认关闭的图层内，其中含洛伦兹规范的**定义**、两种规范的**对比表**，以及**达朗贝尔方程**——后者是 STYLE_GUIDE §1.2 要求必须使用 equation 环境并加 label 的六个核心公式之一。读者按目录翻到该页只看到「展开推导」按钮、没有小节标题，容易误判该页为空。",
+    "fix": "已修正：把小节标题、引言段与一个「本节要点」提示移到图层之外，只把逐步推导保留在折叠层内。折叠的仅是补充推导，符合可折叠内容的本来用途。",
+    "evidence": "PDF 书签中确实存在「规范条件与达朗贝尔方程 → p.103」，说明 LaTeX 侧编号正常，问题在「内容被放进图层」这一结构选择。修复后编译 172 页、0 错误、0 Overfull、0 未定义引用。"
+  },
+  {
+    "id": "OCG-02",
+    "scope": "全书 · 印刷与导出",
+    "page": "全书",
+    "line": 47,
+    "sev": "high",
+    "status": "fixed",
+    "title": "全部 17 个可折叠图层缺 /Usage 字典，打印时答案与推导全部丢失",
+    "orig": "\\usepackage{ocgx2}",
+    "issue": "实测编译产物：17 个可选内容组全部缺 /Usage 字典，且 /D /OFF 列出全部 17 个（默认关闭）。按 PDF 规范 ISO 32000-1 §8.11.4.3，未定义 /Usage /Print 的图层按当前可见状态打印——读者若不先逐个点开按钮就直接打印或「导出为 PDF」，会丢失 10 组随堂自测答案、6 个挑战题块与 §7.1.5 整节。对一本自学教材而言，这直接造成练习闭环断裂（附录 H 只给填空/判断速查，详解都在图层内）。",
+    "fix": "已修正：导言区改为 \\usepackage[printocg=always]{ocgx2}，使每个图层写入 /Usage<</Print<</PrintState/ON>>>>。屏幕行为不变（仍默认折叠），打印时强制输出。",
+    "evidence": "修复前后实测对比（.build/check_print.py）：修复前 17 个图层 /Usage 全部缺失；修复后全部存在，PrintState 均为 /ON（答案 ×10、挑战 ×6、推导 ×1）。"
+  },
+  {
+    "id": "CH08-01",
+    "scope": "第8章 电磁波的传播",
+    "page": "p.124 附近",
+    "line": 6619,
+    "sev": "high",
+    "status": "fixed",
+    "title": "TE₁₀ 主模的 H_z 符号写错（+i 应为 −i）",
+    "orig": "H_z = \\frac{\\ii\\pi}{\\omega\\muz a} E_0 \\cos\\left(\\frac{\\pi x}{a}\\right) \\ee^{\\ii(k_z z - \\omega t)}",
+    "issue": "按书本自己印出的场分量代入麦克斯韦方程组，Faraday 定律的 x 分量与 H_x 吻合，但 Ampere 定律的 y 分量反解出的 ∂H_z/∂x 与所印的 H_z 恰好相差一个负号。换言之，印出的三个分量不能同时满足两个方程——H_z 的符号错了。",
+    "fix": "已修正：H_z 前的系数由 +i 改为 −i。",
+    "evidence": "sympy 相位量代数（.build/verify_ch08_hz.py）：以书本约定 e^{i(kz z−ωt)} 计算，书印 H_x 满足 Faraday 的 x 分量；而 Ampere 的 y 分量给出 ∂H_z/∂x 的系数，与书本 H_z 求导所得之比恰为 −1（前提是本章自己的色散关系 k_z²=ω²/c²−π²/a² 成立，即 ε₀μ₀ω²−k_z²=π²/a²）。"
+  },
+  {
+    "id": "CH08-03",
+    "scope": "第8章 电磁波的传播",
+    "page": "p.131 附近",
+    "line": 7041,
+    "sev": "high",
+    "status": "fixed",
+    "title": "洛伦兹色散模型的 dn/dω 漏掉决定符号的因子，导致「反常色散」无法得出",
+    "orig": "\\dfrac{dn}{d\\omega} = \\dfrac{Ne^2}{2\\eps_0 m}\\dfrac{2\\omega}{((\\omega_0^2 - \\omega^2)^2 + \\gamma^2\\omega^2)}",
+    "issue": "书中这个 dn/dω 在 ω>0 上**恒为正**（分母恒正、分子 2ω>0），因此永远得不出同一段文字所要求的「共振附近 dn/dω<0，即反常色散」。原文的「注意」甚至自己承认了这一点，却仍把它当作反常色散的依据，前后矛盾。根因是求导时丢掉了阻尼项带来的贡献。",
+    "fix": "已修正：补回分子中的方括号因子，dn/dω = (Ne²/2ε₀m)·2ω[(ω₀²−ω²)² − γ²ω₀²] / ((ω₀²−ω²)² + γ²ω²)²，并重写随后的讨论，说明符号由方括号决定、反常色散仅出现在 |ω−ω₀| ≲ γ/2 的邻域，且必须保留阻尼项。",
+    "evidence": "数值验证（.build/verify_ch08_dispersion.py）：原式在 ω∈(0,3] 上最小值 1.0×10⁻³（恒正）；而 n=Re√(1+χ) 的数值导数在 ω=0.98/1.00/1.02 处确为负。补回因子的解析式在 5 个测试点上符号与数值导数全部吻合。"
+  },
+  {
+    "id": "CH05-01",
+    "scope": "第5章 静磁学",
+    "page": "p.85",
+    "line": 4582,
+    "sev": "high",
+    "status": "fixed",
+    "title": "铁磁平面例题把 H 的法向性误记为「B 只有法向分量」",
+    "orig": "在铁磁表面 y=0 上，由对称性，B 只有 y 分量（垂直于表面），满足边界条件 H_1t=H_2t=0…",
+    "issue": "正确的是 **H 只有法向分量**（H_t=0），而 B 的切向分量只在表面上为零、在真空区内处处非零。原文用「B 只有 y 分量」描述求解区内的场，与同一句给出的 H_1t=H_2t=0 自相矛盾，也让读者无法用刚学过的 B_n 连续去定场。",
+    "fix": "已修正：改为「镜像电流的选取应使切向磁场为零：H 只有法向分量」，并明确「法向性属于 H 而非 B」「真空侧内部 B 一般同时含 x、y 分量」。",
+    "evidence": "独立复算（_t4_verify_all.py）：取导线 I 在 y=d、镜像 I′ 在 y=−d。只有 I′=+I 能使 H_t=B_x/μ₀=0 在表面成立（与「铁磁体吸引导线」结论一致）；但真空区内 B_x = −Iμ₀y/(π(x²+y²)) 一般非零，故「B 只有 y 分量」不成立。"
+  },
+  {
+    "id": "CH07-01",
+    "scope": "第7章 麦克斯韦方程组",
+    "page": "p.112 附近",
+    "line": 5989,
+    "sev": "high",
+    "status": "open",
+    "title": "动量守恒方程写成 +∂_jT_ij = −f_i，与同节给出的 T 定义不配套",
+    "orig": "∂g_i/∂t + ∂_jT_ij = −f_i",
+    "issue": "该式与其下方给出的应力张量定义（正号约定）不配套，正确应为 −∂_jT_ij。两个独立判据可证伪：把自由平面波代入后给出 f ≠ 0，等于说真空对自身施力；静电场中带电面片的判据也给出反号的力。这与同节「T_zz = −ε₀E²、负号即辐射压强」的表述亦冲突。",
+    "fix": "待修正：把该行的 +∂_jT_ij 改为 −∂_jT_ij（一个字符），不要改动 T 的定义（否则与本节例题冲突）。",
+    "evidence": "由 ∂_jT_ij 的正号约定与 f_i = ∂_jT_ij（力密度）反推：守恒式应为 ∂g_i/∂t − ∂_jT_ij = −f_i 的形式；自由平面波判据给出 f = 2ε₀E₀²k·sin2(kz−ωt) ≠ 0，与真空无源自相矛盾。"
+  },
+  {
+    "id": "APX-01",
+    "scope": "附录D 单位制转换手册",
+    "page": "p.160 附近",
+    "line": 8465,
+    "sev": "high",
+    "status": "fixed",
+    "title": "附录 D 电荷换算因子方向与数值双错，且同句自相矛盾",
+    "orig": "q_SI = q_G/√(4πε₀)；电荷单位换算为 1 esu = 3.3356×10⁻¹⁰ C（即 q_SI = 3.3356×10⁻¹⁰ q_G）",
+    "issue": "同一句话里两个说法互相矛盾：1/√(4πε₀) = 9.48×10⁴，若按此式则 1 esu 应等于 9.48×10⁴ C，与后半句的 3.3356×10⁻¹⁰ C 差了 14 个数量级。正确关系是 q_SI = 3.3356×10⁻¹⁰ q_G（系数已把 1/√(4πε₀) 与 cm→m 合并）；只有在做**公式级整体替换**时才出现 √(4πε₀)，且方向是「除以」。",
+    "fix": "已修正：改写为数值关系 q_SI = 3.33564095×10⁻¹⁰ q_G 与 1 C = 2.99792458×10⁹ esu，并单独说明公式级替换的写法（把每个 q 换成 q/√(4πε₀)），加注「不可再把 1/√(4πε₀) 单独乘一次」。",
+    "evidence": "1/√(4πε₀) = 9.4816×10⁴；3.33564095×10⁻¹⁰ 与附录 C 的 e = 4.803×10⁻¹⁰ esu 完全自洽（1.602176634×10⁻¹⁹ C ÷ 4.803205×10⁻¹⁰ = 3.3356×10⁻¹⁰）。"
+  },
+  {
+    "id": "CH01-01",
+    "scope": "第1章 数学预备知识",
+    "page": "p.14",
+    "line": 627,
+    "sev": "high",
+    "status": "fixed",
+    "title": "章首「学习路径」引用的小节号 8 处全错",
+    "orig": "必学：§1.1…；§1.2 梯度/散度/旋度；§1.4 高斯定理与斯托克斯定理\n重要：§1.3 曲线坐标系；§1.5 δ函数\n可延后：§1.6 并矢；§1.5.3 δ函数复合性质",
+    "issue": "本章实际编号为 §1.1 标量矢量张量 / §1.2 矢量代数（并矢在 §1.2.4）/ §1.3 梯度散度旋度 / §1.4 矢量微分算子恒等式 / §1.5 矢量积分定理 / §1.6 δ函数 / §1.7 正交曲线坐标系。8 处引用全部错位，且出现在全书第一个导航面板上，会直接卡住自学者。同源错误另见前言与第3章前置知识两处。",
+    "fix": "已修正：按实际小节号重写学习路径（§1.2→§1.3、§1.4→§1.5、§1.3→§1.7、§1.5→§1.6、§1.6→§1.2.4），并同步修正前言与第3章的两处同源错误。",
+    "evidence": "依据编译产物实测锚点：section.1.3「梯度、散度与旋度」p.20；section.1.5「矢量积分定理」p.26；section.1.6「Dirac δ 函数」p.27；section.1.7「正交曲线坐标系」p.32；subsection.1.2.4「并矢基础」p.18。"
+  },
+  {
+    "id": "CH01-02",
+    "scope": "第1章 数学预备知识",
+    "page": "p.24",
+    "line": 1251,
+    "sev": "high",
+    "status": "fixed",
+    "title": "正电荷处电势高低说反了",
+    "orig": "正电荷所在处电势的曲率向下凹（电势低于周围），负电荷处向上凸。",
+    "issue": "ρ>0 ⇒ ∇²φ<0，由紧邻上一段自己给出的判据「∇²φ<0 则高于周围平均值（如山峰）」，正电荷处电势应**高于**周围。现文与上一段直接冲突，会让初学者建立「正电荷处电势是坑」的错误图像——而这正是第 2 章泊松方程、第 4 章边值问题全部依赖的基础图像。",
+    "fix": "已修正：改为「正电荷所在处 ∇²φ<0，此时电势高于周围平均值（呈山峰形）；负电荷处 ∇²φ>0，电势低于周围平均值」，并补点电荷电势图像作为印证。",
+    "evidence": "解析解 φ=q/(4πε₀r) 给出 ∇²φ = −qδ³(r)/ε₀，r→0 时 φ→+∞，确实高于周围。"
+  },
+  {
+    "id": "CH07-08",
+    "scope": "第7章 麦克斯韦方程组",
+    "page": "p.104 附近",
+    "line": 5989,
+    "sev": "medium",
+    "status": "open",
+    "title": "位移电流两套定义并存，未说明真空/介质的等价条件",
+    "orig": "一处写 J_d = ε₀∂E/∂t，另一处写 J_d = ∂D/∂t",
+    "issue": "两套定义在真空下等价，但在介质中 ∂D/∂t = ε₀∂E/∂t + ∂P/∂t，两者相差极化电流项。教材未说明该等价条件，读者在介质问题中会混用。",
+    "fix": "待修正：统一采用 J_d = ∂D/∂t，并加注「真空中退化为 ε₀∂E/∂t；介质中多出 ∂P/∂t（极化电流）」。",
+    "evidence": "由 D = ε₀E + P 直接求导即得。"
+  },
+  {
+    "id": "CH06-02",
+    "scope": "第6章 磁介质",
+    "page": "p.95 附近",
+    "line": 454,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "速查表磁学切向边界条件丢失矢量结构",
+    "orig": "H_{1∥} − H_{2∥} = j_{f,∥}",
+    "issue": "把矢量边界条件压成标量差，丢失了两个必要信息：缺少 n̂× 的矢量结构，读者无法判断「平行分量」沿哪个切向取；也未说明 n̂ 的取向约定。记号上，本书正文用 K_f 表示自由面电流密度，此处 j_f 与全书记号体系不合。",
+    "fix": "已修正：改为 H_{1∥} − H_{2∥} = K_f × n̂，并在表下补注 n̂ 取向与 K_f 含义。",
+    "evidence": "由 ∮H·dl = I_f,enc 施加于跨界面小回路取极限得 H_1t − H_2t = K_f × n̂；标量式无法表达方向信息。正文三处表述均正确，仅速查表行有缺陷。"
+  },
+  {
+    "id": "CR-03",
+    "scope": "前置 · 高频公式速查表",
+    "page": "p.11",
+    "line": 495,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "平面波 E-B 关系漏抄正文的模长式",
+    "orig": "B = (1/ω)k×E",
+    "issue": "矢量关系本身正确，但漏掉了配套的模长关系 |B| = (k/ω)|E| = |E|/v，而模长关系恰是做题时最常用的。使用者若把矢量式当作 ω=k（即 v=1）来读，会得到数值量级完全错误的结果。",
+    "fix": "已修正：补上模长式，并在表下注中说明真空 v=c、介质中 v=1/√(με)。",
+    "evidence": "正文对应处明确写出 |B| = (k/ω)|E| = (1/v)|E|，速查表漏抄。定量示例：λ₀=600 nm 可见光在水中（n=1.33）误用 1/c 会低估 B 约 33%。"
+  },
+  {
+    "id": "CR-04",
+    "scope": "前置 · 高频公式速查表",
+    "page": "p.11",
+    "line": 500,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "波导截止频率未注明「真空填充」前提",
+    "orig": "ω_c = cπ√((m/a)² + (n/b)²)",
+    "issue": "该式只在真空填充时成立。填充介质的波导须把 c 换成介质中光速 v = c/√(ε_rμ_r)。常见介质填充波导（如 ε_r=2.2 的 PTFE）用现式会把截止频率高估约 1.48 倍，直接导致尺寸设计错误。",
+    "fix": "已修正：c → v，并在表下注中说明真空填充时 v=c、TE₁₀ 模 f_c = v/2a。",
+    "evidence": "TE₁₀（m=1,n=0）应为 f_c = v/(2a)，即 ω_c = πv/a；代入现式仅在 v=c 时正确。"
+  },
+  {
+    "id": "CR-05",
+    "scope": "前置 · 高频公式速查表",
+    "page": "p.11",
+    "line": 499,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "趋肤深度误用真空磁导率 μ₀",
+    "orig": "δ = √(2/(μ₀σω))",
+    "issue": "把材料的磁导率写成了真空磁导率 μ₀，且未注明良导体近似前提 σ≫ωε。正确式为 δ = √(2/(μσω))，μ = μ₀μ_r。对铁磁导体（μ_r 可达 10³–10⁵），现式会把 δ 高估 √μ_r 倍即 30–300 倍。",
+    "fix": "已修正：μ₀ → μ，并在表下注中补上良导体近似与非磁性材料取值。",
+    "evidence": "由良导体中 k²=iμσω 得衰减常数 α=√(μσω/2)=1/δ。"
+  },
+  {
+    "id": "CH01-04",
+    "scope": "第1章 数学预备知识",
+    "page": "p.22/24/40",
+    "line": 1041,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "「无散 ⇒ 场线闭合」错误，三处出现且与自绘图矛盾",
+    "orig": "若处处 ∇·A = 0：矢量场是无源场或螺线管场——场线没有起点和终点，形成闭合回路",
+    "issue": "无散只意味着场线没有起点和终点，绝不意味着它们闭合成环。反例极简单：A = ẑ 处处无散，但场线是永不闭合的无限长直线。该错误说法出现 3 次，其中一次被写进章末「常见误区」清单，等于把错误当结论教给学生；第 5、8 章都会用到「无散场」的语言，错误图像会向后传播。",
+    "fix": "已修正：三处统一改为「场线没有起点和终点（不等于一定闭合成环，如 A=ẑ）」。",
+    "evidence": "∇·ẑ = 0 而场线无闭合。更直接的证据：本章自绘的 TikZ 图 (c) 标题即「无源：场线平行穿过，净通量为零」——原图与文字自相矛盾，现文字已与图一致。"
+  },
+  {
+    "id": "CH01-05",
+    "scope": "第1章 数学预备知识",
+    "page": "p.26/40",
+    "line": 1364,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "无旋 ⇒ 环流为零 / 可写梯度，缺「单连通」前提",
+    "orig": "如果流体在某区域无旋（∇×A = 0），那么沿任何闭合曲线的环流都为零",
+    "issue": "两处都缺「单连通区域」这一关键前提。在非单连通区域（有洞），∇×A=0 既不能保证任意闭合回路的环流为零，也不能保证存在单值标量势。经典反例：A = (−y x̂ + x ŷ)/(x²+y²) 满足 ∇×A=0，但绕 z 轴一圈的环流为 2π。这恰是第 5 章无限长直导线外部磁场、第 6/7 章「矢势是否单值」的数学根源。",
+    "fix": "已修正：两处均补上「在单连通区域内」。",
+    "evidence": "矢量分析标准结论：∇×A=0 ⟺ 环流为零 ⟺ 存在单值标量势，三者等价当且仅当区域单连通；上述反例的环流直接积分得 2π ≠ 0。"
+  },
+  {
+    "id": "CH01-03",
+    "scope": "第1章 数学预备知识",
+    "page": "p.28",
+    "line": 1501,
+    "sev": "medium",
+    "status": "fixed",
+    "title": "复合 δ 函数定理的条件写错（「单调」应为「只有单根」）",
+    "orig": "对于单调可微函数 f(x)，若 f(x_i)=0 且 f′(x_i)≠0：δ(f(x)) = Σ_i δ(x−x_i)/|f′(x_i)|",
+    "issue": "复合 δ 公式的充要前提是「f 只有单根」，不需要 f 单调；而且「单调」与「求和遍历所有 x_i」逻辑上互斥——单调函数至多有一个零点，求和号形同虚设。读者照字面理解会以为 x²−a² 这类非单调函数不能用该公式，而本章例题恰恰就是这么用的，于是定理与例题互相打架。",
+    "fix": "已修正：条件改为「若 f(x) 只有单根 x_i」。",
+    "evidence": "sympy：DiracDelta(x²−a²).expand(diracdelta=True, wrt=x) → DiracDelta(x−a)/(2a) + DiracDelta(x+a)/(2a)，说明非单调函数完全适用。"
+  },
+  {
+    "id": "UI-03",
+    "scope": "配套站点 · 无障碍",
+    "page": "—",
+    "line": null,
+    "sev": "high",
+    "status": "fixed",
+    "title": "勘误严重度徽标对比度不足 WCAG AA",
+    "orig": ".badge-high 前景 #b4531a 叠于 #f4e5dd 底，实测对比度 4.08:1",
+    "issue": "明色方案下 high 级徽标对比度 4.08:1，低于 WCAG AA 正文要求的 4.5:1；另有 --ink-3（4.13:1）与 --energy（4.17:1）两项同样不足。",
+    "fix": "已修正：下调四个分级色的明度，并把 --ink-3 与 --energy 一并调整；全部令牌重新实测均达到 AA。",
+    "evidence": "对比度复算（.build/verify_contrast.py，按 WCAG 2.1 相对亮度公式，徽标底色按 15% 叠加于页面底色计算）：blocker 7.85、high 5.77、medium 5.59、low 5.89、--ink-3 4.91、--energy 6.12。"
+  }
+];
+</script>
+<script>
+(function () {
+  'use strict';
+  var SEV_CN = { blocker: 'blocker', high: 'high', medium: 'medium', low: 'low' };
+  var list = document.getElementById('errataList');
+  var data = window.ERRATA || [];
+
+  /* ---- 汇总 ---- */
+  var stats = document.getElementById('summaryStats');
+  var bySev = {};
+  data.forEach(function (e) { bySev[e.sev] = (bySev[e.sev] || 0) + 1; });
+  var scopes = {};
+  data.forEach(function (e) { scopes[e.scope] = (scopes[e.scope] || 0) + 1; });
+
+  [
+    { n: data.length, l: '本条已确认问题' },
+    { n: bySev.high || 0, l: 'high 级' },
+    { n: bySev.medium || 0, l: 'medium 级' },
+    { n: bySev.low || 0, l: 'low 级' }
+  ].forEach(function (s) {
+    var d = document.createElement('div');
+    d.className = 'stat';
+    d.innerHTML = '<div class="n">' + s.n + '</div><div class="l">' + s.l + '</div>';
+    stats.appendChild(d);
+  });
+
+  document.getElementById('scopeNote').textContent =
+    '已覆盖范围：' + Object.keys(scopes).map(function (k) {
+      return k + '（' + scopes[k] + ' 条）';
+    }).join('；') + '。';
+
+  /* ---- 筛选器 ---- */
+  var fScope = document.getElementById('fScope');
+  Object.keys(scopes).forEach(function (s) {
+    var o = document.createElement('option');
+    o.value = s; o.textContent = s + '（' + scopes[s] + '）';
+    fScope.appendChild(o);
+  });
+  var fSev = document.getElementById('fSev');
+
+  /* ---- 渲染 ---- */
+  function render() {
+    var scope = fScope.value, sev = fSev.value;
+    list.innerHTML = '';
+    var shown = data.filter(function (e) {
+      return (!scope || e.scope === scope) && (!sev || e.sev === sev);
+    });
+    if (!shown.length) {
+      list.innerHTML = '<p class="note">没有符合当前筛选条件的条目。</p>';
+      return;
+    }
+    shown.forEach(function (e) {
+      var card = document.createElement('article');
+      card.className = 'card';
+      card.style.marginBottom = '1rem';
+
+            var head = document.createElement('div');
+      var st = e.status === 'fixed'
+        ? '<span class="badge badge-basic">\u5df2\u4fee\u6b63</span>'
+        : '<span class="badge badge-hard">\u5f85\u4fee\u6b63</span>';
+      head.innerHTML =
+        '<div style="display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem">' +
+          '<span class="badge badge-' + e.sev + '">' + SEV_CN[e.sev] + '</span>' +
+          st +
+          '<code>' + e.id + '</code>' +
+          '<strong style="font-size:var(--step-1)">' + e.title + '</strong>' +
+        '</div>' +
+        '<div style="color:var(--ink-3);font-size:var(--step--1)">' +
+          e.scope + '\u3000\u00b7\u3000' + e.page +
+          (e.line ? '\u3000\u00b7\u3000\u6e90\u6587\u4ef6\u7b2c ' + e.line + ' \u884c' : '') +
+        '</div>';
+      card.appendChild(head);
+
+      function block(label, text, tone) {
+        if (!text) return;
+        var d = document.createElement('div');
+        d.style.marginTop = '.9rem';
+        var h = document.createElement('div');
+        h.style.cssText = 'font-size:var(--step--1);font-weight:620;color:var(--ink-2);margin-bottom:.25rem';
+        h.textContent = label;
+        var b = document.createElement('div');
+        b.style.cssText = 'font-size:var(--step--1);line-height:1.7;white-space:pre-wrap;' +
+          (tone || '');
+        b.textContent = text;
+        d.appendChild(h); d.appendChild(b);
+        card.appendChild(d);
+      }
+      block('原文', e.orig, 'padding:.6rem .8rem;background:var(--surface-2);border-radius:6px;font-family:var(--font-mono);');
+      block('问题', e.issue);
+      block('建议修正', e.fix, 'border-left:3px solid var(--k-vector);padding-left:.8rem;');
+      block('复核依据', e.evidence, 'color:var(--ink-2);');
+
+      list.appendChild(card);
+    });
+  }
+
+  fScope.addEventListener('change', render);
+  fSev.addEventListener('change', render);
+  document.getElementById('fReset').addEventListener('click', function () {
+    fScope.value = ''; fSev.value = ''; render();
+  });
+  render();
+})();
 </script>
 </body>
 </html>

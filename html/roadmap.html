@@ -2,388 +2,194 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>电动力学 — 学习路线图</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { font-family: "微软雅黑", "Microsoft YaHei", "Segoe UI", sans-serif; background: #0b0f1a; color: #e0e0e0; min-height: 100vh; }
-
-.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 70% 30%, #0d1b3a 0%, transparent 60%), #0a0e1a; }
-.container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-/* 导航 */
-.nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.nav-logo { font-size: 1.2rem; font-weight: 700; color: #2962FF; }
-.nav-links { display: flex; gap: 24px; }
-.nav-links a { color: #9ab; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
-.nav-links a:hover { color: #2962FF; }
-
-.page-title { text-align: center; padding: 40px 0 20px; }
-.page-title h1 { font-size: 1.8rem; color: #fff; }
-.page-title p { color: #789; margin-top: 8px; }
-
-/* 图例说明 */
-.legend { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: #abc; }
-.legend-dot { width: 14px; height: 14px; border-radius: 50%; }
-.dot-basic { background: #2E7D32; }
-.dot-advanced { background: #E65100; }
-.dot-challenge { background: #B71C1C; }
-
-/* 路线图容器 */
-.roadmap { padding: 20px 0 60px; }
-
-/* 节点通用 */
-.chapter-node { position: relative; margin-bottom: 16px; }
-.node-content {
-  display: flex; align-items: center; gap: 20px; padding: 18px 24px;
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px; cursor: pointer; transition: all 0.3s; text-decoration: none; color: inherit;
-}
-.node-content:hover { transform: translateX(8px); border-color: rgba(41,98,255,0.3); background: rgba(41,98,255,0.05); }
-
-.node-number { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: #fff; flex-shrink: 0; }
-.node-difficulty { font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; margin-left: 10px; font-weight: 600; }
-.node-title { font-size: 1.05rem; color: #fff; font-weight: 600; }
-.node-desc { font-size: 0.85rem; color: #789; margin-top: 4px; }
-.node-tags { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-.node-tag { font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #9ab; }
-
-/* 难度颜色 */
-.diff-basic { background: rgba(46,125,50,0.2); color: #2E7D32; }
-.diff-advanced { background: rgba(230,81,0,0.2); color: #E65100; }
-.diff-challenge { background: rgba(183,28,28,0.2); color: #B71C1C; }
-
-.num-basic { background: #2E7D32; }
-.num-advanced { background: #E65100; }
-.num-challenge { background: #B71C1C; }
-
-/* 连接线 */
-.node-connector { width: 2px; height: 24px; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04)); margin-left: 51px; margin-top: -8px; margin-bottom: -8px; }
-
-/* 依赖关系标签 */
-.deps-label { font-size: 0.75rem; color: #567; margin-left: 51px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.deps-label::before { content: '↳'; color: #2962FF; }
-
-/* 分支样式 */
-.branch-group { margin-left: 24px; padding-left: 20px; border-left: 2px dashed rgba(255,255,255,0.08); margin-bottom: 16px; }
-
-/* 路线标注 */
-.route-label { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-left: 10px; }
-.route-eng { background: rgba(41,98,255,0.15); color: #2962FF; }
-.route-phys { background: rgba(46,125,50,0.15); color: #2E7D32; }
-.route-adv { background: rgba(230,81,0,0.15); color: #E65100; }
-
-/* 进度追踪 */
-.progress-track { position: fixed; right: 20px; top: 100px; width: 200px; background: rgba(17,24,39,0.95); border: 1px solid #1f2937; border-radius: 12px; padding: 16px; z-index: 50; }
-.progress-track h4 { font-size: 0.85rem; color: #fff; margin-bottom: 12px; }
-.progress-track .pt-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 0.8rem; color: #abc; cursor: pointer; }
-.progress-track .pt-check { width: 16px; height: 16px; border: 2px solid #1f2937; border-radius: 4px; cursor: pointer; }
-.progress-track .pt-check.checked { background: #2962FF; border-color: #2962FF; }
-.progress-track .pt-check.checked::after { content: '✓'; display: block; text-align: center; color: #fff; font-size: 0.7rem; line-height: 12px; }
-
-@media (max-width: 900px) { .progress-track { display: none; } }
-
-.footer { text-align: center; padding: 30px 0; color: #567; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 20px; }
-
-@media (max-width: 600px) {
-  .node-content { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .node-connector { margin-left: 21px; }
-  .deps-label { margin-left: 21px; }
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>学习路线 — 电动力学 · 自学教材</title>
+<meta name="description" content="《电动力学》自学教材的 10 章推进顺序、前置依赖、难度与建议学时。">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<div class="bg"></div>
-<div class="container">
 
-  <nav class="nav-bar">
-    <div class="nav-logo">🗺️ 路线图</div>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="reader.html">阅读</a>
-      <a href="tools.html">工具</a>
-      <a href="appendix-nav.html">附录</a>
-      <a href="errata.html">勘误</a>
-    </div>
-  </nav>
+<a class="skip-link" href="#main">跳转到主内容</a>
 
-  <div class="page-title">
-    <h1>学习路线图</h1>
-    <p>10 章知识体系，从基础到进阶，标注难度与前置依赖</p>
+<header class="site-header">
+  <div class="wrap inner">
+    <a class="brand" href="index.html">
+      <span class="mark">电动力学</span>
+      <span class="sub">自学教材 · v2.15</span>
+    </a>
+    <nav class="site-nav" aria-label="站点导航">
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="reader.html">阅读</a></li>
+        <li><a href="roadmap.html" aria-current="page">学习路线</a></li>
+        <li><a href="formulas.html">公式速查</a></li>
+        <li><a href="tools.html">计算工具</a></li>
+        <li><a href="errata.html">勘误</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
 
-  <div class="legend">
-    <div class="legend-item"><span class="legend-dot dot-basic"></span> 基础</div>
-    <div class="legend-item"><span class="legend-dot dot-advanced"></span> 提高</div>
-    <div class="legend-item"><span class="legend-dot dot-challenge"></span> 挑战</div>
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <h1>学习路线</h1>
+      <p class="lede">
+        10 章内容之间存在真实的依赖关系——跳过前置章节会在后面付出更高代价。
+        下表按建议推进顺序排列，每章标注页码、规模、难度与建议学时。
+      </p>
+    </div>
+
+    <div class="note" style="margin-bottom:1.5rem">
+      <strong>关于学时：</strong>建议学时是按「逐节精读 + 做完课后综合练习」估算的。
+      标注「可延后」的小节在第一次通读时可以跳过，不影响后续章节的连贯性。
+    </div>
+
+    <!-- 进度 -->
+    <div class="card" style="margin-bottom:1.75rem">
+      <h3>我的进度</h3>
+      <p style="color:var(--ink-2);font-size:var(--step--1)">
+        勾选已完成的章节。进度保存在本机浏览器中，不上传。
+      </p>
+      <div class="progress-bar" id="progressBar" style="margin:.9rem 0"><span></span></div>
+      <p id="progressText" style="font-size:var(--step--1);color:var(--ink-3)">—</p>
+      <ul class="progress-list" id="progressList" style="margin-top:.8rem"></ul>
+    </div>
+
+    <h2 style="margin-bottom:1rem">推荐顺序</h2>
+    <ol class="roadmap" id="roadmap"></ol>
+
+    <!-- 三条路线 -->
+    <div class="card" style="margin-top:2rem">
+      <h2>三条可选路线</h2>
+      <p style="color:var(--ink-2);font-size:var(--step--1);margin-bottom:1rem">
+        目标不同，取舍不同。以下均以「上表顺序」为基础。
+      </p>
+      <div class="grid grid-3">
+        <div class="tile" style="cursor:default">
+          <div class="t-title">打好理论地基</div>
+          <div class="t-desc">
+            第 1–7 章逐节精读，重点在边值问题（第 4 章）的多极展开与分离变量——
+            这是后续辐射与波导计算的通用工具。
+          </div>
+          <div class="t-meta">第 1–7 章 · 约 110 学时</div>
+        </div>
+        <div class="tile" style="cursor:default">
+          <div class="t-title">先看到物理</div>
+          <div class="t-desc">
+            第 1–2 章打底后直接跳到第 7–8 章看麦克斯韦方程组与电磁波，
+            获得整体图像，再回头补第 3–6 章的介质与边值问题。
+          </div>
+          <div class="t-meta">第 1–2 → 7–8 → 3–6 → 9–10 章</div>
+        </div>
+        <div class="tile" style="cursor:default">
+          <div class="t-title">直奔相对论</div>
+          <div class="t-desc">
+            以第 7 章（麦克斯韦方程组）与第 10 章（协变形式）为主线。
+            需要额外自备狭义相对论基础（洛伦兹变换、四维矢量）。
+          </div>
+          <div class="t-meta">第 1、2、5、7、10 章</div>
+        </div>
+      </div>
+    </div>
   </div>
+</main>
 
-  <div class="roadmap" id="roadmap">
-
-    <!-- 第1章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=1" class="node-content">
-        <div class="node-number num-basic">1</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">矢量分析</span>
-            <span class="node-difficulty diff-basic">基础</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">标量场、矢量场、梯度、散度、旋度、斯托克斯定理、格林定理</div>
-          <div class="node-tags">
-            <span class="node-tag">📐 数学基础</span>
-            <span class="node-tag">🔧 必备工具</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="node-connector"></div>
-
-    <!-- 第2章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=2" class="node-content">
-        <div class="node-number num-basic">2</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">静电场</span>
-            <span class="node-difficulty diff-basic">基础</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">库仑定律、高斯定理、泊松方程、唯一性定理、镜像法</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第1章</span>
-            <span class="node-tag">⚡ 核心内容</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第1章（矢量分析）</div>
-    <div class="node-connector"></div>
-
-    <!-- 第3章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=3" class="node-content">
-        <div class="node-number num-basic">3</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">静磁场</span>
-            <span class="node-difficulty diff-basic">基础</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">毕奥-萨伐尔定律、安培定律、磁标势、磁多极展开</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第1章</span>
-            <span class="node-tag">🧲 核心内容</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第1章（矢量分析）</div>
-    <div class="node-connector"></div>
-
-    <!-- 第4章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=4" class="node-content">
-        <div class="node-number num-advanced">4</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">麦克斯韦方程</span>
-            <span class="node-difficulty diff-advanced">提高</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">法拉第电磁感应、位移电流、麦克斯韦方程组、能量守恒、坡印廷定理</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第2,3章</span>
-            <span class="node-tag">⭐ 核心枢纽</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第2章（静电场）+ 第3章（静磁场）</div>
-    <div class="node-connector"></div>
-
-    <!-- 第5章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=5" class="node-content">
-        <div class="node-number num-advanced">5</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">电磁波</span>
-            <span class="node-difficulty diff-advanced">提高</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">平面波、偏振、色散、群速度、相速度、电磁波在介质中传播</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第4章</span>
-            <span class="node-tag">🌊 波动核心</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第4章（麦克斯韦方程）</div>
-    <div class="node-connector"></div>
-
-    <!-- 第6章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=6" class="node-content">
-        <div class="node-number num-advanced">6</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">传输线</span>
-            <span class="node-difficulty diff-advanced">提高</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">电报方程、特性阻抗、反射系数、史密斯圆图、阻抗匹配</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第5章</span>
-            <span class="node-tag">📡 工程应用</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第5章（电磁波）</div>
-    <div class="node-connector"></div>
-
-    <!-- 第7章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=7" class="node-content">
-        <div class="node-number num-advanced">7</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">波导</span>
-            <span class="node-difficulty diff-advanced">提高</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">矩形波导、TE/TM模式、截止频率、谐振腔、品质因数</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第5,6章</span>
-            <span class="node-tag">📐 边界问题</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第5章（电磁波）+ 第6章（传输线）</div>
-    <div class="node-connector"></div>
-
-    <!-- 第8章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=8" class="node-content">
-        <div class="node-number num-advanced">8</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">辐射</span>
-            <span class="node-difficulty diff-advanced">提高</span>
-            <span class="route-label route-eng">工科</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">推迟势、电偶极辐射、磁偶极辐射、天线基础、多极展开</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第5章</span>
-            <span class="node-tag">📡 辐射核心</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第5章（电磁波）+ 矢量势基础</div>
-    <div class="node-connector"></div>
-
-    <!-- 第9章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=9" class="node-content">
-        <div class="node-number num-challenge">9</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">相对论电动力学</span>
-            <span class="node-difficulty diff-challenge">挑战</span>
-            <span class="route-label route-phys">物理</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">洛伦兹变换、电磁场张量、协变形式、推迟势的相对论推导</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第4章</span>
-            <span class="node-tag">⚡ 理论前沿</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第4章（麦克斯韦方程）+ 狭义相对论基础</div>
-    <div class="node-connector"></div>
-
-    <!-- 第10章 -->
-    <div class="chapter-node">
-      <a href="reader.html?route=physics&chapter=10" class="node-content">
-        <div class="node-number num-challenge">10</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-            <span class="node-title">等离子体</span>
-            <span class="node-difficulty diff-challenge">挑战</span>
-            <span class="route-label route-adv">进阶</span>
-          </div>
-          <div class="node-desc">德拜屏蔽、等离子体频率、磁化等离子体、冷等离子体波、磁流体</div>
-          <div class="node-tags">
-            <span class="node-tag">📘 第5,9章</span>
-            <span class="node-tag">🔬 前沿应用</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="deps-label">依赖：第5章（电磁波）+ 第9章（相对论）推荐前置</div>
-
+<footer class="site-footer">
+  <div class="wrap">
+    <p>《电动力学》自学教材 · 学习路线 · 仅供个人学习使用</p>
   </div>
+</footer>
 
-  <footer class="footer">
-    <p>电动力学自学教材 · 学习路线图 · 点击节点可跳转到对应章节</p>
-  </footer>
-</div>
-
-<!-- 进度追踪侧边栏 -->
-<div class="progress-track">
-  <h4>📌 学习进度</h4>
-  <div class="pt-item" data-ch="1"><div class="pt-check" onclick="toggleCheck(this)"></div>第1章 矢量分析</div>
-  <div class="pt-item" data-ch="2"><div class="pt-check" onclick="toggleCheck(this)"></div>第2章 静电场</div>
-  <div class="pt-item" data-ch="3"><div class="pt-check" onclick="toggleCheck(this)"></div>第3章 静磁场</div>
-  <div class="pt-item" data-ch="4"><div class="pt-check" onclick="toggleCheck(this)"></div>第4章 麦克斯韦方程</div>
-  <div class="pt-item" data-ch="5"><div class="pt-check" onclick="toggleCheck(this)"></div>第5章 电磁波</div>
-  <div class="pt-item" data-ch="6"><div class="pt-check" onclick="toggleCheck(this)"></div>第6章 传输线</div>
-  <div class="pt-item" data-ch="7"><div class="pt-check" onclick="toggleCheck(this)"></div>第7章 波导</div>
-  <div class="pt-item" data-ch="8"><div class="pt-check" onclick="toggleCheck(this)"></div>第8章 辐射</div>
-  <div class="pt-item" data-ch="9"><div class="pt-check" onclick="toggleCheck(this)"></div>第9章 相对论电动力学</div>
-  <div class="pt-item" data-ch="10"><div class="pt-check" onclick="toggleCheck(this)"></div>第10章 等离子体</div>
-</div>
-
+<script src="book-data.js"></script>
+<script src="assets/site.js"></script>
 <script>
-(function() {
-  // 从 localStorage 恢复进度
-  const saved = JSON.parse(localStorage.getItem('chapterProgress') || '[]');
-  document.querySelectorAll('.pt-check').forEach((chk, idx) => {
-    if(saved.includes(idx+1)) chk.classList.add('checked');
+/* 路线图：章节顺序与依赖关系由教材实际内容结构决定；
+   页码／节数／例题数取自 book-data.js 的实测数据。 */
+(function () {
+  var PLAN = [
+    { n: 1,  deps: '无。但需自备：多元微积分（偏导、重积分）、矢量代数基础',
+      diff: '基础', hours: 24, level: 'basic',
+      note: '全书地基。§1.2.4 并矢、§1.6.2–1.6.3 δ 函数复合与傅里叶表示可延后到用时再回看。' },
+    { n: 2,  deps: '第 1 章（矢量分析、δ 函数、高斯定理）',
+      diff: '基础', hours: 16, level: 'basic',
+      note: '高斯定理的积分形式与微分形式必须都掌握；唯一性定理是第 4 章的理论前提。' },
+    { n: 3,  deps: '第 2 章（电场、电势、边界条件的雏形）',
+      diff: '提高', hours: 14, level: 'mid',
+      note: '核心是 D 场与束缚电荷。注意界面外法向的取向约定，这里最容易出错。' },
+    { n: 4,  deps: '第 1 章（曲线坐标系）+ 第 2–3 章（泊松方程与边界条件）',
+      diff: '提高', hours: 26, level: 'mid',
+      note: '全书数学密度最高的一章。分离变量与多极展开是第 8–9 章的必备工具。' },
+    { n: 5,  deps: '第 1 章（旋度、斯托克斯定理）',
+      diff: '基础', hours: 16, level: 'basic',
+      note: '与第 2 章结构对称：毕奥-萨伐尔↔库仑，安培环路↔高斯，矢势↔电势。' },
+    { n: 6,  deps: '第 5 章（H 场与磁化电流）',
+      diff: '提高', hours: 12, level: 'mid',
+      note: '与第 3 章（电介质）对照学习效率最高；超导体的完全抗磁性是重要特例。' },
+    { n: 7,  deps: '第 2–6 章全部（四个方程的每一项都来自前面的章节）',
+      diff: '提高', hours: 22, level: 'mid',
+      note: '全书枢纽。位移电流的引入动机、坡印廷定理的能量解释必须吃透。' },
+    { n: 8,  deps: '第 7 章（波动方程）+ 第 4 章（波导中的边值问题）',
+      diff: '挑战', hours: 24, level: 'hard',
+      note: '菲涅耳公式的符号约定与 TE/TM 模式的场分量是两大难点。' },
+    { n: 9,  deps: '第 7 章（推迟势）+ 第 5 章（磁偶极子）',
+      diff: '挑战', hours: 18, level: 'hard',
+      note: '李纳-维谢尔势属选学内容；电偶极辐射的角分布与功率公式是重点。' },
+    { n: 10, deps: '第 7 章（麦克斯韦方程组）+ 狭义相对论基础（需自备）',
+      diff: '挑战', hours: 26, level: 'hard',
+      note: '指标运算需从头适应。度规约定与张量符号务必先固定下来再往下读。' }
+  ];
+
+  var byNumber = {};
+  window.BOOK.chapters.forEach(function (c) { if (c.kind === 'chapter') byNumber[c.number] = c; });
+
+  var rmHost = document.getElementById('roadmap');
+  var prHost = document.getElementById('progressList');
+
+  PLAN.forEach(function (p, i) {
+    var c = byNumber[p.n] || { title: '?', page: '?', sections: [], counts: {} };
+    var badgeCls = p.level === 'basic' ? 'badge-basic' : p.level === 'mid' ? 'badge-mid' : 'badge-hard';
+    var nEx = (c.examples || []).length;
+
+    var li = document.createElement('li');
+    li.dataset.step = String(p.n);
+    li.innerHTML =
+      '<div class="r-head">' +
+        '<span class="r-title">' + c.title + '</span>' +
+        '<span class="badge ' + badgeCls + '">' + p.diff + '</span>' +
+        '<span class="badge badge-neutral">约 ' + p.hours + ' 学时</span>' +
+        '<a href="../electrodynamics_textbook_v2.pdf#page=' + c.page + '" ' +
+          'style="font-size:var(--step--1)">p.' + c.page + ' ↗</a>' +
+      '</div>' +
+      '<div class="r-desc">' + c.sections.length + ' 节 · ' +
+        (nEx ? nEx + ' 道例题' : '无例题') + '　' + p.note + '</div>' +
+      '<div class="r-deps">前置：' + p.deps + '</div>';
+    rmHost.appendChild(li);
+
+    // 进度勾选
+    prHost.appendChild(
+      (function () {
+        var item = document.createElement('li');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = 'prog' + p.n;
+        cb.dataset.progress = String(p.n);
+        var lab = document.createElement('label');
+        lab.htmlFor = cb.id;
+        lab.textContent = '第 ' + p.n + ' 章 ' + c.title;
+        item.appendChild(cb); item.appendChild(lab);
+        return item;
+      })()
+    );
   });
 
-  window.toggleCheck = function(el) {
-    el.classList.toggle('checked');
-    const checked = [];
-    document.querySelectorAll('.pt-check').forEach((chk, idx) => {
-      if(chk.classList.contains('checked')) checked.push(idx+1);
-    });
-    localStorage.setItem('chapterProgress', JSON.stringify(checked));
-  };
+  var total = PLAN.reduce(function (s, p) { return s + p.hours; }, 0);
+  var head = document.createElement('p');
+  head.className = 'note';
+  head.style.marginTop = '1.4rem';
+  head.innerHTML = '<strong>全程合计约 ' + total + ' 学时。</strong>' +
+    '按每周 10 学时计，约需 5–6 个月。若要压缩，优先砍掉第 8 章的波导细节与第 9 章的天线部分。';
+  rmHost.parentNode.insertBefore(head, rmHost.nextSibling);
 })();
 </script>
 </body>

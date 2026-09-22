@@ -44,7 +44,11 @@
 \usepackage{marginnote}
 \usepackage{epigraph}
 \usepackage{makeidx}
-\usepackage{ocgx2}           % 可折叠内容（线上PDF交互）
+\usepackage[printocg=always]{ocgx2}  % 可折叠内容（线上PDF交互）
+                                      % printocg=always：为图层写入 /Print<</PrintState/ON>>，
+                                      % 使折叠内容在**打印/导出为PDF时始终输出**。
+                                      % 否则（缺 /Usage 字典）图层按当前可见状态打印，
+                                      % 默认关闭的答案层与推导层会在纸上变成空白。
 \usepackage{pdfcomment}       % PDF tooltip注释
 
 % ---------- marginnote 设置 ----------
@@ -406,7 +410,7 @@ $\grad\phi = \unitvec{x}\partial\phi/\partial x + \cdots$ & 直角坐标梯度 \
 $\divg\vecA = \partial A_x/\partial x + \cdots$ & 直角坐标散度 \\
 $\curl\vecA = \begin{vmatrix}\unitvec{x}&\unitvec{y}&\unitvec{z}\\\partial_x&\partial_y&\partial_z\\A_x&A_y&A_z\end{vmatrix}$ & 直角坐标旋度 \\
 $\lap\phi = \divg\grad\phi$ & 拉普拉斯算子 \\
-$\nabla\times(\nabla\times\vecA) = \grad(\divg\vecA) - \lap\vecA$ & BAC-CAB恒等式 \\
+$\nabla\times(\nabla\times\vecA) = \grad(\divg\vecA) - \lap\vecA$ & 矢量三重积展开（BAC-CAB）应用于 $\nabla$ 算子 \\
 $\int_V \divg\vecA\,dV = \oint_S \vecA\cdot d\vect{S}$ & 高斯散度定理 \\
 $\int_S (\curl\vecA)\cdot d\vect{S} = \oint_C \vecA\cdot d\vect{l}$ & 斯托克斯定理 \\
 $\delta^{(3)}(\vect{r}) = \frac{1}{(2\pi)^3}\int e^{i\vecK\cdot\vect{r}}d^3k$ & $\delta$函数傅里叶表示 \\
@@ -451,10 +455,13 @@ $\nabla\cdot\vecA=0$ & 库仑规范 \\
 $\vecB=\muz(\vect{H}+\vect{M})=\muz\mu_r\vect{H}$ & 线性介质 \\
 $\vecJ_M=\nabla\times\vect{M}$ & 磁化电流 \\
 $B_{1\perp}=B_{2\perp}$ & 法向边界条件 \\
-$H_{1\parallel}-H_{2\parallel}=j_{f,\parallel}$ & 切向边界条件 \\
+$H_{1\parallel}-H_{2\parallel}=(\vect{K}_f\times\unitvec{n})$ & 切向边界条件（详见下方注） \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+\noindent{\small\textbf{注}：磁学边界条件中 $\unitvec{n}$ 由区域 2 指向区域 1，
+$\vect{K}_f$ 为自由面电流密度（A/m），与电学边界条件 $D_{1\perp}-D_{2\perp}=\sigma_f$ 配对使用。}
 
 \section{第7章：麦克斯韦方程组}
 
@@ -485,15 +492,22 @@ $-\oint\vect{S}\cdot d\vecA=\int_V \vecJ\cdot\vecE\,dV+\frac{d}{dt}\int_V w\,dV$
 \midrule
 $\vecE=\vecE_0 e^{i(\vecK\cdot\vect{r}-\omega t)}$ & 平面波一般形式 \\
 $k=\omega\sqrt{\muz\eps}=n\omega/c$ & 介质中波数 \\
-$\vecB=\frac{1}{\omega}\vecK\times\vecE$ & 平面波中E-B关系 \\
+$\vecB=\frac{1}{\omega}\vecK\times\vecE$ & 平面波 E-B 矢量关系 \\
+$|\vecB|=\frac{k}{\omega}|\vecE|=\frac{1}{v}|\vecE|$ & 平面波 E-B 模长关系（$v$ 为相速） \\
 $R=\left|\frac{n_1-n_2}{n_1+n_2}\right|^2$ & 正入射反射率 \\
 $T=\frac{4n_1 n_2}{(n_1+n_2)^2}$ & 正入射透射率 \\
-$\delta=\sqrt{\frac{2}{\muz\sigma\omega}}$ & 趋肤深度 \\
-$\omega_c=c\pi\sqrt{(m/a)^2+(n/b)^2}$ & 矩形波导截止频率 \\
+$\delta=\sqrt{\frac{2}{\mu\sigma\omega}}$ & 趋肤深度（详见下方注） \\
+$\omega_c=v\pi\sqrt{(m/a)^2+(n/b)^2}$ & 矩形波导截止角频率（详见下方注） \\
 $\theta_c=\arcsin(n_2/n_1)$ & 全反射临界角 \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+\noindent{\small\textbf{本表适用条件注}：除注明外均为 SI 单位制。\textbf{(1)} 涉及介质的公式中 $c$ 指真空光速，
+介质中须以相速 $v=1/\sqrt{\mu\eps}$（或 $v=c/n$）替代；平面波 E-B 关系中 $|\vecB|=|\vecE|/v$，
+仅真空时才有 $|\vecB|=|\vecE|/c$。\textbf{(2)} 趋肤深度 $\delta=\sqrt{2/(\mu\sigma\omega)}$ 取材料磁导率
+$\mu=\muz\mu_r$（非磁性材料 $\mu=\muz$），前提为良导体近似 $\sigma\gg\omega\eps$。
+\textbf{(3)} 波导截止角频率中 $v$ 为介质中光速，真空填充时 $v=c$；TE$_{10}$ 模（$m=1,n=0$）化为 $f_c=v/2a$。}
 
 \section{第9章：辐射}
 
@@ -573,7 +587,7 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 
 \subsection*{阅读建议}
 
-\textbf{零基础读者的最小可行动路径}：第1章只看 \S1.1+\S1.2（矢量与梯度/散度/旋度）$\to$ 第2章（高斯定理、唯一性定理）$\to$ 第3章（电介质与边界条件）$\to$ 第4章（边值问题）$\to$ 第5章（静磁学）$\to$ 第7章（麦克斯韦方程组）$\to$ 第8章（电磁波）$\to$ 按需回看其余（第6章磁介质、第9章辐射、第10章相对论可最后补）。第1章开头的"快速通道"盒给出了同样路径与三档划分。
+\textbf{零基础读者的最小可行动路径}：第1章只看 \S1.1+\S1.3（矢量与梯度/散度/旋度）$\to$ 第2章（高斯定理、唯一性定理）$\to$ 第3章（电介质与边界条件）$\to$ 第4章（边值问题）$\to$ 第5章（静磁学）$\to$ 第7章（麦克斯韦方程组）$\to$ 第8章（电磁波）$\to$ 按需回看其余（第6章磁介质、第9章辐射、第10章相对论可最后补）。第1章开头的"快速通道"盒给出了同样路径与三档划分。
 
 \begin{itemize}
 \item \textbf{数学预备}：第1章是后续所有内容的基石，务必扎实掌握。特别要理解梯度、散度、旋度的几何意义。
@@ -610,9 +624,9 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 \textbf{学习路径建议：}
 
 \begin{itemize}[leftmargin=*]
-\item[\textcolor{red}{$\blacksquare$}] \textbf{必学（必须掌握）}：\S1.1 标量/矢量/张量基础概念；\S1.2 梯度/散度/旋度的定义与计算；\S1.4 高斯定理与斯托克斯定理（积分定理是整个电动力学的基石！）
-\item[\textcolor{orange}{$\blacksquare$}] \textbf{重要（建议掌握）}：\S1.3 曲线坐标系（球/柱坐标下的微分算子会在第2--4章频繁使用）；\S1.5 $\delta$函数的定义与基本性质
-\item[\textcolor{green}{$\blacksquare$}] \textbf{可延后（第一次读可跳过）}：\S1.6 并矢与张量（第10章才需要）；\S1.5.3 $\delta$函数的复合性质与傅里叶表示（用到时再回看）
+\item[\textcolor{red}{$\blacksquare$}] \textbf{必学（必须掌握）}：\S1.1 标量/矢量/张量基础概念；\S1.3 梯度/散度/旋度的定义与计算；\S1.5 高斯定理与斯托克斯定理（积分定理是整个电动力学的基石！）
+\item[\textcolor{orange}{$\blacksquare$}] \textbf{重要（建议掌握）}：\S1.7 正交曲线坐标系（球/柱坐标下的微分算子会在第2--4章频繁使用）；\S1.6 $\delta$函数的定义与基本性质
+\item[\textcolor{green}{$\blacksquare$}] \textbf{可延后（第一次读可跳过）}：\S1.2.4 并矢与张量（第4/10章才需要）；\S1.6.2--\S1.6.3 $\delta$函数的复合性质与傅里叶表示（用到时再回看）
 \end{itemize}
 
 \textbf{本章学完你应该能够：}
@@ -629,13 +643,13 @@ $\partial_\lambda F_{\mu\nu}+\partial_\mu F_{\nu\lambda}+\partial_\nu F_{\lambda
 \begin{tip}{快速通道：最小可行动阅读路径}{ch1-fast-track}
 只想要"最快看到电磁波"？按下表走，其余内容用到时再回看：
 
-\textbf{最小路径}：\S1.1 标量/矢量基础 $\to$ \S1.2 梯度/散度/旋度 $\to$ \S1.4 高斯/斯托克斯定理 $\to$ 直接进\textbf{第2章}。
+\textbf{最小路径}：\S1.1 标量/矢量基础 $\to$ \S1.3 梯度/散度/旋度 $\to$ \S1.5 高斯/斯托克斯定理 $\to$ 直接进\textbf{第2章}。
 
 \textbf{三档划分}：
 \begin{itemize}[nosep]
-\item \textcolor{green}{\textbf{必看}}：\S1.1、\S1.2、\S1.4（后续每一章都在用）
-\item \textcolor{orange}{\textbf{用到再看}}：\S1.3 曲线坐标系（第2--4章计算需要时回看）、\S1.5.1--1.5.2 $\delta$ 函数基本性质（第2章点电荷要用）
-\item \textcolor{red}{\textbf{可跳}}：\S1.6 并矢（第4/10章用到）、\S1.5.3 $\delta$ 函数傅里叶表示（第8/9章用到）
+\item \textcolor{green}{\textbf{必看}}：\S1.1、\S1.3、\S1.5（后续每一章都在用）
+\item \textcolor{orange}{\textbf{用到再看}}：\S1.7 正交曲线坐标系（第2--4章计算需要时回看）、\S1.6.1--\S1.6.3 $\delta$ 函数基本性质（第2章点电荷要用）
+\item \textcolor{red}{\textbf{可跳}}：\S1.2.4 并矢（第4/10章用到）、\S1.6.2--\S1.6.3 $\delta$ 函数复合性质与傅里叶表示（第8/9章用到）
 \end{itemize}
 
 被卡住就跳——本书会在用到跳过内容的地方标注"回顾 §X.Y"，届时带着具体需求回来，学习效率最高。
@@ -1024,7 +1038,7 @@ BAC-CAB法则在推导电磁波方程时至关重要。例如：
 \begin{itemize}
 \item 若 $\divg\vecA > 0$：从曲面内流出的通量大于流入的通量——该点是\textbf{源}（如正电荷产生的发散电场）
 \item 若 $\divg\vecA < 0$：流入大于流出——该点是\textbf{汇}（如负电荷）
-\item 若处处 $\divg\vecA = 0$：矢量场是\textbf{无源场}或\textbf{螺线管场}——场线没有起点和终点，形成闭合回路
+\item 若处处 $\divg\vecA = 0$：矢量场是\textbf{无源场}（\textbf{螺线管场}）——场线没有起点和终点。注意：没有起点和终点\textbf{并不等于}场线一定闭合成环，例如 $\vecA=\unitvec{z}$ 的场线是无限长直线，而 $\vecA=-y\unitvec{x}+x\unitvec{y}$ 的场线才是闭合圆
 \end{itemize}
 
 静电学中的高斯定理告诉我们 $\divg\vecE = \rho/\eps_0$：电荷密度 $\rho$ 正是电场 $\vecE$ 的"源"！这个方程的微分形式比积分形式更深刻地揭示了电场与电荷之间的\textbf{局部}联系。
@@ -1188,7 +1202,7 @@ $\divg(\curl\vecA) = \dfrac{\partial(x-y)}{\partial x} + \dfrac{\partial(-y)}{\p
 \[
 \divg(\curl\vecA) = 0
 \]
-对任意矢量场 $\vecA$ 成立。几何上，旋度场的场线是闭合回路（没有起点和终点），因此是天然的无源场。
+对任意矢量场 $\vecA$ 成立。几何上，旋度场是天然的无源场——它的场线没有起点和终点（旋度场本身处处无散，不可能在某处"发出"或"终止"）。
 \end{theorem}
 
 \begin{theorem}{梯度的散度（拉普拉斯算子）}{laplacian-v2}
@@ -1234,7 +1248,7 @@ $\lap$ 称为\textbf{拉普拉斯算子（Laplacian）}。
 \]
 即 $\phi$ 的梯度通过包围该点的无穷小球面的通量密度。如果某点 $\lap\phi > 0$，说明该点的值低于周围平均值（如热源处的温度分布）；如果 $\lap\phi < 0$，则高于周围平均值（如"山峰"）。
 
-在静电学中，泊松方程 $\lap\phi = -\rho/\eps_0$ 告诉我们：正电荷所在处电势的曲率向下凹（电势低于周围），负电荷处向上凸。
+在静电学中，泊松方程 $\lap\phi = -\rho/\eps_0$ 告诉我们：正电荷所在处 $\lap\phi<0$，由上面的判据可知该点电势\textbf{高于}周围平均值（$\phi$ 呈"山峰"形）；负电荷处 $\lap\phi>0$，电势低于周围平均值（呈"山谷"形）。这正是点电荷电势 $\phi = q/4\pi\eps_0 r$ 的图像：$q>0$ 时越靠近电荷电势越高。
 \end{insight}
 
 \begin{example}{验证旋度的旋度恒等式}{curl-curl-verify-v2}
@@ -1347,7 +1361,7 @@ $\nabla^2\vecA = \nabla^2(r^2)\unitvec{z}$（因为 $\unitvec{z}$ 是常矢量�
 \begin{insight}{斯托克斯定理的物理含义}{stokes-insight-v2}
 斯托克斯定理建立了"线积分"与"面积分"之间的联系。它说：矢量场沿闭合曲线的\textbf{环流}，等于其\textbf{旋度}穿过以该曲线为边界的任意曲面的\textbf{通量}。
 
-想象将一张纸放入水中漩涡：沿纸边界的环流，等于穿过纸面的涡量总和。如果流体在某区域无旋（$\curl\vecA = 0$），那么沿任何闭合曲线的环流都为零——这正是保守场的特征。
+想象将一张纸放入水中漩涡：沿纸边界的环流，等于穿过纸面的涡量总和。如果在\textbf{单连通}区域内流体处处无旋（$\curl\vecA = 0$），那么沿区域内任何闭合曲线的环流都为零——这正是保守场的特征。（区域有"洞"时该结论不成立，见本节末的常见误区。）
 
 在电磁学中，法拉第定律的积分形式 $\displaystyle\oint_C \vecE \cdot \diff\vect{l} = -\dfrac{\diff\Phi_B}{\diff t}$ 就是斯托克斯定理的直接应用：变化的磁通量会在周围空间中激发涡旋电场。
 \end{insight}
@@ -1484,7 +1498,7 @@ $\delta$ 函数可以看作一系列普通函数在极限下的产物。例如�
 \[
 \delta(ax) = \frac{1}{|a|}\delta(x)
 \]
-更一般地，对于单调可微函数 $f(x)$，若 $f(x_i)=0$ 且 $f'(x_i)\neq 0$：
+更一般地，若 $f(x)$ 只有\textbf{单根} $x_i$（即 $f(x_i)=0$ 且 $f'(x_i)\neq 0$），则：
 \[
 \delta(f(x)) = \sum_i \frac{\delta(x-x_i)}{|f'(x_i)|}
 \]
@@ -2205,8 +2219,8 @@ x = \rho\cos\phi, \quad y = \rho\sin\phi, \quad z = z
 \begin{warning}{本章常见误区总结}{ch1-warnings}
 \begin{enumerate}
 \item $\grad\phi$ 指向 $\phi$\textbf{增长}最快的方向，不是下降方向。电场 $\vecE = -\grad\phi$ 才指向下降方向。
-\item $\divg\vecA = 0$ 不意味着 $\vecA = \vect{0}$，只意味着场线闭合。
-\item $\curl\vecA = \vect{0}$ 不意味着 $\vecA = \vect{0}$，只意味着 $\vecA$ 可以写成某个标量场的梯度。
+\item $\divg\vecA = 0$ 不意味着 $\vecA = \vect{0}$，只意味着场线没有起点和终点（\textbf{不}意味着场线一定闭合，如 $\vecA=\unitvec{z}$）。
+\item $\curl\vecA = \vect{0}$ 不意味着 $\vecA = \vect{0}$，只意味着在\textbf{单连通}区域内 $\vecA$ 可以写成某个标量场的梯度。
 \item \textbf{$\nabla$ 算子不是普通矢量}！$\nabla\cdot\vecA$（散度，标量）$\neq$ $\vecA\cdot\nabla$（算子，作用于其右侧的场）。$\nabla\times\vecA$（旋度，矢量）$\neq$ $-\vecA\times\nabla$（算子）。
 \item $\nabla\cdot(\nabla\times\vecA) \equiv 0$ 和 $\nabla\times(\nabla\psi) \equiv \vect{0}$ 是恒等式，但 $\nabla\cdot\nabla\psi = \lap\psi$ 不是恒等式——它定义了拉普拉斯算子。
 \item 高斯定理要求曲面\textbf{闭合}；斯托克斯定理要求曲线\textbf{闭合}。
@@ -4565,7 +4579,7 @@ B = \frac{\muz I\rho}{2\pi R^2}
 \]
 其中 $r_1 = \sqrt{x^2+(y-d)^2}$，$r_2 = \sqrt{x^2+(y+d)^2}$。
 
-在铁磁表面 $y=0$ 上，由对称性，$\vecB$ 只有 $y$ 分量（垂直于表面），满足边界条件 $H_{1t}=H_{2t}=0$（因 $\mu \to \infty$ 时 $H$ 在铁磁体内趋于0）。
+在铁磁表面 $y=0$ 上，镜像电流的选取应使切向磁场为零：$\vect{H}$ \textbf{只有法向分量}（即 $H_{1t}=H_{2t}=0$，因 $\mu\to\infty$ 时铁磁体内 $\vect{H}\to\vect{0}$）。注意这里\textbf{法向性属于 $\vect{H}$ 而非 $\vecB$}——$\vecB$ 的法向分量 $B_y$ 由 $B_{1n}=B_{2n}$ 定出；而在真空侧（$y>0$）的\textbf{内部}，$\vecB$ 一般同时含有 $x$、$y$ 两个分量（只有表面 $y=0$ 这一层上 $B_x=0$）。
 
 \textbf{导线受力}：镜像电流对原导线的作用力。两导线间距 $2d$，电流同向相吸：
 \[
@@ -5538,11 +5552,14 @@ $\chi$ & 规范函数（$\vecA' = \vecA + \grad\chi$） \\
 其中 $-\grad\phi$ 是保守部分，$-\partial\vecA/\partial t$ 是涡旋部分。
 \end{warning}
 
-\toggleButton{展开推导}{ocg推导}
-\begin{ocg}{推导}{ocg推导}{off}
 \subsection{规范条件与达朗贝尔方程}
 
-在时变电磁场中，标势 $\phi$ 和矢势 $\vecA$ 的引入虽然恢复了用电势描述电磁场的可能性，但也带来了一个本质性的问题：四个势分量（$\phi$ 和 $\vecA$ 的三个分量）满足的只是三个独立的麦克斯韦方程（$\divg\vecB=0$ 已自动满足），因此存在冗余自由度。为了消除这种冗余，必须对势函数施加额外的约束条件，称为\textbf{规范条件}（gauge condition）。本节将讨论两种最重要的规范条件，并在此基础上导出时变电磁势满足的达朗贝尔方程。
+在时变电磁场中，标势 $\phi$ 和矢势 $\vecA$ 的引入虽然恢复了用电势描述电磁场的可能性，但也带来了一个本质性的问题：四个势分量（$\phi$ 和 $\vecA$ 的三个分量）满足的只是三个独立的麦克斯韦方程（$\divg\vecB=0$ 已自动满足），因此存在冗余自由度。为了消除这种冗余，必须对势函数施加额外的约束条件，称为\textbf{规范条件}（gauge condition）。本节讨论两种最重要的规范条件，并在此基础上导出时变电磁势满足的达朗贝尔方程。
+
+\noindent\textbf{本节要点}：洛伦兹规范的定义、库仑规范与洛伦兹规范的对比，以及\textbf{达朗贝尔方程}——这三项务必掌握。其下的逐步推导属补充内容，第一次阅读可先跳过。
+
+\toggleButton{展开详细推导}{ocg推导}
+\begin{ocg}{推导}{ocg推导}{off}
 
 \subsubsection{库仑规范与洛伦兹规范}
 
@@ -6599,7 +6616,7 @@ $\text{TE}_{10}$ 模式的电磁场分量为：
 \begin{align}
 E_y &= E_0 \sin\left(\frac{\pi x}{a}\right) \ee^{\ii(k_z z - \omega t)} \\
 H_x &= -\frac{k_z}{\omega\muz} E_0 \sin\left(\frac{\pi x}{a}\right) \ee^{\ii(k_z z - \omega t)} \\
-H_z &= \frac{\ii\pi}{\omega\muz a} E_0 \cos\left(\frac{\pi x}{a}\right) \ee^{\ii(k_z z - \omega t)}
+H_z &= -\frac{\ii\pi}{\omega\muz a} E_0 \cos\left(\frac{\pi x}{a}\right) \ee^{\ii(k_z z - \omega t)}
 \end{align}
 
 特点：
@@ -7019,10 +7036,12 @@ $\chi_e = P/(\eps_0 E) = \dfrac{Ne^2}{\eps_0 m(\omega_0^2 - \omega^2 - i\gamma\o
 
 折射率：$n^2 = 1 + \chi_e$，$n(\omega) \approx 1 + \dfrac{Ne^2}{2\eps_0 m(\omega_0^2 - \omega^2 - i\gamma\omega)}$。
 
-$\dfrac{dn}{d\omega} = \dfrac{Ne^2}{2\eps_0 m}\dfrac{2\omega}{((\omega_0^2 - \omega^2)^2 + \gamma^2\omega^2)}$（实部近似）。
+$\dfrac{\diff n}{\diff\omega} = \dfrac{Ne^2}{2\eps_0 m}\cdot\dfrac{2\omega\left[(\omega_0^2 - \omega^2)^2 - \gamma^2\omega_0^2\right]}{\left((\omega_0^2 - \omega^2)^2 + \gamma^2\omega^2\right)^2}$（实部近似）。
+
+\textbf{关键在分子方括号里的 $-\gamma^2\omega_0^2$}：正是它使 $dn/d\omega$ 可以在共振附近变号。若像无阻尼近似那样只保留 $2\omega$（见下文"注意"），$dn/d\omega$ 将处处为正，无法得到反常色散。
 
 远离共振（$\omega\ll\omega_0$ 或 $\omega\gg\omega_0$）：$dn/d\omega > 0$，\textbf{正常色散}；
-共振附近（$|\omega-\omega_0|\lesssim\gamma$，且必须保留阻尼项）：$dn/d\omega < 0$，\textbf{反常色散}。\textbf{注意}：上式分母 $(\omega_0^2-\omega^2)^2+\gamma^2\omega^2$ 恒正、分子 $2\omega>0$，故无阻尼近似下 $\diff n/\diff\omega$ 除共振点外处处为正——$\\omega>\\omega_0$ 同样属于正常色散，反常色散只出现在共振的邻域内（与 §8.6.2 正文一致）。
+共振附近（$|\omega-\omega_0|\lesssim\gamma$，且必须保留阻尼项）：$dn/d\omega < 0$，\textbf{反常色散}。\textbf{注意}：分母 $((\omega_0^2-\omega^2)^2+\gamma^2\omega^2)^2$ 恒正、因子 $2\omega>0$，故符号完全由分子方括号决定——当 $(\omega_0^2-\omega^2)^2 < \gamma^2\omega_0^2$（即 $|\omega-\omega_0| \lesssim \gamma/2$ 的共振邻域）时方括号为负，$dn/d\omega<0$；离开该邻域后方括号转正，$dn/d\omega>0$。若取无阻尼极限 $\gamma\to0$，方括号退化为 $(\omega_0^2-\omega^2)^2\geq0$，$dn/d\omega$ 除共振点外处处为正——这正是"反常色散必须保留阻尼项"的原因（与 §8.6.2 正文一致）。
 
 反常色散意味着群速度可以超过相速度，但信号速度不超过 $c$（因果性限制）。\qedsymbol
 
@@ -8032,18 +8051,18 @@ $\vect{F} = q(\vecE + \vect{v}\times\vecB)$ & 洛伦兹力 \\
 \subsection{电磁场的洛伦兹不变量}
 
 \begin{theorem}{两个基本不变量}{lorentz-invariants}
-由电磁场张量 $F^{\mu\nu}$ 可以构造两个洛伦兹不变量：
+由电磁场张量 $F^{\mu\nu}$ 可以构造两个洛伦兹不变量（按本书约定 $F^{0i}=-E_i/c$、$\epsilon_{0123}=+1$，与本章前述不变量定义式 \eqref{eq:invariant1}、\eqref{eq:invariant2} 完全一致）：
 \begin{align*}
-\mathcal{I}_1 &= F_{\mu\nu}F^{\mu\nu} = 2\left(\frac{E^2}{c^2} - B^2\right) \\
-\mathcal{I}_2 &= \epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = +\frac{8}{c}\vecE\cdot\vecB
+\mathcal{I}_1 &= \tfrac{1}{2}F_{\mu\nu}F^{\mu\nu} = B^2 - \frac{E^2}{c^2} \\
+\mathcal{I}_2 &= \tfrac{1}{8}\epsilon_{\mu\nu\rho\sigma}F^{\mu\nu}F^{\rho\sigma} = +\frac{1}{c}\vecE\cdot\vecB
 \end{align*}
 \end{theorem}
 
 \begin{insight}{不变量的物理意义}{invariant-meaning}
-$\mathcal{I}_1$ 的符号决定了在某参考系中 $E$ 和 $B$ 的相对大小：\\
-- 若 $\mathcal{I}_1 > 0$：存在参考系使 $B=0$（纯电场）\\
-- 若 $\mathcal{I}_1 < 0$：存在参考系使 $E=0$（纯磁场）\\
-- 若 $\mathcal{I}_1 = 0$：在所有参考系中 $E=cB$（如平面电磁波）\\
+$\mathcal{I}_1 = B^2 - E^2/c^2$ 的符号决定了能否通过洛伦兹变换消去某一种场：\\
+- 若 $\mathcal{I}_1 > 0$（即 $cB > E$，磁场占优）：存在参考系使 $E=0$（纯磁场）\\
+- 若 $\mathcal{I}_1 < 0$（即 $cB < E$，电场占优）：存在参考系使 $B=0$（纯电场）\\
+- 若 $\mathcal{I}_1 = 0$（即 $E=cB$）：在所有参考系中都有 $E=cB$（如平面电磁波），两种场都无法被消去\\
 $\mathcal{I}_2 = 0$ 时，$\vecE\perp\vecB$，也是平面波的特征。
 \end{insight}
 
@@ -8443,7 +8462,17 @@ $e$ & $1.602\times 10^{-19}\,\text{C}$ & $4.803\times 10^{-10}\,\text{esu}$ \\
 
 SI制中 $F = q_1 q_2 / (4\pi\eps_0 r^2)$，力的单位是牛顿（N）。
 
-转换关系：$1\,\text{N} = 10^5\,\text{dyn}$，$q_{\text{SI}} = q_{\text{G}}/\sqrt{4\pi\eps_0}$；电荷单位换算为 $1\,\text{esu} = 3.3356\times 10^{-10}\,\text{C}$（即 $q_{\text{SI}} = 3.3356\times10^{-10}\,q_{\text{G}}$）。
+转换关系：$1\,\text{N} = 10^5\,\text{dyn}$；电荷单位换算为 $1\,\text{esu} = 3.33564095\times 10^{-10}\,\text{C}$（即 $1\,\text{C} = 2.99792458\times 10^{9}\,\text{esu}$，记作 $1\,\text{C} = c_{\text{cgs}}\,\text{esu}$，其中 $c_{\text{cgs}} = c/(1\,\text{m/s})\times 10^{-2} = 2.99792458\times10^{9}$）。
+
+\textbf{电荷与公式的关系（最易错处）}：单次把\textbf{电荷数值}从高斯制换到 SI 制，用
+\[
+q_{\text{SI}} = 3.33564095\times 10^{-10}\,q_{\text{G}}\qquad(\text{数值关系})
+\]
+而若要\textbf{整体替换库仑定律这个公式}，则
+\[
+F = \frac{q_1 q_2}{r^2}\ \text{(高斯)}\ \longrightarrow\ F = \frac{1}{4\pi\eps_0}\frac{(q_1/\sqrt{4\pi\eps_0}\,)\,(\,q_2/\sqrt{4\pi\eps_0}\,)}{r^2}\ \text{(SI)}
+\]
+即公式级的替换是「把每个 $q$ 换成 $q/\sqrt{4\pi\eps_0}$」。两种写法并不矛盾：前者的 $3.3356\times10^{-10}$ 已经把 $1/\sqrt{4\pi\eps_0}$ 与 cm→m 的因子合并进去了，\textbf{不可再把 $1/\sqrt{4\pi\eps_0}$ 单独乘一次}（否则量级会差 $10^{5}$ 倍以上）。
 
 因此：$F_{\text{SI}} = \dfrac{1}{4\pi\eps_0}\dfrac{q_{\text{SI},1}q_{\text{SI},2}}{r^2}$，其中 $1/(4\pi\eps_0) \approx 8.99\times 10^9\,\text{N}\cdot\text{m}^2/\text{C}^2$。
 

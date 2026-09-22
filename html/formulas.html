@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公式速查 — 电动力学 · 自学教材</title>
+<meta name="description" content="电动力学核心公式速查：麦克斯韦方程组、矢量恒等式、曲线坐标算子、基本物理常数与单位制换算。">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">跳转到主内容</a>
+
+<header class="site-header">
+  <div class="wrap inner">
+    <a class="brand" href="index.html">
+      <span class="mark">电动力学</span>
+      <span class="sub">自学教材 · v2.15</span>
+    </a>
+    <nav class="site-nav" aria-label="站点导航">
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="reader.html">阅读</a></li>
+        <li><a href="roadmap.html">学习路线</a></li>
+        <li><a href="formulas.html" aria-current="page">公式速查</a></li>
+        <li><a href="tools.html">计算工具</a></li>
+        <li><a href="errata.html">勘误</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <div class="page-head">
+      <h1>公式速查</h1>
+      <p class="lede">
+        按主题归类的核心公式。对应教材附录 A（矢量恒等式）、附录 B（坐标系转换）、
+        附录 C（基本物理常数）与附录 D（单位制转换）。
+      </p>
+    </div>
+
+    <p class="note" style="margin-bottom:1.5rem">
+      <strong>使用前提：</strong>全书统一采用 <strong>SI 单位制</strong>。
+      凡涉及介质的公式，<span class="m">c</span> 一律指真空光速，
+      介质中须以相速 <span class="m">v</span> = 1/√(<span class="m">με</span>) 替代。
+      标注 <span class="badge badge-neutral">真空</span> 的公式不可直接用于介质。
+    </p>
+
+    <nav class="card" aria-label="本页目录" style="margin-bottom:1.5rem">
+      <h3 style="margin-bottom:.6rem">本页内容</h3>
+      <ul class="plain" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 1.5rem">
+        <li><a href="#maxwell">麦克斯韦方程组</a></li>
+        <li><a href="#electro">静电学</a></li>
+        <li><a href="#magneto">静磁学</a></li>
+        <li><a href="#media">介质与边界条件</a></li>
+        <li><a href="#wave">电磁波</a></li>
+        <li><a href="#radiate">辐射</a></li>
+        <li><a href="#relativity">相对论协变形式</a></li>
+        <li><a href="#vector">矢量恒等式</a></li>
+        <li><a href="#coords">曲线坐标算子</a></li>
+        <li><a href="#constants">基本物理常数</a></li>
+      </ul>
+    </nav>
+
+    <!-- 麦克斯韦方程组 -->
+    <section class="card" id="maxwell" style="margin-bottom:1rem">
+      <h2>麦克斯韦方程组（真空，SI）</h2>
+      <div class="formula">
+        <div class="fx">∇·<span class="m">E</span> = <span class="m">ρ</span>/<span class="m">ε</span><sub>0</sub></div>
+        <div><span class="badge badge-neutral">微分</span></div>
+        <div class="fn">高斯定律 —— 电场有源，电荷是电场的源</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇·<span class="m">B</span> = 0</div>
+        <div><span class="badge badge-neutral">微分</span></div>
+        <div class="fn">磁场无源 —— 不存在磁单极子</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇×<span class="m">E</span> = −∂<span class="m">B</span>/∂<span class="m">t</span></div>
+        <div><span class="badge badge-neutral">微分</span></div>
+        <div class="fn">法拉第电磁感应定律 —— 变化的磁场产生电场</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇×<span class="m">B</span> = <span class="m">μ</span><sub>0</sub><span class="m">J</span> + <span class="m">μ</span><sub>0</sub><span class="m">ε</span><sub>0</sub> ∂<span class="m">E</span>/∂<span class="m">t</span></div>
+        <div><span class="badge badge-neutral">微分</span></div>
+        <div class="fn">安培-麦克斯韦定律 —— 位移电流项是麦克斯韦的关键补充</div>
+      </div>
+
+      <h3 style="margin:1.4rem 0 .5rem">积分形式</h3>
+      <div class="formula">
+        <div class="fx">∮<sub>S</sub> <span class="m">E</span>·d<span class="m">S</span> = <span class="m">Q</span><sub>enc</sub>/<span class="m">ε</span><sub>0</sub></div>
+        <div class="fn">高斯定理</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∮<sub>S</sub> <span class="m">B</span>·d<span class="m">S</span> = 0</div>
+        <div class="fn">磁通连续性</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∮<sub>C</sub> <span class="m">E</span>·d<span class="m">l</span> = −d<span class="m">Φ</span><sub>B</sub>/d<span class="m">t</span></div>
+        <div class="fn">法拉第定律</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∮<sub>C</sub> <span class="m">B</span>·d<span class="m">l</span> = <span class="m">μ</span><sub>0</sub><span class="m">I</span><sub>enc</sub> + <span class="m">μ</span><sub>0</sub><span class="m">ε</span><sub>0</sub> d<span class="m">Φ</span><sub>E</sub>/d<span class="m">t</span></div>
+        <div class="fn">安培-麦克斯韦定律</div>
+      </div>
+
+      <h3 style="margin:1.4rem 0 .5rem">势与波动方程</h3>
+      <div class="formula">
+        <div class="fx"><span class="m">E</span> = −∇<span class="m">φ</span> − ∂<span class="m">A</span>/∂<span class="m">t</span></div>
+        <div class="fn">时变电磁势</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">B</span> = ∇×<span class="m">A</span></div>
+        <div class="fn">磁矢势定义</div>
+      </div>
+      <div class="formula">
+        <div class="fx">□<span class="m">φ</span> = −<span class="m">ρ</span>/<span class="m">ε</span><sub>0</sub>，　□<span class="m">A</span> = −<span class="m">μ</span><sub>0</sub><span class="m">J</span></div>
+        <div class="fn">达朗贝尔方程（洛伦兹规范）。本书统一约定 □ ≡ ∇² − ∂²/∂(ct)²，全书写法一致</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">S</span> = <span class="m">E</span> × <span class="m">H</span></div>
+        <div class="fn">坡印廷矢量 —— 电磁能流密度</div>
+      </div>
+    </section>
+
+    <!-- 静电学 -->
+    <section class="card" id="electro" style="margin-bottom:1rem">
+      <h2>静电学</h2>
+      <div class="formula">
+        <div class="fx"><span class="m">E</span> = (1/4π<span class="m">ε</span><sub>0</sub>) <span class="m">q</span><b>r̂</b>/<span class="m">r</span>²</div>
+        <div class="fn">点电荷电场（库仑定律）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">E</span> = −∇<span class="m">φ</span></div>
+        <div class="fn">电场与电势的关系</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇²<span class="m">φ</span> = −<span class="m">ρ</span>/<span class="m">ε</span><sub>0</sub></div>
+        <div class="fn">泊松方程。注意右端为<b>负</b>号：正电荷处电势高于周围</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇²<span class="m">φ</span> = 0</div>
+        <div class="fn">拉普拉斯方程（无源区）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">φ</span> = (1/4π<span class="m">ε</span><sub>0</sub>) <span class="m">p</span>·<b>r̂</b>/<span class="m">r</span>²</div>
+        <div class="fn">电偶极子电势</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">φ</span>(<span class="m">r</span>) = (1/4π<span class="m">ε</span><sub>0</sub>) [ <span class="m">Q</span>/<span class="m">r</span> + <span class="m">p</span>·<b>r̂</b>/<span class="m">r</span>² + <span class="m">Q</span><sub>ij</sub> <span class="m">r̂</span><sub>i</sub><span class="m">r̂</span><sub>j</sub>/(2<span class="m">r</span>³) + ⋯ ]</div>
+        <div class="fn">多极展开（本书采用减迹四极矩定义，四极项系数为 1/2）</div>
+      </div>
+    </section>
+
+    <!-- 静磁学 -->
+    <section class="card" id="magneto" style="margin-bottom:1rem">
+      <h2>静磁学</h2>
+      <div class="formula">
+        <div class="fx">d<span class="m">B</span> = (<span class="m">μ</span><sub>0</sub>/4π) <span class="m">I</span> d<span class="m">l</span>×<b>r̂</b>/<span class="m">r</span>²</div>
+        <div class="fn">毕奥-萨伐尔定律</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∮<sub>C</sub> <span class="m">B</span>·d<span class="m">l</span> = <span class="m">μ</span><sub>0</sub> <span class="m">I</span><sub>enc</sub></div>
+        <div class="fn">安培环路定理。仅适用于稳恒电流（∇·<span class="m">J</span> = 0）；有限长导线不能用它求场</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">A</span>′ = <span class="m">A</span> + ∇<span class="m">χ</span></div>
+        <div class="fn">矢势的规范变换（<span class="m">B</span> 不变）</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇·<span class="m">A</span> = 0</div>
+        <div class="fn">库仑规范。注意：库仑规范<b>不是</b>洛伦兹规范的推广，它恰好是非协变的</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">m</span> = <span class="m">I</span> <span class="m">S</span> <b>n̂</b></div>
+        <div class="fn">磁偶极矩（小电流环）</div>
+      </div>
+    </section>
+
+    <!-- 介质与边界条件 -->
+    <section class="card" id="media" style="margin-bottom:1rem">
+      <h2>介质与边界条件</h2>
+      <div class="formula">
+        <div class="fx"><span class="m">D</span> = <span class="m">ε</span><sub>0</sub><span class="m">E</span> + <span class="m">P</span> = <span class="m">ε</span><span class="m">E</span></div>
+        <div class="fn">电位移矢量（线性各向同性介质）。<span class="m">ε</span> = <span class="m">ε</span><sub>0</sub><span class="m">ε</span><sub>r</sub></div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">B</span> = <span class="m">μ</span><sub>0</sub>(<span class="m">H</span> + <span class="m">M</span>) = <span class="m">μ</span><sub>0</sub><span class="m">μ</span><sub>r</sub><span class="m">H</span> = <span class="m">μ</span><span class="m">H</span></div>
+        <div class="fn">磁场强度（线性介质）。首项必须是真空磁导率 <span class="m">μ</span><sub>0</sub>，与电学式对称</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">σ</span><sub>b</sub> = <span class="m">P</span>·<b>n̂</b>，　<span class="m">ρ</span><sub>b</sub> = −∇·<span class="m">P</span></div>
+        <div class="fn">束缚电荷。<b>n̂ 必须取介质的外法向</b>——这是本节最易错处</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">J</span><sub>M</sub> = ∇×<span class="m">M</span>，　<span class="m">K</span><sub>M</sub> = <span class="m">M</span> × <b>n̂</b></div>
+        <div class="fn">磁化电流</div>
+      </div>
+      <h3 style="margin:1.4rem 0 .5rem">边界条件（<b>n̂</b> 由区域 2 指向区域 1）</h3>
+      <div class="formula">
+        <div class="fx"><span class="m">E</span><sub>1∥</sub> = <span class="m">E</span><sub>2∥</sub></div>
+        <div class="fn">电场切向连续</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">D</span><sub>1⊥</sub> − <span class="m">D</span><sub>2⊥</sub> = <span class="m">σ</span><sub>f</sub></div>
+        <div class="fn">电位移法向跃变等于自由面电荷密度</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">B</span><sub>1⊥</sub> = <span class="m">B</span><sub>2⊥</sub></div>
+        <div class="fn">磁感应强度法向连续</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">H</span><sub>1∥</sub> − <span class="m">H</span><sub>2∥</sub> = <span class="m">K</span><sub>f</sub> × <b>n̂</b></div>
+        <div class="fn">磁场强度切向跃变。必须保留矢量叉乘形式，方向由 <b>n̂</b> 与 <span class="m">K</span><sub>f</sub> 共同决定</div>
+      </div>
+    </section>
+
+    <!-- 电磁波 -->
+    <section class="card" id="wave" style="margin-bottom:1rem">
+      <h2>电磁波</h2>
+      <div class="formula">
+        <div class="fx"><span class="m">E</span> = <span class="m">E</span><sub>0</sub> e<sup>i(<span class="m">k</span>·<span class="m">r</span> − <span class="m">ωt</span>)</sup></div>
+        <div class="fn">平面波一般形式</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">k</span> = <span class="m">ω</span>√(<span class="m">με</span>) = <span class="m">nω</span>/<span class="m">c</span></div>
+        <div class="fn">介质中的色散关系。折射率 <span class="m">n</span> = √(<span class="m">ε</span><sub>r</sub><span class="m">μ</span><sub>r</sub>)</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">B</span> = (1/<span class="m">ω</span>) <span class="m">k</span>×<span class="m">E</span>，　|<span class="m">B</span>| = (1/<span class="m">v</span>)|<span class="m">E</span>|</div>
+        <div class="fn">平面波中 E-B 关系。<b>务必带上模长式</b>：介质中 <span class="m">v</span> = 1/√(<span class="m">με</span>) ≠ <span class="m">c</span>；
+          仅<span class="badge badge-neutral">真空</span>时 |<span class="m">B</span>| = |<span class="m">E</span>|/<span class="m">c</span></div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">v</span><sub>p</sub> <span class="m">v</span><sub>g</sub> = <span class="m">c</span>²/<span class="m">n</span>²</div>
+        <div class="fn">相速与群速之积（无色散介质）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">Z</span> = √(<span class="m">μ</span>/<span class="m">ε</span>)</div>
+        <div class="fn">波阻抗。真空 <span class="m">Z</span><sub>0</sub> = √(<span class="m">μ</span><sub>0</sub>/<span class="m">ε</span><sub>0</sub>) ≈ 376.73 Ω</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">R</span> = |(<span class="m">n</span><sub>1</sub>−<span class="m">n</span><sub>2</sub>)/(<span class="m">n</span><sub>1</sub>+<span class="m">n</span><sub>2</sub>)|²</div>
+        <div class="fn">正入射反射率</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">T</span> = 4<span class="m">n</span><sub>1</sub><span class="m">n</span><sub>2</sub>/(<span class="m">n</span><sub>1</sub>+<span class="m">n</span><sub>2</sub>)²</div>
+        <div class="fn">正入射透射率（<span class="m">R</span> + <span class="m">T</span> = 1）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">θ</span><sub>c</sub> = arcsin(<span class="m">n</span><sub>2</sub>/<span class="m">n</span><sub>1</sub>)</div>
+        <div class="fn">全反射临界角（<span class="m">n</span><sub>1</sub> &gt; <span class="m">n</span><sub>2</sub>）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">θ</span><sub>B</sub> = arctan(<span class="m">n</span><sub>2</sub>/<span class="m">n</span><sub>1</sub>)</div>
+        <div class="fn">布儒斯特角（反射光完全偏振）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">δ</span> = √(2/(<span class="m">μσω</span>))</div>
+        <div class="fn">趋肤深度。用<b>材料</b>磁导率 <span class="m">μ</span> = <span class="m">μ</span><sub>0</sub><span class="m">μ</span><sub>r</sub>，
+          非磁性材料才可代入 <span class="m">μ</span><sub>0</sub>。前提：良导体近似 <span class="m">σ</span> ≫ <span class="m">ωε</span></div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">f</span><sub>c</sub> = (<span class="m">v</span>/2)√((<span class="m">m</span>/<span class="m">a</span>)² + (<span class="m">n</span>/<span class="m">b</span>)²)</div>
+        <div class="fn">矩形波导截止频率。<span class="m">v</span> = 1/√(<span class="m">με</span>) 为<b>介质中</b>光速；
+          TE<sub>10</sub> 模（<span class="m">m</span>=1, <span class="m">n</span>=0）化为 <span class="m">f</span><sub>c</sub> = <span class="m">v</span>/(2<span class="m">a</span>)</div>
+      </div>
+    </section>
+
+    <!-- 辐射 -->
+    <section class="card" id="radiate" style="margin-bottom:1rem">
+      <h2>辐射</h2>
+      <div class="formula">
+        <div class="fx"><span class="m">t</span><sub>r</sub> = <span class="m">t</span> − |<span class="m">r</span> − <span class="m">r</span>′|/<span class="m">c</span></div>
+        <div class="fn">推迟时间</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">φ</span>(<span class="m">r</span>,<span class="m">t</span>) = (1/4π<span class="m">ε</span><sub>0</sub>) ∫ <span class="m">ρ</span>(<span class="m">r</span>′,<span class="m">t</span><sub>r</sub>)/|<span class="m">r</span>−<span class="m">r</span>′| d³<span class="m">r</span>′</div>
+        <div class="fn">推迟标势</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">A</span>(<span class="m">r</span>,<span class="m">t</span>) = (<span class="m">μ</span><sub>0</sub>/4π) ∫ <span class="m">J</span>(<span class="m">r</span>′,<span class="m">t</span><sub>r</sub>)/|<span class="m">r</span>−<span class="m">r</span>′| d³<span class="m">r</span>′</div>
+        <div class="fn">推迟矢势</div>
+      </div>
+      <div class="formula">
+        <div class="fx">⟨<span class="m">P</span>⟩ = <span class="m">μ</span><sub>0</sub> <span class="m">p</span><sub>0</sub>²<span class="m">ω</span>⁴ / (12π<span class="m">c</span>)</div>
+        <div class="fn">电偶极辐射平均功率</div>
+      </div>
+      <div class="formula">
+        <div class="fx">⟨<span class="m">P</span>⟩ = <span class="m">μ</span><sub>0</sub> <span class="m">m</span><sub>0</sub>²<span class="m">ω</span>⁴ / (12π<span class="m">c</span>³)</div>
+        <div class="fn">磁偶极辐射平均功率（小电流环，<span class="m">ka</span> ≪ 1）</div>
+      </div>
+      <div class="formula">
+        <div class="fx">d<span class="m">P</span>/d<span class="m">Ω</span> = (<span class="m">μ</span><sub>0</sub> <span class="m">p</span><sub>0</sub>²<span class="m">ω</span>⁴/32π²<span class="m">c</span>) sin²<span class="m">θ</span></div>
+        <div class="fn">电偶极辐射角分布（赤道面最强，沿偶极轴为零）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">P</span> = <span class="m">q</span>²<span class="m">a</span>²/(6π<span class="m">ε</span><sub>0</sub><span class="m">c</span>³)</div>
+        <div class="fn">拉莫尔公式（非相对论加速电荷）</div>
+      </div>
+    </section>
+
+    <!-- 相对论 -->
+    <section class="card" id="relativity" style="margin-bottom:1rem">
+      <h2>相对论协变形式</h2>
+      <div class="formula">
+        <div class="fx"><span class="m">x</span><sup>μ</sup> = (<span class="m">ct</span>, <span class="m">x</span>, <span class="m">y</span>, <span class="m">z</span>)</div>
+        <div class="fn">四维逆变坐标</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">η</span><sub>μν</sub> = diag(1, −1, −1, −1)</div>
+        <div class="fn">闵可夫斯基度规（本书采用的号差约定）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">A</span><sup>μ</sup> = (<span class="m">φ</span>/<span class="m">c</span>, <span class="m">A</span>)，　<span class="m">j</span><sup>μ</sup> = (<span class="m">cρ</span>, <span class="m">J</span>)</div>
+        <div class="fn">四维势与四维电流</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">F</span><sup>μν</sup> = ∂<sup>μ</sup><span class="m">A</span><sup>ν</sup> − ∂<sup>ν</sup><span class="m">A</span><sup>μ</sup></div>
+        <div class="fn">电磁场张量</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∂<sub>μ</sub><span class="m">F</span><sup>μν</sup> = <span class="m">μ</span><sub>0</sub><span class="m">j</span><sup>ν</sup></div>
+        <div class="fn">协变麦克斯韦方程（含源）</div>
+      </div>
+      <div class="formula">
+        <div class="fx">∂<sub>λ</sub><span class="m">F</span><sub>μν</sub> + ∂<sub>μ</sub><span class="m">F</span><sub>νλ</sub> + ∂<sub>ν</sub><span class="m">F</span><sub>λμ</sub> = 0</div>
+        <div class="fn">协变麦克斯韦方程（齐次，与度规约定无关）</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">I</span><sub>1</sub> = <span class="m">F</span><sub>μν</sub><span class="m">F</span><sup>μν</sup> = 2(<span class="m">B</span>² − <span class="m">E</span>²/<span class="m">c</span>²)</div>
+        <div class="fn">第一洛伦兹不变量</div>
+      </div>
+      <div class="formula">
+        <div class="fx"><span class="m">I</span><sub>2</sub> = <span class="m">F</span><sub>μν</sub><span class="m">F̃</span><sup>μν</sup> ∝ <span class="m">E</span>·<span class="m">B</span></div>
+        <div class="fn">第二洛伦兹不变量。<b>注意：其数值系数依赖 ε 张量与 F<sup>0i</sup> 的符号约定</b>，
+          跨教材比较时必须先核对约定，不可直接套用</div>
+      </div>
+    </section>
+
+    <!-- 矢量恒等式 -->
+    <section class="card" id="vector" style="margin-bottom:1rem">
+      <h2>矢量恒等式（附录 A）</h2>
+      <div class="formula"><div class="fx"><span class="m">A</span>·(<span class="m">B</span>×<span class="m">C</span>) = <span class="m">B</span>·(<span class="m">C</span>×<span class="m">A</span>) = <span class="m">C</span>·(<span class="m">A</span>×<span class="m">B</span>)</div><div class="fn">标量三重积的轮换不变性</div></div>
+      <div class="formula"><div class="fx"><span class="m">A</span>×(<span class="m">B</span>×<span class="m">C</span>) = <span class="m">B</span>(<span class="m">A</span>·<span class="m">C</span>) − <span class="m">C</span>(<span class="m">A</span>·<span class="m">B</span>)</div><div class="fn">BAC-CAB 法则</div></div>
+      <div class="formula"><div class="fx">(<span class="m">A</span>×<span class="m">B</span>)·(<span class="m">C</span>×<span class="m">D</span>) = (<span class="m">A</span>·<span class="m">C</span>)(<span class="m">B</span>·<span class="m">D</span>) − (<span class="m">A</span>·<span class="m">D</span>)(<span class="m">B</span>·<span class="m">C</span>)</div><div class="fn">四重积展开</div></div>
+      <div class="formula"><div class="fx">∇(<span class="m">fg</span>) = <span class="m">f</span>∇<span class="m">g</span> + <span class="m">g</span>∇<span class="m">f</span></div><div class="fn">梯度乘积法则</div></div>
+      <div class="formula"><div class="fx">∇·(<span class="m">fA</span>) = <span class="m">f</span>∇·<span class="m">A</span> + <span class="m">A</span>·∇<span class="m">f</span></div><div class="fn">散度乘积法则</div></div>
+      <div class="formula"><div class="fx">∇×(<span class="m">fA</span>) = <span class="m">f</span>∇×<span class="m">A</span> + ∇<span class="m">f</span>×<span class="m">A</span></div><div class="fn">旋度乘积法则</div></div>
+      <div class="formula"><div class="fx">∇·(<span class="m">A</span>×<span class="m">B</span>) = <span class="m">B</span>·∇×<span class="m">A</span> − <span class="m">A</span>·∇×<span class="m">B</span></div><div class="fn">混合积的散度</div></div>
+      <div class="formula"><div class="fx">∇×(<span class="m">A</span>×<span class="m">B</span>) = <span class="m">A</span>(∇·<span class="m">B</span>) − <span class="m">B</span>(∇·<span class="m">A</span>) + (<span class="m">B</span>·∇)<span class="m">A</span> − (<span class="m">A</span>·∇)<span class="m">B</span></div><div class="fn">叉积的旋度</div></div>
+      <div class="formula"><div class="fx">∇×(∇×<span class="m">A</span>) = ∇(∇·<span class="m">A</span>) − ∇²<span class="m">A</span></div><div class="fn">矢量三重积展开应用于 ∇ 算子</div></div>
+      <div class="formula"><div class="fx">∇·(∇×<span class="m">A</span>) = 0</div><div class="fn">旋度必无散</div></div>
+      <div class="formula"><div class="fx">∇×(∇<span class="m">f</span>) = 0</div><div class="fn">梯度必无旋</div></div>
+      <h3 style="margin:1.4rem 0 .5rem">积分定理</h3>
+      <div class="formula"><div class="fx">∮<sub>S</sub> <span class="m">A</span>·d<span class="m">S</span> = ∫<sub>V</sub> ∇·<span class="m">A</span> d<span class="m">V</span></div><div class="fn">高斯散度定理</div></div>
+      <div class="formula"><div class="fx">∮<sub>C</sub> <span class="m">A</span>·d<span class="m">l</span> = ∫<sub>S</sub> (∇×<span class="m">A</span>)·d<span class="m">S</span></div><div class="fn">斯托克斯定理</div></div>
+      <p class="note note-warn" style="margin-top:1rem">
+        <strong>适用条件：</strong>上述积分定理要求被积函数在积分区域内<b>连续可微</b>。
+        若区域内有奇点（如点电荷所在处），须先把奇点挖去再取极限，不可直接套用。
+      </p>
+      <p class="note note-warn" style="margin-top:.6rem">
+        <strong>关于「无散」与「无旋」：</strong>
+        ∇·<span class="m">A</span> = 0 只说明场线<b>没有起点和终点</b>，<b>不</b>意味着场线闭合成环
+        （<span class="m">A</span> = <b>ẑ</b> 即处处无散，但场线是无限长直线）。
+        同理 ∇×<span class="m">A</span> = 0 时环流为零、可写为 ∇<span class="m">ψ</span>，
+        这两个结论都<b>额外要求区域单连通</b>——有洞的区域存在反例。
+      </p>
+    </section>
+
+    <!-- 曲线坐标 -->
+    <section class="card" id="coords" style="margin-bottom:1rem">
+      <h2>曲线坐标算子（附录 B）</h2>
+
+      <h3>直角坐标 (<span class="m">x</span>, <span class="m">y</span>, <span class="m">z</span>)</h3>
+      <div class="formula">
+        <div class="fx">∇²<span class="m">ψ</span> = ∂²<span class="m">ψ</span>/∂<span class="m">x</span>² + ∂²<span class="m">ψ</span>/∂<span class="m">y</span>² + ∂²<span class="m">ψ</span>/∂<span class="m">z</span>²</div>
+      </div>
+      <div class="formula"><div class="fx">d³<span class="m">r</span> = d<span class="m">x</span> d<span class="m">y</span> d<span class="m">z</span></div></div>
+
+      <h3 style="margin-top:1.2rem">球坐标 (<span class="m">r</span>, <span class="m">θ</span>, <span class="m">φ</span>)</h3>
+      <div class="formula">
+        <div class="fx">∇²<span class="m">ψ</span> = (1/<span class="m">r</span>²)∂<sub>r</sub>(<span class="m">r</span>²∂<sub>r</sub><span class="m">ψ</span>)
+          + (1/<span class="m">r</span>²sin<span class="m">θ</span>)∂<sub>θ</sub>(sin<span class="m">θ</span> ∂<sub>θ</sub><span class="m">ψ</span>)
+          + (1/<span class="m">r</span>²sin²<span class="m">θ</span>)∂²<sub>φ</sub><span class="m">ψ</span></div>
+      </div>
+      <div class="formula"><div class="fx">d³<span class="m">r</span> = <span class="m">r</span>² sin<span class="m">θ</span> d<span class="m">r</span> d<span class="m">θ</span> d<span class="m">φ</span></div></div>
+      <div class="formula">
+        <div class="fx">∇<span class="m">ψ</span> = ∂<sub>r</sub><span class="m">ψ</span> <b>r̂</b> + (1/<span class="m">r</span>)∂<sub>θ</sub><span class="m">ψ</span> <b>θ̂</b> + (1/<span class="m">r</span>sin<span class="m">θ</span>)∂<sub>φ</sub><span class="m">ψ</span> <b>φ̂</b></div>
+      </div>
+      <div class="formula">
+        <div class="fx">∇·<span class="m">A</span> = (1/<span class="m">r</span>²)∂<sub>r</sub>(<span class="m">r</span>²<span class="m">A</span><sub>r</sub>)
+          + (1/<span class="m">r</span>sin<span class="m">θ</span>)∂<sub>θ</sub>(sin<span class="m">θ</span> <span class="m">A</span><sub>θ</sub>)
+          + (1/<span class="m">r</span>sin<span class="m">θ</span>)∂<sub>φ</sub><span class="m">A</span><sub>φ</sub></div>
+      </div>
+
+      <h3 style="margin-top:1.2rem">柱坐标 (<span class="m">ρ</span>, <span class="m">φ</span>, <span class="m">z</span>)</h3>
+      <div class="formula">
+        <div class="fx">∇²<span class="m">ψ</span> = (1/<span class="m">ρ</span>)∂<sub>ρ</sub>(<span class="m">ρ</span> ∂<sub>ρ</sub><span class="m">ψ</span>)
+          + (1/<span class="m">ρ</span>²)∂²<sub>φ</sub><span class="m">ψ</span> + ∂²<sub>z</sub><span class="m">ψ</span></div>
+      </div>
+      <div class="formula"><div class="fx">d³<span class="m">r</span> = <span class="m">ρ</span> d<span class="m">ρ</span> d<span class="m">φ</span> d<span class="m">z</span></div></div>
+      <div class="formula">
+        <div class="fx">∇<span class="m">ψ</span> = ∂<sub>ρ</sub><span class="m">ψ</span> <b>ρ̂</b> + (1/<span class="m">ρ</span>)∂<sub>φ</sub><span class="m">ψ</span> <b>φ̂</b> + ∂<sub>z</sub><span class="m">ψ</span> <b>ẑ</b></div>
+      </div>
+      <p class="note" style="margin-top:1rem">
+        <strong>坐标符号约定：</strong>本书柱坐标的径向坐标统一记为 <span class="m">ρ</span>（不是 <span class="m">r</span>），
+        以避免与球坐标的 <span class="m">r</span> 混淆。图注与公式中若见 <span class="m">r</span> 作柱径向，
+        应理解为 <span class="m">ρ</span>。
+      </p>
+    </section>
+
+    <!-- 常数 -->
+    <section class="card" id="constants" style="margin-bottom:1rem">
+      <h2>基本物理常数（附录 C）</h2>
+      <div class="table-scroll">
+        <table class="data">
+          <caption>本书作为教学用书采用表中数值；2019 年 SI 修订后 ε₀ 与 μ₀ 已改为测量值。</caption>
+          <thead>
+            <tr><th>常数</th><th>符号</th><th class="num">数值</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>真空光速</td><td><span class="m">c</span></td><td class="num">2.998 × 10⁸ m/s</td></tr>
+            <tr><td>真空介电常数</td><td><span class="m">ε</span><sub>0</sub></td><td class="num">8.854 × 10⁻¹² F/m</td></tr>
+            <tr><td>真空磁导率</td><td><span class="m">μ</span><sub>0</sub></td><td class="num">4π × 10⁻⁷ H/m（近似）</td></tr>
+            <tr><td>基本电荷</td><td><span class="m">e</span></td><td class="num">1.602 × 10⁻¹⁹ C</td></tr>
+            <tr><td>电子质量</td><td><span class="m">m</span><sub>e</sub></td><td class="num">9.109 × 10⁻³¹ kg</td></tr>
+            <tr><td>精细结构常数</td><td><span class="m">α</span></td><td class="num">1/137.036</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:1rem">
+        2019 年 SI 修订后，<span class="m">μ</span><sub>0</sub> = 4π×10⁻⁷ H/m 不再是精确定义值，
+        而是由 <span class="m">α</span>、<span class="m">e</span>、<span class="m">h</span>、<span class="m">c</span>
+        推导的测量值，与 4π×10⁻⁷ 的偏差约 2×10⁻⁹ 量级。
+        本书统一沿用 4π×10⁻⁷ 近似值，对全部计算结果的影响可忽略。
+      </p>
+      <p style="margin-top:1rem">
+        需要做数值换算时，请使用<a href="tools.html">计算工具</a>页的
+        SI ⇄ 高斯单位换算器（换算因子取自附录 D）。
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>《电动力学》自学教材 · 公式速查 · 仅供个人学习使用</p>
+    <p>本页公式已与教材正文逐条核对；发现疑问请查阅<a href="errata.html">勘误记录</a>。</p>
+  </div>
+</footer>
+
+<script src="book-data.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

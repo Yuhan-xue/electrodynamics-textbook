@@ -8,6 +8,16 @@
 *.upb
 *.ilg
 *.ind
+*.fls
+*.fdb_latexmk
+*.xdv
+*.synctex.gz
+
+# 本地编译输出目录（latexmk -outdir=.build）
+.build/
+
+# AgentTeams 会话状态（不应入库）
+.agent-teams/
 
 # 备份文件
 *.bak
