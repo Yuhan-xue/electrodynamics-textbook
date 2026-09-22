@@ -3,21 +3,21 @@
    重新生成：python tools/site/export_site_data.py  */
 window.BOOK = {
  "facts": {
-  "pages": 172,
-  "texLines": 8929,
+  "pages": 179,
+  "texLines": 9235,
   "chapters": 10,
   "appendices": 9,
-  "examples": 49,
+  "examples": 50,
   "examplesByDifficulty": {
    "基础": 21,
-   "提高": 23,
+   "提高": 24,
    "挑战": 5
   },
-  "theorems": 64,
-  "definitions": 28,
-  "insights": 78,
-  "warnings": 17,
-  "tips": 47,
+  "theorems": 65,
+  "definitions": 31,
+  "insights": 80,
+  "warnings": 18,
+  "tips": 48,
   "miniquizzes": 10,
   "version": "v2.15"
  },
@@ -349,16 +349,20 @@ window.BOOK = {
      "difficulty": "提高"
     },
     {
-     "line": 3900,
+     "line": 3940,
      "difficulty": "提高"
     },
     {
-     "line": 3981,
+     "line": 4021,
      "difficulty": "提高"
     },
     {
-     "line": 4035,
+     "line": 4075,
      "difficulty": "挑战"
+    },
+    {
+     "line": 4275,
+     "difficulty": "提高"
     }
    ],
    "counts": {}
@@ -404,23 +408,23 @@ window.BOOK = {
    "number": 5,
    "examples": [
     {
-     "line": 4401,
+     "line": 4591,
      "difficulty": "基础"
     },
     {
-     "line": 4430,
+     "line": 4620,
      "difficulty": "提高"
     },
     {
-     "line": 4504,
+     "line": 4694,
      "difficulty": "基础"
     },
     {
-     "line": 4568,
+     "line": 4758,
      "difficulty": "提高"
     },
     {
-     "line": 4714,
+     "line": 4904,
      "difficulty": "提高"
     }
    ],
@@ -459,11 +463,11 @@ window.BOOK = {
    "number": 6,
    "examples": [
     {
-     "line": 5120,
+     "line": 5310,
      "difficulty": "提高"
     },
     {
-     "line": 5142,
+     "line": 5332,
      "difficulty": "提高"
     }
    ],
@@ -506,19 +510,19 @@ window.BOOK = {
    "number": 7,
    "examples": [
     {
-     "line": 5668,
+     "line": 5858,
      "difficulty": "基础"
     },
     {
-     "line": 5782,
+     "line": 5983,
      "difficulty": "基础"
     },
     {
-     "line": 5919,
+     "line": 6120,
      "difficulty": "提高"
     },
     {
-     "line": 6024,
+     "line": 6226,
      "difficulty": "提高"
     }
    ],
@@ -573,7 +577,7 @@ window.BOOK = {
    "number": 8,
    "examples": [
     {
-     "line": 6661,
+     "line": 6863,
      "difficulty": "提高"
     }
    ],
@@ -608,11 +612,11 @@ window.BOOK = {
    "number": 9,
    "examples": [
     {
-     "line": 7249,
+     "line": 7482,
      "difficulty": "挑战"
     },
     {
-     "line": 7287,
+     "line": 7520,
      "difficulty": "挑战"
     }
    ],
@@ -663,19 +667,19 @@ window.BOOK = {
    "number": 10,
    "examples": [
     {
-     "line": 7630,
+     "line": 7934,
      "difficulty": "基础"
     },
     {
-     "line": 7677,
+     "line": 7981,
      "difficulty": "提高"
     },
     {
-     "line": 7789,
+     "line": 8093,
      "difficulty": "提高"
     },
     {
-     "line": 7812,
+     "line": 8116,
      "difficulty": "基础"
     }
    ],
@@ -725,7 +729,7 @@ window.BOOK = {
    "letter": "D",
    "examples": [
     {
-     "line": 8449,
+     "line": 8753,
      "difficulty": "基础"
     }
    ],

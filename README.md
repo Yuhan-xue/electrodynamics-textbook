@@ -12,7 +12,7 @@
 |------|------|
 | **书名** | 电动力学 |
 | **作者** | Han & Kimi & glm |
-| **页数** | 172 页 |
+| **页数** | 179 页 |
 | **版本** | v2.15 |
 | **状态** | 已完成（含 2026-09 独立复核与勘误） |
 | **编译** | XeLaTeX（TeX Live 2026 实测通过） |
@@ -22,7 +22,7 @@
 | 文件 | 说明 |
 |------|------|
 | `electrodynamics_textbook_v2.tex` | LaTeX 源文件（完整可编译，8918 行） |
-| `electrodynamics_textbook_v2.pdf` | 编译产物（XeLaTeX，172 页） |
+| `electrodynamics_textbook_v2.pdf` | 编译产物（XeLaTeX，179 页） |
 | `ERRATA_REPORT.md` | **独立复核与勘误报告**（本轮全面复核，含已修正与待修正清单） |
 | `STYLE_GUIDE.md` | 后期修改规范 |
 | `CHANGELOG.md` | 修改记录 |
@@ -58,7 +58,7 @@
 |------|------|
 | 页数 | 172 |
 | 源文件行数 | 8918 |
-| 例题 | 49（基础 21 / 提高 23 / 挑战 5） |
+| 例题 | 50（基础 21 / 提高 24 / 挑战 5） |
 | 定理 | 64 |
 | 定义 | 28 |
 | 物理洞见 | 78 |
@@ -70,7 +70,7 @@
 ## 教材特色
 
 - **纯矢量插图**：全部由 TikZ 代码绘制，PDF 无限缩放清晰
-- **49 道分层例题**：标注 [基础]/[提高]/[挑战] 难度
+- **50 道分层例题**：标注 [基础]/[提高]/[挑战] 难度
 - **物理史话**：每章穿插科学史故事
 - **常见误区**：学生最容易犯错的地方
 - **9 个附录**：公式速查、单位转换、学习计划等
@@ -86,7 +86,7 @@ xelatex -interaction=nonstopmode electrodynamics_textbook_v2.tex
 xelatex -interaction=nonstopmode electrodynamics_textbook_v2.tex
 ```
 
-**当前编译状态**：172 页 · 0 错误 · 0 Overfull hbox · 0 Underfull hbox · 0 未定义引用。
+**当前编译状态**：179 页 · 0 错误 · 0 Overfull hbox · 0 Underfull hbox · 0 未定义引用。
 
 ## 配套站点
 

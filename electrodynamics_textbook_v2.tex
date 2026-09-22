@@ -3884,15 +3884,55 @@ l \neq 1: &\quad B_l = 0
 + \frac{\partial^2\phi}{\partial z^2} = 0
 \]
 
-\begin{theorem}{柱坐标轴对称拉普拉斯方程的通解}{cylindrical-separation-v2}
-设 $\phi(\rho,z)$ 与方位角 $\varphi$ 无关。通过分离变量，径向部分满足\textbf{贝塞尔方程}，其解涉及贝塞尔函数 $J_n(k\rho)$ 和 $Y_n(k\rho)$。对于要求 $\rho=0$ 处有限的解，零阶贝塞尔函数 $J_0(k\rho)$ 是关键函数。
-
-零阶贝塞尔函数 $J_0(x)$ 是下列方程的解：
+\begin{theorem}{柱坐标分离变量：两种情形与通解}{cylindrical-separation-v2}
+柱坐标下的拉普拉斯方程
 \[
-x^2\frac{\diff^2 J_0}{\diff x^2} + x\frac{\diff J_0}{\diff x} + x^2 J_0 = 0
+\frac{1}{\rho}\frac{\partial}{\partial\rho}\left(\rho\frac{\partial\phi}{\partial\rho}\right)
++ \frac{1}{\rho^2}\frac{\partial^2\phi}{\partial\varphi^2}
++ \frac{\partial^2\phi}{\partial z^2} = 0
 \]
+按对 $z$ 的依赖分为两种情形，其通解的函数族\textbf{完全不同}——这是本节最容易混淆之处。
 
-$J_0(x)$ 具有振荡衰减特性（类似衰减的余弦函数），在 $x=0$ 处取值为1，并随着 $x$ 增大而振荡衰减。它是处理圆柱形边界问题的自然函数。
+\textbf{情形一：与 $z$ 无关（二维问题）}。此时退化为
+$\dfrac{1}{\rho}\partial_\rho(\rho\,\partial_\rho\phi) + \dfrac{1}{\rho^2}\partial^2_\varphi\phi = 0$，
+分离变量后径向方程是\textbf{欧拉方程}，通解为\textbf{幂函数}：
+\begin{equation}
+\phi(\rho,\varphi) = A_0 + B_0\ln\rho
++ \sum_{m=1}^{\infty}\left(A_m\rho^m + B_m\rho^{-m}\right)\cos m\varphi
++ \sum_{m=1}^{\infty}\left(C_m\rho^m + D_m\rho^{-m}\right)\sin m\varphi .
+\label{eq:cyl-2d}
+\end{equation}
+\textbf{本情形不出现贝塞尔函数}。§4.2.3 的例题（无限长圆柱面）用的正是这一族解。
+
+\textbf{情形二：与 $z$ 有关（三维轴对称问题）}。设 $\phi(\rho,z)$ 与 $\varphi$ 无关，
+分离变量得径向部分满足\textbf{零阶贝塞尔方程}
+\begin{equation}
+\rho^2\frac{\diff^2 R}{\diff\rho^2} + \rho\frac{\diff R}{\diff\rho} + k^2\rho^2 R = 0,
+\label{eq:bessel0}
+\end{equation}
+其两个线性无关解为零阶贝塞尔函数 $J_0(k\rho)$ 与零阶诺依曼函数 $Y_0(k\rho)$；
+若把分离常数取为 $-k^2$，则径向方程变为修正贝塞尔方程，解为 $I_0(k\rho)$、$K_0(k\rho)$。
+要求 $\rho=0$ 处有限时须舍去 $Y_0$（它在原点发散），只留 $J_0$。
+于是\textbf{一般柱体}（如半径 $a$ 的圆柱内、端面给定电势）的通解为
+\begin{equation}
+\phi(\rho,z) = \sum_{n=1}^{\infty} J_0\!\left(\frac{x_n \rho}{a}\right)
+\Big(A_n\,\ee^{k_n z} + B_n\,\ee^{-k_n z}\Big),
+\label{eq:cyl-3d}
+\end{equation}
+其中 $x_n$ 是 $J_0(x)$ 的第 $n$ 个零点，$k_n = x_n/a$ 由 $\rho=a$ 处的边界条件定出；
+$z$ 方向的两个指数也可等价地写成 $\cosh(k_n z)$ 与 $\sinh(k_n z)$ 的组合（取决于端面条件取对称或反对称）。
+
+\textbf{系数的确定}依赖正交性：$J_0$ 在区间 $[0,a]$ 上以权 $\rho$ 正交，
+\[
+\int_0^a J_0\!\left(\frac{x_m\rho}{a}\right)J_0\!\left(\frac{x_n\rho}{a}\right)\rho\,\diff\rho
+= \frac{a^2}{2}J_1(x_n)^2\,\delta_{mn},
+\]
+用它即可逐项投影出系数 $A_n$、$B_n$，与傅里叶级数定系数的方法完全平行。
+
+\textbf{关于 $J_0$}：$J_0(x)$ 在 $x=0$ 处取 $1$，随后振荡衰减（类似衰减的余弦），
+其零点 $x_1 \approx 2.4048$、$x_2 \approx 5.5201$、$x_3 \approx 8.6537$。
+本书不展开 $J_0$ 的完整性质——把它理解为"柱坐标下的余弦"即可，
+用到时查表或调用数值库。
 \end{theorem}
 
 \toggleButton{挑战题}{ocg挑战3}
@@ -4137,6 +4177,156 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \end{center}
 \end{review}
 
+\section{格林函数法}
+\addcontentsline{toc}{section}{格林函数法}
+
+镜像法与分离变量法各自只适用于特定几何。\textbf{格林函数法}把边值问题统一成一个积分表达式，
+是本节要补上的第三种方法——它也是本章核心框架里列出的"三大解析方法"之一。
+
+\subsection{从点源响应到边值问题}
+
+\begin{definition}{格林函数}{green-function-def}
+泊松方程 $\lap\phi = -\rho/\eps_0$ 的\textbf{格林函数} $G(\vect{r},\vect{r}')$
+定义为位于 $\vect{r}'$ 的单位点源所满足的方程之解：
+\begin{equation}
+\lap G(\vect{r},\vect{r}') = -4\pi\,\delta^{(3)}(\vect{r}-\vect{r}')
+\label{eq:green-def}
+\end{equation}
+若场点与源点都在无界空间中，由第1章已证的 $\lap(1/|\vect{r}-\vect{r}'|)
+= -4\pi\delta^{(3)}(\vect{r}-\vect{r}')$ 立得\textbf{自由空间格林函数}
+\[
+G_0(\vect{r},\vect{r}') = \frac{1}{|\vect{r}-\vect{r}'|}.
+\]
+有导体或介质边界时，令 $G = G_0 + F$，其中 $F$ 满足拉普拉斯方程
+$\lap F = 0$，用来把边界条件"顶"住。
+\end{definition}
+
+有了格林函数，泊松方程的解就能写成叠加积分。对无界空间代入
+$\phi = \frac{1}{4\pi\eps_0}\int G_0 \rho \,\diff^3r'$ 即回到熟悉的库仑叠加式；
+真正有价值的是\textbf{有边界}的情形，这时要用格林定理把边界项一并纳入。
+
+\subsection{格林定理给出的边值问题解}
+
+设 $\phi$ 与 $G$ 都在区域内二阶可微，对两者使用\textbf{格林第二恒等式}
+（见第1章矢量恒等式）：$\displaystyle\int_V(\phi\lap G - G\lap\phi)\,\diff^3r'
+= \oint_S\left(\phi\,\frac{\partial G}{\partial n'} - G\,\frac{\partial \phi}{\partial n'}\right)\diff S'$。
+
+代入 $\lap G = -4\pi\delta^{(3)}(\vect r - \vect r')$ 与 $\lap\phi = -\rho/\eps_0$，
+左端化为 $-4\pi\phi(\vect r) + \frac{1}{\eps_0}\int_V G\rho\,\diff^3r'$，整理得
+
+\begin{theorem}{格林函数形式解}{green-solution-thm}
+\begin{equation}
+\phi(\vect r) = \frac{1}{4\pi\eps_0}\int_V G(\vect r,\vect r')\,\rho(\vect r')\,\diff^3r'
+\;+\; \frac{1}{4\pi}\oint_S\left[\,
+G\,\frac{\partial\phi}{\partial n'} - \phi\,\frac{\partial G}{\partial n'}
+\,\right]\diff S'
+\label{eq:green-solution}
+\end{equation}
+其中 $\partial/\partial n'$ 是边界上对源点坐标的\textbf{外法向}导数。
+\end{theorem}
+
+式 \eqref{eq:green-solution} 里出现了 $\phi$ 与 $\partial\phi/\partial n'$ 两类边界值，
+但边值问题\textbf{只}给定其中之一。格林函数的自由度正是用来消掉多余那一项的：
+
+\begin{itemize}
+\item \textbf{Dirichlet 条件}（边界上 $\phi$ 给定）：要求 $G$ 在边界上为零，
+  即 $G_D\big|_S = 0$。此时式 \eqref{eq:green-solution} 中带 $\partial\phi/\partial n'$
+  的项消失，剩下
+  \begin{equation}
+  \phi(\vect r) = \frac{1}{4\pi\eps_0}\int_V G_D\,\rho\,\diff^3r'
+  \;-\; \frac{1}{4\pi}\oint_S \phi\,\frac{\partial G_D}{\partial n'}\,\diff S'.
+  \label{eq:green-dirichlet}
+  \end{equation}
+\item \textbf{Neumann 条件}（边界上 $\partial\phi/\partial n$ 给定）：此时取
+  $\partial G_N/\partial n'\big|_S = 0$ 会与高斯定理冲突——由 \eqref{eq:green-def}
+  对区域积分得 $\oint_S \partial G_N/\partial n'\,\diff S' = -4\pi \neq 0$，
+  而常数的法向导数为零，故这个要求无法满足。正确做法是改取
+  $\dfrac{\partial G_N}{\partial n'}\bigg|_S = -\dfrac{4\pi}{S_{\text{总}}}$
+  （$S_{\text{总}}$ 为边界面总面积），代价是解中多出一个常数项——
+  这与 §4.1 唯一性定理中指出的"Neumann 问题解可差一个常数"完全一致。
+\end{itemize}
+
+\begin{insight}{镜像法就是最简单的格林函数构造}{image-as-green}
+§4.1 的镜像法与本节是同一件事。以接地导体平面（$z=0$，区域为 $z>0$）为例，
+取 $G_D = \dfrac{1}{|\vect r - \vect r'|} - \dfrac{1}{|\vect r - \vect r'_{\text{镜}}|}$，
+其中 $\vect r'_{\text{镜}}$ 是 $\vect r'$ 关于平面的镜像点。
+两项都满足拉普拉斯方程（除各自奇点外），且在 $z=0$ 上两者相等因而相消，
+恰满足 $G_D\big|_{S} = 0$——\textbf{镜像电荷正是那个让格林函数在边界上归零的齐次解}。
+
+由此还能直接读出导体表面的\textbf{感应电荷}。区域内有电荷 $\rho$ 时，导体表面
+$S$ 上的总感应电荷为
+\[
+Q_{\text{感}} = \oint_S \sigma\,\diff S'
+= -\eps_0\oint_S \frac{\partial\phi}{\partial n}\bigg|_S \diff S',
+\]
+把 \eqref{eq:green-dirichlet} 代入即得用 $G_D$ 表达的积分式。
+最简单也最常用的是"区域内只有一个点电荷 $q$ 位于 $\vect r_0$"的情形，
+此时由线性叠加立刻得到总感应电荷
+\[
+Q_{\text{感}} = -q\,\frac{R}{r_0}\qquad(\text{接地导体球，半径 } R,\ \text{源距球心 } r_0),
+\]
+这正是 §4.1 导体球例题里镜像电荷的电量——\textbf{格林函数法给出的结论与镜像法完全相同}，
+只是把"猜镜像电荷"换成了"按边界条件构造 $G_D$"的系统步骤。
+对更一般的几何，格林函数法能给出镜像法猜不出来的答案。
+\end{insight}
+
+\subsection{例题：接地导体球外的格林函数}
+
+\begin{example}{用镜像法构造接地导体球的格林函数}{green-sphere-ex}
+\difficulty{提高}
+半径 $R$ 的接地导体球，球心在原点，区域为球外 $r>R$。
+求 Dirichlet 格林函数 $G_D(\vect r,\vect r')$。
+\tcblower
+\textbf{解答：}
+
+\textbf{第一步：沿用镜像法结果。}
+由 §4.1 点电荷与导体球的结论，源点 $r'$ 处单位点源应在球内
+$r'' = R^2/r'$ 处放镜像点源，其"电量"为 $-R/r'$。于是
+\[
+G_D(\vect r,\vect r') = \frac{1}{|\vect r - \vect r'|}
+- \frac{R/r'}{|\vect r - (R^2/r'^2)\vect r'|}.
+\]
+
+\textbf{第二步：验证边界条件。}
+当 $r = R$ 时，由余弦定理
+\begin{align*}
+|\vect r - \vect r'|^2 &= R^2 + r'^2 - 2Rr'\cos\gamma, \\
+\left|\vect r - \tfrac{R^2}{r'^2}\vect r'\right|^2
+&= R^2 + \tfrac{R^4}{r'^2} - 2\tfrac{R^3}{r'}\cos\gamma
+= \tfrac{R^2}{r'^2}\left(r'^2 + R^2 - 2Rr'\cos\gamma\right),
+\end{align*}
+其中 $\gamma$ 是 $\vect r$ 与 $\vect r'$ 的夹角。于是第二项分母
+$= \tfrac{R}{r'}|\vect r - \vect r'|$，与系数 $R/r'$ 相消，两项恰好相等：
+\[
+G_D\big|_{r=R} = \frac{1}{|\vect r-\vect r'|} - \frac{1}{|\vect r-\vect r'|} = 0.\;\checkmark
+\]
+
+\textbf{第三步：与 $1/r$ 展开式对照（可选校验）。}
+在球坐标下把 $G_D$ 按球谐函数展开，可得
+\[
+G_D = 4\pi\sum_{l=0}^{\infty}\frac{1}{2l+1}
+\left(\frac{r_<^l}{r_>^{l+1}} - \frac{R^{2l+1}}{r^{l+1}r'^{l+1}}\right)
+\sum_m Y_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi'),
+\]
+其中 $r_<,r_>$ 为 $r,r'$ 中的小者与大者。令 $R\to 0$ 时第二项消失，
+回到自由空间展开式——这既验证了构造正确，也说明\textbf{镜像法给出的
+正是分离变量法给出的同一结果}。
+
+[量纲校验] $G$ 与 $1/|\vect r-\vect r'|$ 同量纲，为 $\mathrm{m^{-1}}$；
+两项量纲一致，相加合法。$\checkmark$
+\end{example}
+
+\begin{review}{本节要点}{green-review}
+\begin{itemize}[nosep]
+\item 格林函数满足 $\lap G = -4\pi\delta^{(3)}(\vect r-\vect r')$，无界时 $G_0 = 1/|\vect r-\vect r'|$。
+\item 有边界时取 $G = G_0 + F$，$\lap F = 0$，$F$ 负责满足边界条件。
+\item 解由格林定理给出：体项（源的叠加）+ 面项（边界值的影响）。
+\item Dirichlet 取 $G_D|_S = 0$ 消去 $\partial\phi/\partial n'$ 项；
+  Neumann 不能取 $\partial G_N/\partial n' = 0$，须取 $-4\pi/S_{\text{总}}$，解含常数。
+\item 镜像法 = 最简单的格林函数构造；感应电荷面密度可由 $\partial G_D/\partial n$ 读出。
+\end{itemize}
+\end{review}
+
 \begin{tip}{本章核心框架}{ch4-summary}
 \textbf{一句话总结}：静电学边值问题可通过分离变量、镜像法、格林函数三大解析方法求解。\\
 \textbf{核心工具}：勒让德多项式（球坐标）、贝塞尔函数（柱坐标）、镜像电荷（导体边界）、格林函数（$\delta$源响应）。\\
@@ -4151,7 +4341,7 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \begin{miniquiz}
 \textbf{一、选择题}
 \begin{enumerate}[label=\arabic*.]
-\item 拉普拉斯方程 $\lap\phi = 0$ 在球坐标下的分离变量解中，角向部分由什么函数描述？
+\item 拉普拉斯方程 $\lap\phi = 0$ 在球坐标下的分离变量解中，\textbf{轴对称情形}（$\phi$ 与 $\varphi$ 无关）的角向部分由什么函数描述？
   \begin{enumerate}[label=(\Alph*),nosep]
   \item 贝塞尔函数
   \item 球谐函数
@@ -4159,7 +4349,7 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
   \item 厄米多项式
   \end{enumerate}
 \begin{ocg}{答案}{ocg答案4}{off}
-  \textit{答案：C。勒让德多项式（及连带勒让德函数）是球坐标角向方程的解。}
+  \textit{答案：C。轴对称时角向方程化为勒让德方程，解为 $P_l(\cos\theta)$（连带勒让德函数 $P_l^m$ 用于 $m\neq0$ 的情形）。若 $\phi$ 还依赖 $\varphi$，则须改用球谐函数 $Y_{lm}(\theta,\varphi)$（选项 B）——故本题的"轴对称"限定是必要的。}
 \end{ocg}
 
 \item 接地导体球的镜像法中，像电荷的位置在：
@@ -4207,14 +4397,14 @@ Griffiths & $Q_{ij}=\int(3x'_ix'_j-r'^2\delta_{ij})\rho\,\diff^3r'$ & 与 Jackso
 \item 分离变量的级数系数由\textbf{边界条件}（而非初始条件）确定——忘记归一化或漏掉正交性积分是最常见错误。
 \item 多极展开的适用条件是 $r \gg r'$（远场）——近距离使用多极展开会得到错误结论。
 \item 唯一性定理只保证"解唯一"，不提供解本身——它验证猜测，不产生猜测（镜像电荷仍要靠对称性去猜）。
-\item 格林函数法的完整推导见第 1 章 $\delta$ 函数与格林函数部分；本章直接使用其结论。
+\item 格林函数法的完整推导见本章 §4.4（含 Dirichlet/Neumann 两种边界条件的处理与接地导体球例题）；第 1 章只给出了自由空间格林函数 $\lap(1/r)=-4\pi\delta^{(3)}(\vect r)$ 这一基础结果。
 \end{enumerate}
 \end{warning}
 
 \begin{chapterreview}
 \begin{itemize}[nosep]
 \item \textbf{核心方法}：分离变量法（直角/柱/球）、镜像法、格林函数法、多极展开。
-\item \textbf{关键函数}：勒让德多项式、球谐函数、贝塞尔函数。
+\item \textbf{关键函数}：勒让德多项式 $P_l$（轴对称球坐标，本章 §4.2.2 展开）、贝塞尔函数 $J_0$（柱坐标含 $z$ 依赖，本章 §4.2.3 情形二）、格林函数 $G(\vect r,\vect r')$（本章 §4.4）。球谐函数 $Y_{lm}$ 用于 $\phi$ 同时依赖 $\theta$ 与 $\varphi$ 的一般情形，本章未展开。
 \item \textbf{核心定理}：唯一性定理。
 \item \textbf{自检验}：能否推导点电荷在接地导体球外的镜像电荷大小和位置？
 \item \textbf{衔接预告}：第5章进入静磁学——电流、毕奥-萨伐尔定律、安培环路定理。
@@ -5761,11 +5951,22 @@ $\chi$ & 规范函数（$\vecA' = \vecA + \grad\chi$） \\
 \end{insight}
 
 \begin{definition}{位移电流}{displacement-current-v2}
-\textbf{位移电流密度}定义为：
+\textbf{位移电流密度}定义为
+\begin{equation}
+\vecJ_D \equiv \frac{\partial\vect{D}}{\partial t}.
+\label{eq:displacement-current}
+\end{equation}
+它不是真实的电荷流动，而是变化电场（以及介质极化变化）等效的"电流"。
+
+\textbf{与真空形式的等价性}：由 $\vect D = \eps_0\vecE + \vect{P}$ 得
 \[
-\vecJ_D = \eps_0\frac{\partial\vecE}{\partial t}
+\vecJ_D = \eps_0\frac{\partial\vecE}{\partial t} + \frac{\partial\vect{P}}{\partial t},
 \]
-它不是真实的电荷流动，而是变化电场等效的"电流"。
+即 \eqref{eq:displacement-current} 比常见的 $\eps_0\,\partial\vecE/\partial t$ 多出一项
+$\partial\vect{P}/\partial t$（\textbf{极化电流}）。\textbf{只有在真空（或 $\vect P$ 不随时间变化）时二者才相等}。
+本书\textbf{统一采用 $\vecJ_D = \partial\vect{D}/\partial t$} 作为定义；
+凡出现 $\eps_0\,\partial\vecE/\partial t$ 的写法，均指真空或已略去极化电流的情形。
+把位移电流写成 $\eps_0\partial\vecE/\partial t$ 却用于介质问题，是本章最常见的错误来源之一。
 \end{definition}
 
 \begin{insight}{位移电流的物理意义}{displacement-meaning-v2}
@@ -5787,7 +5988,7 @@ $\chi$ & 规范函数（$\vecA' = \vecA + \grad\chi$） \\
 
 (a) 极板间电场：$E = Q/(\eps_0\pi R^2)$（均匀，边缘效应忽略）
 
-位移电流密度：$j_D = \eps_0 \partial E/\partial t = (1/\pi R^2)\, \diff Q/\diff t = I/(\pi R^2)$
+位移电流密度（介质中须用 $\partial\vect D/\partial t$；此处按真空情形写 $\eps_0\partial\vecE/\partial t$）：$j_D = \eps_0 \partial E/\partial t = (1/\pi R^2)\, \diff Q/\diff t = I/(\pi R^2)$
 
 总位移电流：$I_D = j_D \cdot \pi R^2 = I$——等于传导电流！
 
@@ -6003,8 +6204,9 @@ f_i &= \rho E_i + (\vecJ\times\vecB)_i \\
 \begin{theorem}{电磁场动量守恒方程}{maxwell-stress-theorem}
 电磁场与带电物质系统的总动量守恒可表述为
 \[
-\frac{\partial g_i}{\partial t} + \partial_j T_{ij} = -f_i
+\frac{\partial g_i}{\partial t} - \partial_j T_{ij} = -f_i
 \]
+（即场对带电体的力密度 $f_i = \partial_j T_{ij} - \partial g_i/\partial t$：应力张量的散度提供动量流入，动量密度的变化率消耗之。注意此处 $T_{ij}$ 的散度前是\textbf{减号}，与能量守恒式 $\partial_t u + \divg\vect{S} = -\vecJ\cdot\vecE$ 中散度前是加号的情形不同，推导时勿套用。）
 其中 $\vect{g} = \muz\eps_0\vecE\times\vect{H}$ 是电磁场动量密度，$T_{ij}$ 是\textbf{麦克斯韦应力张量}：
 \[
 T_{ij} = \eps_0\left(E_i E_j - \frac{1}{2}\delta_{ij}E^2\right) + \frac{1}{\muz}\left(B_i B_j - \frac{1}{2}\delta_{ij}B^2\right)
@@ -6252,7 +6454,7 @@ $\vecE$ 沿径向，$\vecB$ 沿 $\unitvec{\phi}$，故 $\vect{S}$ 沿 $+z$ 方�
 
 [解答] 极板间电场：$E = V/d = V_0\cos\omega t/d$。
 
-位移电流密度：
+位移电流密度（极板间为真空，故 $\vecJ_D = \partial\vect D/\partial t$ 退化为 $\eps_0\,\partial\vecE/\partial t$）：
 \[
 j_D = \eps_0\partial E/\partial t = -\frac{\eps_0\omega V_0\sin\omega t}{d}
 \]
@@ -6692,7 +6894,18 @@ f_{c,01} = \frac{c}{2b}
 
 \textbf{结论}：窄边应满足 $b < \SI{3}{\cm}$，工程上常取 $b = \SI{2.5}{\cm}$ 左右。
 
-\textbf{结果解读}：(1) 结论中 $b$ 只设上限不设下限，但工程上 $b$ 太小会降低功率容量、增大壁损耗——所以实际取 $b\approx a/2$；(2) 极限校验 $b\to a/2 = 2.5$ cm 时 $\text{TE}_{01}$ 与 $\text{TE}_{10}$ 简并（$f_{c,01} = f_{c,10}$），多模风险最大，这就是工程上避开 $b = a/2$ 的原因；(3) 本题考察\textbf{截止频率公式的反向使用}——由"哪个模必须截止"反推几何尺寸，这是微波工程设计的标准思路。
+\textbf{结果解读}：(1) 结论中 $b$ 只设上限不设下限，但工程上 $b$ 太小会降低功率容量、增大壁损耗——所以实际取 $b\approx a/2$；(2) \textbf{极限校验}：取 $a=\SI{5}{\cm}$，当 $b = a/2 = \SI{2.5}{\cm}$ 时
+\[
+f_{c,10} = \frac{c}{2a} = \SI{3.0}{\GHz},\qquad
+f_{c,01} = \frac{c}{2b} = \SI{6.0}{\GHz},\qquad
+f_{c,20} = \frac{c}{a} = \SI{6.0}{\GHz}.
+\]
+即在该点简并的是 $\text{TE}_{01}$ 与 $\text{TE}_{20}$（二者同为 \SI{6.0}{\GHz}），\textbf{不是} $\text{TE}_{01}$ 与 $\text{TE}_{10}$——后者只有在 $b=a$ 时才相等，而波导按定义取 $a>b$。这个 \SI{6.0}{\GHz} 正是单模工作的\textbf{上边界}；(3) 由此看出 $b = a/2$ 并\textbf{不是}要避开的取值，恰恰相反：它是标准设计点。单模带宽为 $f_{c,10}$ 到 $\min(f_{c,01},f_{c,20})$，而
+\[
+f_{c,01}=\frac{c}{2b}\ \ge\ \frac{c}{a}=f_{c,20}
+\iff b \le \frac{a}{2},
+\]
+故 $b = a/2$ 使上边界恰好达到 $\min$ 的最大可能值 $c/a$，单模带宽由 $c/2a$ 到 $c/a$ 恰为\textbf{一个倍频程}（$2:1$）——这是矩形波导能取得的最宽单模带宽。工程上取 $b$ 稍小于 $a/2$ 是为了留出加工与频率漂移余量，而非为了"避开简并"。(4) 本题考察\textbf{截止频率公式的反向使用}——由"哪个模必须截止"反推几何尺寸，这是微波工程设计的标准思路。
 
 \begin{insight}{为什么空心金属波导不能传TEM波}{tem-no-propagation-v2}
 上面的设计中我们默认只有 TE/TM 模式——为什么 TEM 波在空心波导中不存在？
@@ -7065,6 +7278,26 @@ $\dfrac{\diff n}{\diff\omega} = \dfrac{Ne^2}{2\eps_0 m}\cdot\dfrac{2\omega\left[
 
 静止电荷产生静电场，匀速运动电荷产生静磁场——但都不辐射电磁波。只有当电荷\textbf{加速运动}时，才会产生脱离源而独立传播的电磁辐射。
 
+\begin{tip}{本章的时谐约定（务必先读）}{ch9-phase-convention}
+本章及全书时谐问题统一采用\textbf{复指数约定}：物理量写作复振幅形式
+\[
+A(\vect{r},t) = \tilde{A}(\vect{r})\,\ee^{-\ii\omega t},
+\qquad\text{辐射场中则含推迟相位}\quad \ee^{\ii(kr-\omega t)} .
+\]
+\textbf{真正的物理量取其实部。} 因此：
+\begin{itemize}[nosep]
+\item 若题设给出 $I(t) = I_0\cos\omega t$，其复形式为 $\tilde{I} = I_0\ee^{-\ii\omega t}$，
+  取实部后仍回到 $\cos\omega t$；
+\item 由 $\ee^{\ii(kr-\omega t)}$ 取实部得 $\cos(kr-\omega t)$，
+  而 $\cos(kr-\omega t) = \cos(\omega t - kr)$。本章部分例题写作
+  $\sin(kr-\omega t)$，那是把振幅整体取成了 $-1$ 倍（即 $\cos(kr-\omega t)$ 与
+  $-\sin(kr-\omega t)$ 在同一相位基准下相差一个符号）——\textbf{这只影响整体相位/符号，
+  不影响功率与角分布}，而功率与角分布正是本章全部结论的所在。
+\item 计算\textbf{时间平均}量时用 $\langle\cos^2\rangle = \langle\sin^2\rangle = \tfrac12$，
+  与用哪种写法无关。这也是为什么本章的 $\langle P\rangle$ 与 $dP/d\Omega$ 结果不受相位写法影响。
+\end{itemize}
+\end{tip}
+
 \begin{tip}{想一想}{think-why-radiate}
 不急着看下面的数学，先自己想一想：\textbf{为什么静止电荷不辐射、加速电荷才辐射？}
 
@@ -7273,7 +7506,7 @@ P = \frac{q^2 a^2}{6\pi\eps_0 c^3}
 [量纲校验] $[q^2/(\eps_0 c^3)] = \mathrm{C}^2 \cdot (\mathrm{N\cdot m^2/C^2}) / (\mathrm{m^3/s^3}) = \mathrm{N\cdot s^2/m} = \mathrm{kg}$，乘 $[a^2] = \mathrm{m^2/s^4}$ 得 $\mathrm{kg\cdot m^2/s^3} = \mathrm{W}$。\checkmark
 \end{theorem}
 
-（相对论带电粒子的辐射公式见第10章。）
+（相对论带电粒子的辐射公式见本章 §9.2.4「拓展：李纳--维谢尔势简介」——拉莫尔公式的相对论推广（李纳公式）即在该处给出；第 10 章讲的是电磁场的四维协变形式，不含辐射公式。）
 
 对时谐电偶极子，平均辐射功率：
 \[
@@ -7324,6 +7557,77 @@ P = \frac{q^2\gamma^6}{6\pi\eps_0 c^3}\left(a^2 - \frac{|\vect{v}\times\vect{a}|
 
 \textbf{学习建议}：本小节为选学内容，第一次阅读只需记住两点——(1) 推迟势对点电荷有严格解，分母多一个多普勒因子；(2) 相对论修正使辐射功率最多放大 $\gamma^6$ 倍（纵向加速度时），同步辐射光源、自由电子激光都源于此。完整推导见 Jackson 第 14 章。
 \end{tip}
+
+\subsection{天线方向性与方向图}
+\addcontentsline{toc}{subsection}{天线方向性与方向图}
+
+\begin{definition}{辐射方向性函数（方向图）}{directivity-pattern}
+天线在远场区的辐射功率角分布由\textbf{方向性函数}（又称\textbf{方向图}、辐射方向图）描述：
+\[
+F(\theta,\phi) \equiv \frac{dP/d\Omega\,(\theta,\phi)}{\left(dP/d\Omega\right)_{\max}}
+\]
+它是\textbf{无量纲}的量，取值范围 $0 \le F(\theta,\phi) \le 1$，在辐射最强的方向上取 $1$。
+若把 $F$ 归一到总功率而不是峰值，得到的是\textbf{归一化功率方向图}
+$P_n(\theta,\phi) = (dP/d\Omega)/P_{\text{tot}}$，注意两者差一个常数因子。
+\end{definition}
+
+由本章的偶极辐射结果可直接写出几个常用天线的方向性函数：
+
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{天线类型} & \textbf{方向性函数 $F(\theta,\phi)$} & \textbf{说明} \\
+\midrule
+电偶极子（赫兹偶极） & $\sin^2\theta$ & 与 $\phi$ 无关；赤道面最强，沿偶极轴为零 \\
+磁偶极子（小电流环） & $\sin^2\theta$ & 与电偶极同形，但极化方向旋转 $90^\circ$ \\
+半波天线 & $\dfrac{\cos^2\!\left(\frac{\pi}{2}\cos\theta\right)}{\sin^2\theta}$ & 赤道面最强；比电偶极更"扁" \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{insight}{为什么方向图与 $\phi$ 无关？}{directivity-phi}
+上表三种天线的方向图都\textbf{不含 $\phi$}，这是它们都具有绕 $z$ 轴旋转对称性的结果——
+电流分布沿 $z$ 轴放置，绕该轴转动不改变任何几何关系。
+一般天线（如八木天线、阵列天线）的电流分布不再轴对称，方向图才真正依赖 $\phi$。
+这也解释了为什么随堂自测中"方向性图 $F(\theta,\phi)$"虽然写了两个变量，
+但对本章讨论的偶极型天线实际上只是 $\theta$ 的函数。
+\end{insight}
+
+\begin{definition}{方向性系数（定向增益）}{directivity-gain}
+\textbf{方向性系数}衡量天线把能量集中到某一方向的能力：
+\[
+D = \frac{\left(dP/d\Omega\right)_{\max}}{P_{\text{tot}}/(4\pi)}
+= \frac{4\pi}{\displaystyle\oint F(\theta,\phi)\,\diff\Omega}
+\]
+其中分母是对整个立体角的积分。对电偶极（或磁偶极）天线，
+$\oint \sin^2\theta\,\diff\Omega = 2\pi\int_0^\pi \sin^3\theta\,\diff\theta = \frac{8\pi}{3}$，
+故
+\[
+D_{\text{偶极}} = \frac{4\pi}{8\pi/3} = \frac{3}{2} = 1.5 \quad(\approx \SI{1.76}{dB}).
+\]
+对半波天线，$\displaystyle\oint F\,\diff\Omega
+= 2\pi\!\int_0^\pi \frac{\cos^2\!\left(\frac{\pi}{2}\cos\theta\right)}{\sin\theta}\diff\theta
+\approx 2\pi \times 1.2188 = 7.658$，故
+$D_{\text{半波}} = 4\pi/7.658 \approx 1.64$（约 2.15 dB）——
+比理想偶极的 1.5 略高，这正是半波天线被广泛采用的原因之一。
+\end{definition}
+
+\begin{warning}{方向性系数不是效率}{directivity-not-efficiency}
+方向性系数 $D$ 只说"能量往哪个方向集中"，\textbf{不}说明有多少能量被真正辐射出去。
+若天线有欧姆损耗，输入功率中只有一部分变成辐射，两者的比值才是\textbf{效率}。
+工程上常用的\textbf{增益} $G = \eta D$（$\eta$ 为效率）才是把两者都算进去的量。
+初学时常把 $D$ 与 $G$ 混为一谈——在理想无损天线中 $G = D$，这正是一般教材例题默认的情形。
+\end{warning}
+
+\begin{review}{本节要点}{ch9-directivity-review}
+\begin{itemize}[nosep]
+\item 方向性函数 $F(\theta,\phi) = (dP/d\Omega)/(dP/d\Omega)_{\max}$，无量纲、峰值取 1。
+\item 电偶极与磁偶极天线的 $F = \sin^2\theta$，与 $\phi$ 无关；半波天线更扁。
+\item 方向性系数 $D = 4\pi/\oint F\,\diff\Omega$，偶极天线为 $3/2$（约 1.76 dB）。
+\item $D$ 与效率是两回事，增益 $G = \eta D$。
+\end{itemize}
+\end{review}
 
 \begin{review}{第9章要点回顾}{ch9-review}
 \begin{center}
@@ -7487,7 +7791,7 @@ $P \propto \omega^4$ & 辐射功率频率依赖 \\
 
 [分析] 本题计算小圆电流环的磁偶极矩和辐射场，是磁偶极辐射的基本公式。
 
-[解答] 小圆电流环（$a \ll \lambda$）的磁偶极矩：
+[解答] 取时谐约定 $\vect{m}(t) = m_0\cos\omega t\,\unitvec{n}$（即题设 $I(t)=I_0\cos\omega t$ 的实形式）：
 \[
 \vect{m}(t) = I(t)\pi a^2\,\unitvec{n} = I_0\pi a^2\cos\omega t\,\unitvec{n}
 \]
@@ -8816,18 +9120,20 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 
 \begin{tip}{使用说明}{quiz-answer-tip}
 建议先独立完成各章随堂自测，再对照本表核对。选择题给出选项字母，判断题给出"正确/错误"，填空题给出答案关键词。详细解析见各章正文自测框。
+
+\textbf{题号约定}：各章自测的题号在「一、选择题」「二、判断题」「三、填空题/计算题」之间\textbf{连续编号}（正文中使用了 \texttt{resume} 计数），因此每章的题号从 1 连续排到最后一题。本表按同一套连续题号给出答案，与正文完全对应。例如第1章四道选择题为 1--4 题，三道判断题为 5--7 题。
 \end{tip}
 
 \begin{center}
 \small
-\begin{tabular}{@{}cll>{\raggedright\arraybackslash}p{4.2cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{4.4cm}@{}}
 \toprule
-\textbf{章} & \textbf{选择题} & \textbf{判断题} & \textbf{填空题} \\
+\textbf{章} & \textbf{选择题} & \textbf{判断题} & \textbf{填空题 / 计算题} \\
 \midrule
-第1章 数学预备知识 & 1-B \quad 2-C \quad 3-C & 4-正确 \quad 5-错误 \quad 6-错误 & — \\
+第1章 数学预备知识 & 1-B \quad 2-C \quad 3-C \quad 4-B & 5-正确 \quad 6-错误 \quad 7-错误 & — \\
 第2章 静电学基础 & 1-B \quad 2-A \quad 3-B & — & 4-$\curl\vecE=\vect{0}$；5-$\vecE=-\grad\phi$；6-$\lap\phi=-\rho/\eps_0$；7-$\sigma/\eps_0$（法向） \\
 第3章 电介质与边界 & 1-B \quad 2-C \quad 3-B & 4-正确 \quad 5-错误 & — \\
-第4章 边值问题 & 1-C \quad 2-C \quad 3-B & — & 4-电势/电势梯度 \quad 5-贝塞尔 \\
+第4章 边值问题 & 1-C \quad 2-C \quad 3-B & — & 4-电势/电势梯度；5-贝塞尔 \\
 第5章 静磁学 & 1-A \quad 2-B \quad 3-B & 4-正确 \quad 5-错误 & — \\
 第6章 磁介质 & 1-B \quad 2-B \quad 3-A & — & — \\
 第7章 麦克斯韦方程组 & 1-B \quad 2-B \quad 3-A & 4-正确 \quad 5-错误 & — \\
