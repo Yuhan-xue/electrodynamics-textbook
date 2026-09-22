@@ -169,7 +169,7 @@ def main():
         "warnings": counts.get("warning", 0),
         "tips": counts.get("tip", 0),
         "miniquizzes": counts.get("miniquiz", 0),
-        "version": "v2.15",
+        "version": "v2.16",
     }
 
     try:

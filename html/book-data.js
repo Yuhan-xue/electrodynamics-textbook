@@ -19,7 +19,7 @@ window.BOOK = {
   "warnings": 18,
   "tips": 48,
   "miniquizzes": 10,
-  "version": "v2.15"
+  "version": "v2.16"
  },
  "chapters": [
   {
