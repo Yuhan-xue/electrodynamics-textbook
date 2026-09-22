@@ -4,7 +4,7 @@
 window.BOOK = {
  "facts": {
   "pages": 179,
-  "texLines": 9235,
+  "texLines": 9274,
   "chapters": 10,
   "appendices": 9,
   "examples": 50,
@@ -267,11 +267,11 @@ window.BOOK = {
     },
     {
      "title": "第3章随堂自测",
-     "page": 61
+     "page": 62
     },
     {
      "title": "第3章综合练习题",
-     "page": 62
+     "page": 63
     },
     {
      "title": "习题解答",
@@ -290,7 +290,7 @@ window.BOOK = {
      "difficulty": "提高"
     },
     {
-     "line": 3157,
+     "line": 3173,
      "difficulty": "提高"
     }
    ],
@@ -310,58 +310,66 @@ window.BOOK = {
     },
     {
      "title": "多极展开",
-     "page": 73
+     "page": 74
     },
     {
-     "title": "第4章随堂自测",
+     "title": "格林函数法",
      "page": 77
     },
     {
+     "title": "格林函数法",
+     "page": 77
+    },
+    {
+     "title": "第4章随堂自测",
+     "page": 79
+    },
+    {
      "title": "第4章综合练习题",
-     "page": 78
+     "page": 81
     },
     {
      "title": "习题解答",
-     "page": 79
+     "page": 82
     }
    ],
    "kind": "chapter",
    "number": 4,
    "examples": [
     {
-     "line": 3551,
+     "line": 3567,
      "difficulty": "基础"
     },
     {
-     "line": 3627,
+     "line": 3643,
      "difficulty": "提高"
     },
     {
-     "line": 3658,
+     "line": 3674,
      "difficulty": "挑战"
     },
     {
-     "line": 3745,
+     "line": 3761,
      "difficulty": "提高"
     },
     {
-     "line": 3815,
+     "line": 3831,
      "difficulty": "提高"
     },
     {
-     "line": 3940,
+     "line": 3956,
      "difficulty": "提高"
     },
     {
-     "line": 4021,
+     "line": 4037,
      "difficulty": "提高"
     },
     {
-     "line": 4075,
+     "line": 4091,
      "difficulty": "挑战"
     },
     {
-     "line": 4275,
+     "line": 4292,
      "difficulty": "提高"
     }
    ],
@@ -369,62 +377,62 @@ window.BOOK = {
   },
   {
    "title": "静磁学",
-   "page": 81,
+   "page": 84,
    "sections": [
     {
      "title": "毕奥-萨伐尔定律",
-     "page": 81
-    },
-    {
-     "title": "安培环路定理",
-     "page": 83
-    },
-    {
-     "title": "静磁镜像法",
      "page": 84
     },
     {
-     "title": "磁矢势",
-     "page": 85
+     "title": "安培环路定理",
+     "page": 86
     },
     {
-     "title": "磁偶极子",
+     "title": "静磁镜像法",
      "page": 87
     },
     {
-     "title": "第5章随堂自测",
+     "title": "磁矢势",
      "page": 88
     },
     {
+     "title": "磁偶极子",
+     "page": 90
+    },
+    {
+     "title": "第5章随堂自测",
+     "page": 91
+    },
+    {
      "title": "第5章综合练习题",
-     "page": 89
+     "page": 92
     },
     {
      "title": "习题解答",
-     "page": 90
+     "page": 93
     }
    ],
    "kind": "chapter",
    "number": 5,
    "examples": [
     {
-     "line": 4591,
+     "line": 4608,
      "difficulty": "基础"
     },
     {
-     "line": 4620,
+     "line": 4637,
      "difficulty": "提高"
     },
     {
-     "line": 4694,
+     "line": 4711,
      "difficulty": "基础"
     },
     {
-     "line": 4758,
+     "line": 4775,
      "difficulty": "提高"
     },
     {
-     "line": 4904,
+     "line": 4921,
      "difficulty": "提高"
     }
    ],
@@ -432,42 +440,42 @@ window.BOOK = {
   },
   {
    "title": "磁介质",
-   "page": 92,
+   "page": 95,
    "sections": [
     {
      "title": "磁介质的磁化",
-     "page": 92
+     "page": 95
     },
     {
      "title": "磁场强度",
-     "page": 93
+     "page": 96
     },
     {
      "title": "磁学边界条件",
-     "page": 94
-    },
-    {
-     "title": "第6章随堂自测",
      "page": 97
     },
     {
+     "title": "第6章随堂自测",
+     "page": 100
+    },
+    {
      "title": "第6章综合练习题",
-     "page": 98
+     "page": 101
     },
     {
      "title": "习题解答",
-     "page": 99
+     "page": 102
     }
    ],
    "kind": "chapter",
    "number": 6,
    "examples": [
     {
-     "line": 5310,
+     "line": 5337,
      "difficulty": "提高"
     },
     {
-     "line": 5332,
+     "line": 5359,
      "difficulty": "提高"
     }
    ],
@@ -475,54 +483,54 @@ window.BOOK = {
   },
   {
    "title": "麦克斯韦方程组",
-   "page": 101,
+   "page": 104,
    "sections": [
     {
      "title": "法拉第电磁感应定律",
-     "page": 101
+     "page": 104
     },
     {
      "title": "位移电流",
-     "page": 107
-    },
-    {
-     "title": "麦克斯韦方程组的完整形式",
-     "page": 109
-    },
-    {
-     "title": "电磁场能量与坡印廷矢量",
      "page": 110
     },
     {
-     "title": "第7章随堂自测",
+     "title": "麦克斯韦方程组的完整形式",
+     "page": 112
+    },
+    {
+     "title": "电磁场能量与坡印廷矢量",
      "page": 113
     },
     {
+     "title": "第7章随堂自测",
+     "page": 117
+    },
+    {
      "title": "第7章综合练习题",
-     "page": 114
+     "page": 119
     },
     {
      "title": "习题解答",
-     "page": 116
+     "page": 120
     }
    ],
    "kind": "chapter",
    "number": 7,
    "examples": [
     {
-     "line": 5858,
+     "line": 5885,
      "difficulty": "基础"
     },
     {
-     "line": 5983,
+     "line": 6010,
      "difficulty": "基础"
     },
     {
-     "line": 6120,
+     "line": 6147,
      "difficulty": "提高"
     },
     {
-     "line": 6226,
+     "line": 6253,
      "difficulty": "提高"
     }
    ],
@@ -530,54 +538,54 @@ window.BOOK = {
   },
   {
    "title": "电磁波的传播",
-   "page": 119,
+   "page": 123,
    "sections": [
     {
      "title": "波动方程的推导",
-     "page": 119
+     "page": 123
     },
     {
      "title": "平面电磁波",
-     "page": 120
+     "page": 124
     },
     {
      "title": "介质中的电磁波",
-     "page": 121
-    },
-    {
-     "title": "电磁波在导体中的传播",
-     "page": 121
-    },
-    {
-     "title": "波导基础",
-     "page": 122
-    },
-    {
-     "title": "色散与洛伦兹模型",
      "page": 125
     },
     {
-     "title": "反射与折射",
+     "title": "电磁波在导体中的传播",
+     "page": 125
+    },
+    {
+     "title": "波导基础",
      "page": 126
     },
     {
-     "title": "第8章随堂自测",
-     "page": 128
-    },
-    {
-     "title": "第8章综合练习题",
+     "title": "色散与洛伦兹模型",
      "page": 129
     },
     {
-     "title": "习题解答",
+     "title": "反射与折射",
      "page": 130
+    },
+    {
+     "title": "第8章随堂自测",
+     "page": 132
+    },
+    {
+     "title": "第8章综合练习题",
+     "page": 133
+    },
+    {
+     "title": "习题解答",
+     "page": 135
     }
    ],
    "kind": "chapter",
    "number": 8,
    "examples": [
     {
-     "line": 6863,
+     "line": 6890,
      "difficulty": "提高"
     }
    ],
@@ -585,38 +593,38 @@ window.BOOK = {
   },
   {
    "title": "电磁波的辐射",
-   "page": 132,
+   "page": 137,
    "sections": [
     {
      "title": "推迟势",
-     "page": 132
-    },
-    {
-     "title": "电偶极辐射",
-     "page": 134
-    },
-    {
-     "title": "第9章随堂自测",
-     "page": 137
-    },
-    {
-     "title": "第9章综合练习题",
      "page": 138
     },
     {
+     "title": "电偶极辐射",
+     "page": 139
+    },
+    {
+     "title": "第9章随堂自测",
+     "page": 144
+    },
+    {
+     "title": "第9章综合练习题",
+     "page": 146
+    },
+    {
      "title": "习题解答",
-     "page": 140
+     "page": 147
     }
    ],
    "kind": "chapter",
    "number": 9,
    "examples": [
     {
-     "line": 7482,
+     "line": 7509,
      "difficulty": "挑战"
     },
     {
-     "line": 7520,
+     "line": 7547,
      "difficulty": "挑战"
     }
    ],
@@ -624,62 +632,62 @@ window.BOOK = {
   },
   {
    "title": "相对论电动力学",
-   "page": 142,
+   "page": 149,
    "sections": [
     {
      "title": "四维记号基础",
-     "page": 142
+     "page": 149
     },
     {
      "title": "洛伦兹变换",
-     "page": 145
-    },
-    {
-     "title": "四维矢量与张量",
-     "page": 145
-    },
-    {
-     "title": "四维电磁势",
-     "page": 148
-    },
-    {
-     "title": "协变形式的麦克斯韦方程组",
-     "page": 148
-    },
-    {
-     "title": "带电粒子在电磁场中的运动",
-     "page": 150
-    },
-    {
-     "title": "第10章随堂自测",
-     "page": 151
-    },
-    {
-     "title": "第10章综合练习题",
      "page": 152
     },
     {
+     "title": "四维矢量与张量",
+     "page": 152
+    },
+    {
+     "title": "四维电磁势",
+     "page": 155
+    },
+    {
+     "title": "协变形式的麦克斯韦方程组",
+     "page": 155
+    },
+    {
+     "title": "带电粒子在电磁场中的运动",
+     "page": 157
+    },
+    {
+     "title": "第10章随堂自测",
+     "page": 158
+    },
+    {
+     "title": "第10章综合练习题",
+     "page": 159
+    },
+    {
      "title": "习题解答",
-     "page": 153
+     "page": 160
     }
    ],
    "kind": "chapter",
    "number": 10,
    "examples": [
     {
-     "line": 7934,
+     "line": 7961,
      "difficulty": "基础"
     },
     {
-     "line": 7981,
+     "line": 8008,
      "difficulty": "提高"
     },
     {
-     "line": 8093,
+     "line": 8120,
      "difficulty": "提高"
     },
     {
-     "line": 8116,
+     "line": 8143,
      "difficulty": "基础"
     }
    ],
@@ -687,7 +695,7 @@ window.BOOK = {
   },
   {
    "title": "常用矢量恒等式",
-   "page": 156,
+   "page": 163,
    "sections": [],
    "kind": "appendix",
    "letter": "A",
@@ -696,7 +704,7 @@ window.BOOK = {
   },
   {
    "title": "坐标系转换公式",
-   "page": 157,
+   "page": 164,
    "sections": [],
    "kind": "appendix",
    "letter": "B",
@@ -705,7 +713,7 @@ window.BOOK = {
   },
   {
    "title": "基本物理常数",
-   "page": 158,
+   "page": 165,
    "sections": [],
    "kind": "appendix",
    "letter": "C",
@@ -714,22 +722,22 @@ window.BOOK = {
   },
   {
    "title": "单位制转换手册",
-   "page": 159,
+   "page": 166,
    "sections": [
     {
      "title": "SI与高斯制的基本公式对照",
-     "page": 159
+     "page": 166
     },
     {
      "title": "常数对照",
-     "page": 160
+     "page": 167
     }
    ],
    "kind": "appendix",
    "letter": "D",
    "examples": [
     {
-     "line": 8753,
+     "line": 8785,
      "difficulty": "基础"
     }
    ],
@@ -737,35 +745,35 @@ window.BOOK = {
   },
   {
    "title": "全书高频易错点汇总",
-   "page": 161,
+   "page": 168,
    "sections": [
     {
      "title": "第1章：数学预备",
-     "page": 161
+     "page": 168
     },
     {
      "title": "第2--4章：静电学",
-     "page": 161
+     "page": 168
     },
     {
      "title": "第5--6章：静磁学",
-     "page": 161
+     "page": 168
     },
     {
      "title": "第7章：麦克斯韦方程组",
-     "page": 162
+     "page": 169
     },
     {
      "title": "第8章：电磁波",
-     "page": 162
+     "page": 169
     },
     {
      "title": "第9章：辐射",
-     "page": 162
+     "page": 169
     },
     {
      "title": "第10章：相对论电动力学",
-     "page": 162
+     "page": 169
     }
    ],
    "kind": "appendix",
@@ -775,11 +783,11 @@ window.BOOK = {
   },
   {
    "title": "学习计划建议",
-   "page": 164,
+   "page": 171,
    "sections": [
     {
      "title": "每章自检清单",
-     "page": 164
+     "page": 171
     }
    ],
    "kind": "appendix",
@@ -789,39 +797,39 @@ window.BOOK = {
   },
   {
    "title": "名词中英文对照表",
-   "page": 166,
+   "page": 173,
    "sections": [
     {
      "title": "第1章：数学预备",
-     "page": 166
+     "page": 173
     },
     {
      "title": "第2--4章：静电学",
-     "page": 167
+     "page": 174
     },
     {
      "title": "第5--6章：静磁学",
-     "page": 167
+     "page": 174
     },
     {
      "title": "第7章：麦克斯韦方程组",
-     "page": 168
+     "page": 175
     },
     {
      "title": "第8章：电磁波",
-     "page": 168
+     "page": 175
     },
     {
      "title": "第9章：电磁辐射",
-     "page": 168
+     "page": 175
     },
     {
      "title": "第10章：相对论电动力学",
-     "page": 169
+     "page": 176
     },
     {
      "title": "常用物理常数名称",
-     "page": 169
+     "page": 176
     }
    ],
    "kind": "appendix",
@@ -831,7 +839,7 @@ window.BOOK = {
   },
   {
    "title": "随堂自测答案速查",
-   "page": 170,
+   "page": 177,
    "sections": [],
    "kind": "appendix",
    "letter": "H",
@@ -840,7 +848,7 @@ window.BOOK = {
   },
   {
    "title": "延伸阅读与参考书目",
-   "page": 171,
+   "page": 178,
    "sections": [],
    "kind": "appendix",
    "letter": "I",

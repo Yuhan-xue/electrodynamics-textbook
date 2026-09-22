@@ -3146,12 +3146,28 @@ $\vect{D}_2 = \eps_0\eps_r\vecE_2 = \eps_0\eps_r E_0\sin\theta\,\unitvec{x} + \e
 \end{example}
 
 \begin{warning}{边界条件的符号约定}{bc-sign-warning}
-使用边界条件时，法向 $\unitvec{n}$ 的方向至关重要。通常约定 $\unitvec{n}$ 从介质1指向介质2。则：
-\begin{itemize}
-\item $D_{2n} - D_{1n} = \sigma_f$ 中，$D_{1n} = \vect{D}_1\cdot\unitvec{n}$，$D_{2n} = \vect{D}_2\cdot\unitvec{n}$
-\item $\sigma_b = \vect{P}\cdot\unitvec{n}$ 给出的是从介质指向外的束缚电荷
-\end{itemize}
-务必在计算开始时明确法向方向，并始终一致。
+使用边界条件时，法向 $\unitvec{n}$ 的方向至关重要。本节出现\textbf{两个不同的法向}，
+混用是本节最主要的符号错误来源：
+
+\begin{enumerate}
+\item \textbf{自由电荷边界条件}：约定 $\unitvec{n}_{12}$ 从区域 1 指向区域 2，则
+\[
+D_{2n} - D_{1n} = \sigma_f,\qquad\text{其中 } D_{1n}=\vect{D}_1\cdot\unitvec{n}_{12},\quad D_{2n}=\vect{D}_2\cdot\unitvec{n}_{12}.
+\]
+（也可写成等价的无歧义形式 $\unitvec{n}_{12}\cdot(\vect{D}_2-\vect{D}_1)=\sigma_f$。）
+本书全书统一采用这一约定。
+\item \textbf{束缚电荷面密度}：$\sigma_b = \vect{P}\cdot\unitvec{n}_{\text{介质外}}$，
+这里的 $\unitvec{n}_{\text{介质外}}$ 必须是\textbf{该表面的介质外法向}，
+即从介质内部指向外部——\textbf{不是} $\unitvec{n}_{12}$。
+\end{enumerate}
+
+\textbf{为什么必须区分}：设介质占据 $z>0$、真空占据 $z<0$，界面为 $z=0$。
+若把区域 1 取作真空、区域 2 取作介质，则 $\unitvec{n}_{12} = +\unitvec{z}$；
+而界面处介质的外法向是 $-\unitvec{z}$（由介质指向真空），两者\textbf{恰好相反}。
+若在 $\sigma_b$ 的计算中误用 $\unitvec{n}_{12}$，符号就会弄反。
+
+\textbf{可靠的自检}：束缚电荷总是\textbf{削弱介质内的场}。算出 $\sigma_b$ 后，
+检查它产生的场是否与介质内的原场反向；若同向，说明法向取错了。
 \end{warning}
 
 \begin{example}{介质包裹导体球}{coated-conductor-sphere-ex-v2}
@@ -3313,7 +3329,7 @@ $\phi|_{\text{导体}} = \text{常数}$ & 导体边界条件 \\
 
 \begin{tip}{本章核心框架}{ch3-summary}
 \textbf{一句话总结}：电介质通过极化响应外电场，产生束缚电荷，改变有效介电常数。\\
-\textbf{核心关系}：$\vect{D}=\eps_0\vecE+\vect{P}=\eps\vecE$（LIH介质）、$\rho_p=-\divg\vect{P}$（束缚电荷）。\\
+\textbf{核心关系}：$\vect{D}=\eps_0\vecE+\vect{P}=\eps\vecE$（LIH介质）、$\rho_b=-\divg\vect{P}$（束缚电荷）。\\
 \textbf{边界条件}：$E_{1t}=E_{2t}$（切向连续）、$D_{1n}=D_{2n}$（法向连续，无自由面电荷）。\\
 \textbf{衔接}：第4章将用分离变量法、镜像法等解析方法求解含电介质的边值问题。
 \end{tip}
@@ -3347,15 +3363,15 @@ $\phi|_{\text{导体}} = \text{常数}$ & 导体边界条件 \\
   \textit{答案：C。$\vect{D}$的法向分量在无自由面电荷时连续。}
 \end{ocg}
 
-\item 极化强度 $\vect{P}$ 与极化电荷密度的关系是：
+\item 极化强度 $\vect{P}$ 与束缚电荷密度的关系是：
   \begin{enumerate}[label=(\Alph*),nosep]
-  \item $\rho_p = \divg\vect{P}$
-  \item $\rho_p = -\divg\vect{P}$
-  \item $\rho_p = \curl\vect{P}$
-  \item $\rho_p = 0$
+  \item $\rho_b = \divg\vect{P}$
+  \item $\rho_b = -\divg\vect{P}$
+  \item $\rho_b = \curl\vect{P}$
+  \item $\rho_b = 0$
   \end{enumerate}
 \begin{ocg}{答案}{ocg答案3}{off}
-  \textit{答案：B。极化电荷是束缚电荷，满足$\rho_p = -\divg\vect{P}$。}
+  \textit{答案：B。极化产生的束缚电荷满足 $\rho_b = -\divg\vect{P}$。}
 \end{ocg}
 \end{enumerate}
 
@@ -4208,7 +4224,8 @@ $\phi = \frac{1}{4\pi\eps_0}\int G_0 \rho \,\diff^3r'$ 即回到熟悉的库仑�
 \subsection{格林定理给出的边值问题解}
 
 设 $\phi$ 与 $G$ 都在区域内二阶可微，对两者使用\textbf{格林第二恒等式}
-（见第1章矢量恒等式）：$\displaystyle\int_V(\phi\lap G - G\lap\phi)\,\diff^3r'
+（第2章唯一性定理的解答中已给出同一恒等式）：
+$\displaystyle\int_V(\phi\lap G - G\lap\phi)\,\diff^3r'
 = \oint_S\left(\phi\,\frac{\partial G}{\partial n'} - G\,\frac{\partial \phi}{\partial n'}\right)\diff S'$。
 
 代入 $\lap G = -4\pi\delta^{(3)}(\vect r - \vect r')$ 与 $\lap\phi = -\rho/\eps_0$，
@@ -5293,11 +5310,21 @@ $\vect{D} = \eps\vecE$ & $\longleftrightarrow$ & $\vecB = \mu\vect{H}$ \\
 \section{磁学边界条件}
 
 \begin{theorem}{磁学边界条件}{magnetic-bc-v2}
-在两种磁介质的界面处：
+在两种磁介质的界面处（约定 $\unitvec{n}$ 由区域 1 指向区域 2，$K_f$ 为界面上的\textbf{自由面电流密度}，单位 A/m）：
 \begin{align}
 B_{1n} &= B_{2n} \quad\text{（法向 } \vecB \text{ 连续）} \\
 H_{2t} - H_{1t} &= K_f \quad\text{（切向 } \vect{H} \text{ 跳跃 = 自由面电流）}
 \end{align}
+\textbf{切向正方向的约定}：上式中的 $t$ 指沿安培回路选定的正方向；当 $K_f$ 与该方向同向时取正。
+\textbf{等价的无歧义矢量形式}（无须事先选定切向正方向）：
+\[
+\unitvec{n}\times(\vect{H}_1 - \vect{H}_2) = \vect{K}_f
+\qquad\Longleftrightarrow\qquad
+\vect{H}_{1\parallel} - \vect{H}_{2\parallel} = \vect{K}_f\times\unitvec{n}.
+\]
+\textbf{警告}：不要看到矢量式就以为标量式里的 $H_{2t}-H_{1t}$ 可以直接换成矢量差——
+两者对应的切向正方向\textbf{不同}（矢量式给出的方向垂直于 $\vect{K}_f$，而标量式的 $t$ 沿回路方向）。
+混用会差一个符号。做题时\textbf{选定一种并全程用到底}。
 若界面上无自由面电流（$K_f = 0$）：$H_{1t} = H_{2t}$（切向 $\vect{H}$ 连续）。
 \end{theorem}
 
@@ -5450,7 +5477,7 @@ $H_{2t} - H_{1t} = K_f$ & H切向跳跃 \\
 
 \begin{tip}{本章核心框架}{ch6-summary}
 \textbf{一句话总结}：磁介质通过磁化响应磁场，分类为抗磁、顺磁、铁磁，改变有效磁导率。\\
-\textbf{核心关系}：$\vecB=\mu_0(\vect{H}+\vect{M})=\mu\vect{H}$（LIH介质）、$\vecJ_m=\curl\vect{M}$（磁化电流）。\\
+\textbf{核心关系}：$\vecB=\mu_0(\vect{H}+\vect{M})=\mu\vect{H}$（LIH介质）、$\vecJ_M=\curl\vect{M}$（磁化电流）。\\
 \textbf{边界条件}：$B_{1n}=B_{2n}$（法向连续）、$H_{1t}=H_{2t}$（切向连续，无自由面电流）。\\
 \textbf{衔接}：第7章将统一电磁学，安培定理修正为麦克斯韦-安培方程，引入位移电流。
 \end{tip}
@@ -5499,7 +5526,7 @@ $H_{2t} - H_{1t} = K_f$ & H切向跳跃 \\
 \vspace{0.5em}
 \textbf{二、填空题}
 \begin{enumerate}[label=\arabic*.,resume]
-\item 磁化强度$\vect{M}$与磁化电流密度的关系：$\vecJ_m = $ \underline{$\curl\vect{M}$}。
+\item 磁化强度$\vect{M}$与磁化电流密度的关系：$\vecJ_M = $ \underline{$\curl\vect{M}$}。
 \item 相对磁导率$\mu_r$与磁化率的关系：$\mu_r = $ \underline{$1 + \chi_m$}。
 \end{enumerate}
 \end{miniquiz}
@@ -8678,17 +8705,22 @@ F_{\mu\nu}F^{\mu\nu} &= 2\left(F_{01}F^{01} + F_{02}F^{02} + F_{03}F^{03}\right)
 \toprule
 \textbf{常数} & \textbf{符号} & \textbf{数值} \\
 \midrule
-真空光速 & $c$ & $2.998 \times 10^8 \, \si{m/s}$ \\
+真空光速 & $c$ & $2.998 \times 10^8 \, \si{m/s}$（精确值 $2.99792458\times10^8$） \\
 真空介电常数 & $\eps_0$ & $8.854 \times 10^{-12} \, \si{F/m}$ \\
-真空磁导率 & $\muz$ & $4\pi \times 10^{-7} \, \si{H/m}$（近似） \\
-基本电荷 & $e$ & $1.602 \times 10^{-19} \, \si{C}$ \\
+真空磁导率 & $\muz$ & $4\pi \times 10^{-7} \, \si{H/m}$（教学近似，见下注） \\
+基本电荷 & $e$ & $1.602 \times 10^{-19} \, \si{C}$（精确值 $1.602176634\times10^{-19}$） \\
+普朗克常数 & $h$ & $6.626 \times 10^{-34} \, \si{J\cdot s}$ \\
+约化普朗克常数 & $\hbar = h/2\pi$ & $1.055 \times 10^{-34} \, \si{J\cdot s}$ \\
 电子质量 & $m_e$ & $9.109 \times 10^{-31} \, \si{kg}$ \\
-精细结构常数 & $\alpha$ & $1/137.036$ \\
+真空波阻抗 & $Z_0=\sqrt{\muz/\eps_0}$ & $376.73 \, \si{\ohm}$ \\
+精细结构常数 & $\alpha$ & $1/137.036$（无量纲） \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\noindent{\small 注：2019 年 SI 修订后，$\eps_0$ 与 $\muz$ 不再是精确定义值（$\muz = 4\pi\times10^{-7}$ H/m 在旧 SI 中为精确定义），改为由精细结构常数 $\alpha$、基本电荷 $e$、普朗克常数 $h$、光速 $c$ 推导的\textbf{测量值}（与 $4\pi\times10^{-7}$ 的偏差约 $2\times10^{-9}$ 量级）。本书作为教学用书统一沿用 $4\pi\times10^{-7}$ 近似值，对全部计算结果的影响可忽略。}
+\noindent{\small 注一：本表数值为教学用近似值，保留 4 位有效数字；括号内标注的 $c$ 与 $e$ 为 2019 年 SI 修订后的\textbf{精确定义值}，需要高精度计算时应改用精确值。}
+
+\noindent{\small 注二：2019 年 SI 修订后，$\eps_0$ 与 $\muz$ 不再是精确定义值（旧 SI 中 $\muz = 4\pi\times10^{-7}$ H/m 为精确定义），改为由精细结构常数 $\alpha$、基本电荷 $e$、普朗克常数 $h$、光速 $c$ 推导的\textbf{测量值}：$\muz = 2\alpha h/(c e^2)$。按 CODATA 推荐值计算，$\muz$ 与 $4\pi\times10^{-7}$ 的相对偏差约为 $10^{-10}$ 量级（远小于本表 4 位有效数字的分辨率）。本书作为教学用书统一沿用 $4\pi\times10^{-7}$ 近似值，对全部计算结果的影响可忽略。}
 
 
 % ============================================================
@@ -8831,7 +8863,7 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 \section{第7章：麦克斯韦方程组}
 
 \begin{enumerate}
-\item \textbf{位移电流不是真实电流}：$\muz\eps_0\partial\vecE/\partial t$ 是磁场旋度的修正项，不是电荷的流动。它确保安培定律在时变情况下仍满足电荷守恒。
+\item \textbf{位移电流不是真实电流}：$\eps_0\partial\vecE/\partial t$（介质中为 $\partial\vect{D}/\partial t$）是磁场旋度的修正项，不是电荷的流动。它确保安培定律在时变情况下仍满足电荷守恒。\textbf{注意不要误写为 $\muz\eps_0\partial\vecE/\partial t$}——$\muz$ 属于安培定律右端的总系数，不属于位移电流密度本身。
 \item \textbf{感应电场的非保守性}：$\curl\vecE\neq 0$ 时，$\oint\vecE\cdot d\vect{l}\neq 0$，电势 $\phi$ 不再具有全局意义。时变场中应使用 $\vecE=-\nabla\phi-\partial\vecA/\partial t$。
 \item \textbf{坡印廷矢量的方向}：$\vect{S}$ 指向能量传播方向。在直流导线中，能量沿径向从导线表面流入，而非沿导线内部传播。
 \item \textbf{磁单极子的方程对称性}：如果磁单极存在，麦克斯韦方程可写为完全对称形式。但迄今实验未证实，故 $\divg\vecB=0$ 严格成立。
@@ -8850,9 +8882,11 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 
 \begin{enumerate}
 \item \textbf{推迟势的因果性}：$t_r=t-R/c$ 保证了电磁相互作用以光速传播，不存在超距作用。这是相对论的基本要求。
-\item \textbf{电偶极 vs 磁偶极辐射}：电偶极辐射功率 $\propto p_0^2\omega^4$，磁偶极 $\propto m_0^2\omega^4/c^2$。对于相同尺度的源，磁偶极辐射远弱于电偶极（因子约 $(v/c)^2$）。
+\item \textbf{电偶极 vs 磁偶极辐射}：由本章公式 $P_E=\muz p_0^2\omega^4/(12\pi c)$、$P_M=\muz m_0^2\omega^4/(12\pi c^3)$ 得
+  $P_E\propto p_0^2\omega^4/c$、$P_M\propto m_0^2\omega^4/c^3$——\textbf{两者都含 $1/c$ 的幂，切勿漏写}。
+  对于相同尺度的源，磁偶极辐射远弱于电偶极（因子约 $(v/c)^2$）。
 \item \textbf{近场 vs 远场}：近场区（$r\ll\lambda$）中感应场主导，电场行为类似静电；远场区（$r\gg\lambda$）中辐射场主导，场 $\propto 1/r$。
-\item \textbf{拉莫尔公式的适用范围}：仅适用于非相对论粒子（$v\ll c$）。高速粒子的辐射需使用相对论李纳特-维谢尔势。
+\item \textbf{拉莫尔公式的适用范围}：仅适用于非相对论粒子（$v\ll c$）。高速粒子的辐射需使用相对论\textbf{李纳--维谢尔势}（Liénard--Wiechert potentials，见 §9.2.4）。
 \end{enumerate}
 
 \section{第10章：相对论电动力学}
@@ -9205,6 +9239,11 @@ SI制中 $\phi = q/(4\pi\eps_0 r)$。
 
 \begin{tip}{郭硕鸿 / Griffiths 章节对应关系}{textbook-map-tip}
 交叉阅读不同教材时，可按下列对应关系定位同一主题（郭硕鸿《电动力学》第三版；Griffiths \textit{Introduction to Electrodynamics} 4th ed.）：
+
+\textbf{使用前请注意}：下表按两书的\textbf{通行章序}整理，仅供定位参考。\textbf{章号随版次而异}
+（尤其郭硕鸿各版次章序略有调整），且两书主题的归并方式与本书不完全相同——
+请以各书\textbf{自己的目录}为准；若发现某行与手边版本不符，按主题名检索即可。
+本表的作用是告诉你"这个主题在那一章附近"，而不是精确到节的索引。
 \begin{center}
 \small
 \begin{tabular}{@{}p{4.2cm}p{4.6cm}p{4.6cm}@{}}
