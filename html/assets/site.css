@@ -42,12 +42,12 @@
   --font-mono: "JetBrains Mono", "Cascadia Mono", Consolas,
                "SF Mono", Menlo, monospace;
 
-  --step--1: 0.8125rem;
-  --step-0: 0.9375rem;
-  --step-1: 1.0625rem;
-  --step-2: 1.375rem;
-  --step-3: 1.875rem;
-  --step-4: 2.75rem;
+  --step--1: 0.8125rem;   /* 13.0 px —— 次要信息下限，不再更小 */
+  --step-0: 1rem;         /* 16.0 px —— 正文。低于 16px 在移动端会触发缩放、影响可读性 */
+  --step-1: 1.125rem;     /* 18.0 px */
+  --step-2: 1.5rem;       /* 24.0 px */
+  --step-3: 2rem;         /* 32.0 px */
+  --step-4: 2.75rem;      /* 44.0 px */
 
   --measure: 68ch;
   --radius: 10px;
@@ -277,9 +277,11 @@ table.data td.num, table.data th.num { text-align: right; }
   width: .4rem; height: .4rem; border-radius: 50%; background: var(--rule-strong);
 }
 
-/* 按钮 */
+/* 按钮
+   触控目标：垂直内边距按最小 44×44 CSS px 的通行无障碍建议设计
+   （正文 16px × 行高 1.4 ≈ 22px，故 11px×2 + 22 = 44px）。 */
 .btn {
-  display: inline-block; padding: .5rem 1rem; border-radius: var(--radius-sm);
+  display: inline-block; padding: .7rem 1.1rem; border-radius: var(--radius-sm);
   border: 1px solid var(--rule-strong); background: var(--surface);
   color: var(--ink); text-decoration: none; cursor: pointer;
   font-size: var(--step--1); font-weight: 600;
@@ -311,10 +313,10 @@ table.data td.num, table.data th.num { text-align: right; }
 .result .val { font-family: var(--font-mono); font-weight: 600; color: var(--ink); }
 .result .err { color: var(--sev-high); }
 
-/* 标签页 */
+/* 标签页（同样按 44px 触控目标设计） */
 .tabs { display: flex; gap: .25rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.1rem; flex-wrap: wrap; }
 .tab {
-  padding: .5rem .85rem; border: 0; background: transparent; cursor: pointer;
+  padding: .7rem 1rem; border: 0; background: transparent; cursor: pointer;
   color: var(--ink-2); font-size: var(--step--1); font-weight: 600;
   border-bottom: 2px solid transparent; margin-bottom: -1px;
 }

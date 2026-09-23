@@ -6,7 +6,10 @@
 
 \usepackage[UTF8]{ctex}
 \ctexset{punct=quanjiao}
-\linespread{0.98}
+\linespread{1.12}          % 中文正文行距：11pt 字号对应约 15.2pt 行距（比率约 1.38）。
+                           % 原为 0.98（比率约 1.21），对中文连续阅读偏密——
+                           % 汉字笔画繁、行间无词间空隙，行距过紧会显著降低可读性。
+                           % 中文正文宜 1.3–1.5，此处取偏紧一侧以兼顾篇幅。
 \setlength{\parskip}{2pt plus 1pt}
 \usepackage{geometry}
 \geometry{left=2.2cm,right=2.8cm,top=2.2cm,bottom=2.2cm}
