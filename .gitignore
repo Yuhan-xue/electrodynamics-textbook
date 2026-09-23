@@ -19,6 +19,10 @@
 # AgentTeams 会话状态（不应入库）
 .agent-teams/
 
+# Python 缓存
+__pycache__/
+*.py[cod]
+
 # 备份文件
 *.bak
 
