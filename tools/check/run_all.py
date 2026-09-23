@@ -150,16 +150,34 @@ def check_pdf():
     if not author:
         problems.append("PDF 缺作者元数据")
 
-    # ---- 根目录 PDF 必须与最近一次编译产物逐字节一致 ----
-    # 这条判据专门用来抓「页数没变所以以为没变」的静默失配：
+    # ---- 根目录 PDF 必须与最近一次编译产物「内容一致」 ----
+    # 不能比较字节：XeLaTeX 会把编译时间写进 /CreationDate，每次重编译都不同。
+    # 因此比较内容判据：页数 + 标题 + 作者 + 每页提取文本。
+    # 这条专门用来抓「页数没变所以以为没变」的静默失配：
     # 曾出现根目录 PDF 是加新内容之前的旧构建，而页数恰好相同、肉眼无法察觉。
-    if os.path.exists(PDF_BUILD) and os.path.exists(PDF_ROOT):
-        hb = hashlib.sha256(io.open(PDF_BUILD, "rb").read()).hexdigest()
-        hr = hashlib.sha256(io.open(PDF_ROOT, "rb").read()).hexdigest()
-        if hb != hr:
-            problems.append("根目录 PDF 与 .build 编译产物不一致（根目录疑似旧构建）")
-    elif os.path.exists(PDF_BUILD) and not os.path.exists(PDF_ROOT):
-        problems.append("根目录缺 PDF（应复制编译产物）")
+    if os.path.exists(PDF_BUILD):
+        if not os.path.exists(PDF_ROOT):
+            problems.append("根目录缺 PDF（应复制编译产物）")
+        else:
+            a = pypdf.PdfReader(PDF_BUILD)
+            b = pypdf.PdfReader(PDF_ROOT)
+            if len(a.pages) != len(b.pages):
+                problems.append(
+                    f"根目录 PDF 页数 {len(b.pages)} ≠ 编译产物 {len(a.pages)}")
+            else:
+                diff = [i + 1 for i in range(len(a.pages))
+                        if (a.pages[i].extract_text() or "") !=
+                           (b.pages[i].extract_text() or "")]
+                if diff:
+                    shown = ", ".join(map(str, diff[:6]))
+                    problems.append(
+                        f"根目录 PDF 内容与编译产物不一致（{len(diff)} 页不同，"
+                        f"如 p.{shown}）——根目录疑似旧构建")
+                ma = a.metadata or {}
+                mb = b.metadata or {}
+                for key in ("/Title", "/Author"):
+                    if str(ma.get(key, "")) != str(mb.get(key, "")):
+                        problems.append(f"根目录 PDF 的 {key} 与编译产物不一致")
 
     # ---- 正文关键内容抽查：新加入的定理必须真的出现在 PDF 里 ----
     probe = "洛伦兹力"
