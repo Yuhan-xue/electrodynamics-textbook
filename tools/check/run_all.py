@@ -609,8 +609,41 @@ def check_release():
                      "electrodynamics_textbook_v2.tex", "ERRATA_REPORT.md"):
             if need not in names:
                 problems.append(f"release 缺资产 {need}")
+        # 同名资产不得重复（Gitea 允许并存，会导致下载指向不确定）
+        from collections import Counter
+        dup = {k: v for k, v in Counter(names).items() if v > 1}
+        if dup:
+            problems.append("release 同名资产重复: " + str(dup))
         if rel.get("draft"):
             problems.append("release 仍是 draft")
+
+        # ---- release 上的 PDF 必须与本地当前构建内容一致 ----
+        # 光检查资产「存在」不够：曾出现 release 资产是加新内容之前的旧构建。
+        try:
+            import urllib.request
+            import io as _io
+            import pypdf as _pypdf
+            url = (f"http://zsyq.hxlab.tech:3000/yuhanxue/electrodynamics-textbook/"
+                   f"releases/download/v2.16/electrodynamics_textbook_v2.pdf")
+            data = urllib.request.urlopen(url, timeout=180).read()
+            rp = _pypdf.PdfReader(_io.BytesIO(data))
+            lp = _pypdf.PdfReader(PDF_ROOT)
+            if len(rp.pages) != len(lp.pages):
+                problems.append(
+                    f"release PDF 页数 {len(rp.pages)} ≠ 本地 {len(lp.pages)}")
+            else:
+                diff = [i + 1 for i in range(len(rp.pages))
+                        if (rp.pages[i].extract_text() or "") !=
+                           (lp.pages[i].extract_text() or "")]
+                if diff:
+                    problems.append(
+                        f"release PDF 与本地构建不一致（{len(diff)} 页不同，"
+                        f"如 p.{', '.join(map(str, diff[:4]))}）")
+            detail += " · release PDF 与本地一致"
+        except Exception as e:
+            # 网络不可达不算失败，但要在详情里标明未校验
+            detail += f" · release PDF 未校验({type(e).__name__})"
+
     record(10, "Release 与 tag", "FAIL" if problems else "PASS",
            detail + (" · " + "；".join(problems) if problems else ""))
 

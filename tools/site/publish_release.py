@@ -21,7 +21,7 @@ BASE = "http://zsyq.hxlab.tech:3000/api/v1"
 REPO = "yuhanxue/electrodynamics-textbook"
 USER, PASSWORD = "deepseek", "deepseek"
 TAG = "v2.16"
-NAME = "v2.16 独立复核与勘误：修正 52 项（含 2 blocker）"
+NAME = "v2.16 独立复核与勘误：修正 55 项（含 2 blocker）"
 
 AUTH = base64.b64encode(f"{USER}:{PASSWORD}".encode()).decode()
 
@@ -62,9 +62,10 @@ BODY = """\
 
 **编译验证**：0 错误 · 0 Overfull · 0 Underfull · 0 未定义引用 · 0 缺失字形
 
-## 本轮修正 52 项（2 blocker / 10 high / 40 medium+low）
+## 本轮修正 55 项（2 blocker / 12 high / 41 medium+low）
 
 已修正全部 blocker 与关键 high，无遗留项（唯一一项刻意保留，见文末）。
+本轮另新增一套**全量自检套件** `tools/check/run_all.py`（10 项检查，见文末）。
 
 ### blocker
 
@@ -120,6 +121,35 @@ BODY = """\
 现站点含：在线阅读（真实目录 + 可用 PDF 定位）、学习路线、公式速查、计算工具、勘误记录。
 7 页面链接零断裂，配色对比度全部达 WCAG AA，导航数据由编译产物自动生成。
 
+## 全量自检套件
+
+本轮新增 `tools/check/`，可在仓库根目录一键自检（当前 **10/10 PASS**）：
+
+```bash
+python tools/check/run_all.py          # 全部检查（会重新编译）
+python tools/check/run_all.py --quick  # 跳过重编译
+python tools/check/run_all.py --only 4,7
+```
+
+| # | 检查 | 判据要点 |
+|---|---|---|
+| 1 | LaTeX 编译 | 0 错误 / 0 Overfull / 0 Underfull / 0 未定义引用 / 0 缺字 |
+| 2 | PDF 产物与元数据 | 版本号与封面一致；根目录 PDF 与编译产物**内容**一致（非字节比较——XeLaTeX 会写入编译时间） |
+| 3 | 文档结构 | 10 章 + 9 附录；环境配平；50 道例题均有难度标注；10 组自测/练习/解答 |
+| 4 | 交叉引用 | 700 个标签无悬空；「第N章」「§X.Y」引用语义正确（自动排除 Jackson/Griffiths 等外部教材章号 31 处） |
+| 5 | 公式编号与标签 | 标签唯一；STYLE_GUIDE §1.2 的六个核心公式齐全度 5/5 |
+| 6 | 文档与站点一致性 | README/站点/PDF/tex 四处版本号一致；页数行数例题数与产物一致 |
+| 7 | 物理自洽复算 | 7 个独立复算脚本全部通过 |
+| 8 | 站点完整性 | 7 页链接零断裂；全部 JS 通过语法校验 |
+| 9 | 仓库卫生 | 无编译中间产物入库；工作树干净；与远端同步 |
+| 10 | Release 与 tag | tag 指向已推送提交；资产齐全无重复；**release 上的 PDF 与本地构建内容一致** |
+
+自检在本轮实际抓出并修掉了 3 个问题，其中一项值得单独说明：
+**根目录 PDF 曾是旧构建**——同一提交内 `.tex` 已新增洛伦兹力定理，但根目录 PDF 未更新，
+而两份 PDF 页数同为 179、页数检查无法察觉；差异实际在第 84 页缺「定理 5.1」。
+这类「页数没变所以以为没变」的静默失配已加入检查 2 与检查 10 作为固定判据，
+并用两组负向测试（页数不同 / 页数相同但内容不同）验证该判据确实会失败。
+
 ## 一项刻意保留未改
 
 附录 I「教材章节对照表」中郭硕鸿《电动力学》的具体章序：离线环境无法核实原书目录，
@@ -136,7 +166,7 @@ def main():
     # ---- 1. create the release (if it does not exist yet) ----
     st, rel = api("GET", f"/repos/{REPO}/releases/tags/{TAG}")
     if st == 200 and isinstance(rel, dict):
-        print(f"release {TAG} already exists (id={rel['id']}); will only upload assets")
+        print(f"release {TAG} already exists (id={rel['id']})")
         rid = rel["id"]
     else:
         st, rel = api("POST", f"/repos/{REPO}/releases", {
@@ -153,7 +183,20 @@ def main():
         rid = rel["id"]
         print(f"created release {TAG} (id={rid})")
 
-    # ---- 2. upload assets ----
+    # ---- 2. remove same-named assets first ----
+    # Gitea 允许同名资产并存，直接重复上传会产生两份（下载链接指向哪一个不确定），
+    # 因此先删同名旧资产再上传，保证 release 上每个文件只有一份、且为最新。
+    st, rel = api("GET", f"/repos/{REPO}/releases/{rid}")
+    wanted = {"electrodynamics_textbook_v2.pdf",
+              "electrodynamics_textbook_v2.tex",
+              "ERRATA_REPORT.md"}
+    existing = rel.get("assets", []) if isinstance(rel, dict) else []
+    for a in existing:
+        if a["name"] in wanted:
+            st2, _ = api("DELETE", f"/repos/{REPO}/releases/{rid}/assets/{a['id']}")
+            print(f"  removed old asset {a['name']} (id={a['id']}, HTTP {st2})")
+
+    # ---- 3. upload assets ----
     assets = [
         ("electrodynamics_textbook_v2.pdf", "《电动力学》v2.16 完整教材（179 页，PDF）"),
         ("electrodynamics_textbook_v2.tex", "LaTeX 源文件（XeLaTeX 可编译）"),
@@ -176,7 +219,7 @@ def main():
         else:
             print(f"  upload FAILED {name}: {st} {str(resp)[:200]}")
 
-    # ---- 3. report final state ----
+    # ---- 4. report final state ----
     st, rel = api("GET", f"/repos/{REPO}/releases/tags/{TAG}")
     if st == 200:
         print()
@@ -186,8 +229,15 @@ def main():
         print("  url      :", rel.get("html_url"))
         print("  draft    :", rel["draft"], "| prerelease:", rel["prerelease"])
         print("  assets   :")
+        names = {}
         for a in rel.get("assets", []):
-            print(f"     - {a['name']}  ({a['size']/1024:.0f} KB)  {a['browser_download_url']}")
+            names[a["name"]] = names.get(a["name"], 0) + 1
+            print(f"     - {a['name']}  ({a['size']/1024:.0f} KB)")
+        dup = {k: v for k, v in names.items() if v > 1}
+        if dup:
+            print("  !! 同名资产重复:", dup)
+        else:
+            print("  asset names unique:", list(names))
 
 
 if __name__ == "__main__":
