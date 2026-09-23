@@ -57,7 +57,86 @@
     </div>
 
     <h2 style="margin-bottom:1rem">推荐顺序</h2>
-    <ol class="roadmap" id="roadmap"></ol>
+
+    <!-- 本列表的静态内容即为完整的学习计划，无 JS 时同样可读。
+         site.js / 本页脚本只做「增强」：补充页码、节数、例题数与进度勾选。 -->
+    <ol class="roadmap" id="roadmap">
+      <li data-step="1">
+        <div class="r-head"><span class="r-title">数学预备知识</span>
+          <span class="badge badge-basic">基础</span>
+          <span class="badge badge-neutral">约 24 学时</span></div>
+        <div class="r-desc">全书地基。§1.2.4 并矢、§1.6.2–1.6.3 δ 函数复合与傅里叶表示可延后到用时再回看。</div>
+        <div class="r-deps">前置：无。但需自备：多元微积分（偏导、重积分）、矢量代数基础</div>
+      </li>
+      <li data-step="2">
+        <div class="r-head"><span class="r-title">静电学基础</span>
+          <span class="badge badge-basic">基础</span>
+          <span class="badge badge-neutral">约 16 学时</span></div>
+        <div class="r-desc">高斯定理的积分形式与微分形式必须都掌握；唯一性定理是第 4 章的理论前提。</div>
+        <div class="r-deps">前置：第 1 章（矢量分析、δ 函数、高斯定理）</div>
+      </li>
+      <li data-step="3">
+        <div class="r-head"><span class="r-title">电介质与静电边界条件</span>
+          <span class="badge badge-mid">提高</span>
+          <span class="badge badge-neutral">约 14 学时</span></div>
+        <div class="r-desc">核心是 D 场与束缚电荷。注意界面外法向的取向约定，这里最容易出错。</div>
+        <div class="r-deps">前置：第 2 章（电场、电势、边界条件的雏形）</div>
+      </li>
+      <li data-step="4">
+        <div class="r-head"><span class="r-title">静电学边值问题</span>
+          <span class="badge badge-mid">提高</span>
+          <span class="badge badge-neutral">约 26 学时</span></div>
+        <div class="r-desc">全书数学密度最高的一章。分离变量与多极展开是第 8–9 章的必备工具。</div>
+        <div class="r-deps">前置：第 1 章（曲线坐标系）+ 第 2–3 章（泊松方程与边界条件）</div>
+      </li>
+      <li data-step="5">
+        <div class="r-head"><span class="r-title">静磁学</span>
+          <span class="badge badge-basic">基础</span>
+          <span class="badge badge-neutral">约 16 学时</span></div>
+        <div class="r-desc">与第 2 章结构对称：毕奥-萨伐尔↔库仑，安培环路↔高斯，矢势↔电势。</div>
+        <div class="r-deps">前置：第 1 章（旋度、斯托克斯定理）</div>
+      </li>
+      <li data-step="6">
+        <div class="r-head"><span class="r-title">磁介质</span>
+          <span class="badge badge-mid">提高</span>
+          <span class="badge badge-neutral">约 12 学时</span></div>
+        <div class="r-desc">与第 3 章（电介质）对照学习效率最高；超导体的完全抗磁性是重要特例。</div>
+        <div class="r-deps">前置：第 5 章（H 场与磁化电流）</div>
+      </li>
+      <li data-step="7">
+        <div class="r-head"><span class="r-title">麦克斯韦方程组</span>
+          <span class="badge badge-mid">提高</span>
+          <span class="badge badge-neutral">约 22 学时</span></div>
+        <div class="r-desc">全书枢纽。位移电流的引入动机、坡印廷定理的能量解释必须吃透。</div>
+        <div class="r-deps">前置：第 2–6 章全部（四个方程的每一项都来自前面的章节）</div>
+      </li>
+      <li data-step="8">
+        <div class="r-head"><span class="r-title">电磁波的传播</span>
+          <span class="badge badge-hard">挑战</span>
+          <span class="badge badge-neutral">约 24 学时</span></div>
+        <div class="r-desc">菲涅耳公式的符号约定与 TE/TM 模式的场分量是两大难点。</div>
+        <div class="r-deps">前置：第 7 章（波动方程）+ 第 4 章（波导中的边值问题）</div>
+      </li>
+      <li data-step="9">
+        <div class="r-head"><span class="r-title">电磁波的辐射</span>
+          <span class="badge badge-hard">挑战</span>
+          <span class="badge badge-neutral">约 18 学时</span></div>
+        <div class="r-desc">李纳--维谢尔势属选学内容；电偶极辐射的角分布与功率公式是重点。</div>
+        <div class="r-deps">前置：第 7 章（推迟势）+ 第 5 章（磁偶极子）</div>
+      </li>
+      <li data-step="10">
+        <div class="r-head"><span class="r-title">相对论电动力学</span>
+          <span class="badge badge-hard">挑战</span>
+          <span class="badge badge-neutral">约 26 学时</span></div>
+        <div class="r-desc">指标运算需从头适应。度规约定与张量符号务必先固定下来再往下读。</div>
+        <div class="r-deps">前置：第 7 章（麦克斯韦方程组）+ 狭义相对论基础（需自备）</div>
+      </li>
+    </ol>
+
+    <p class="note" style="margin-top:1.4rem" id="totalHours">
+      <strong>全程合计约 198 学时。</strong>按每周 10 学时计，约需 5–6 个月。
+      若要压缩，优先砍掉第 8 章的波导细节与第 9 章的天线部分。
+    </p>
 
     <!-- 三条路线 -->
     <div class="card" style="margin-top:2rem">
@@ -104,92 +183,77 @@
 <script src="book-data.js"></script>
 <script src="assets/site.js"></script>
 <script>
-/* 路线图：章节顺序与依赖关系由教材实际内容结构决定；
-   页码／节数／例题数取自 book-data.js 的实测数据。 */
+/* 路线图的章节、难度、学时、前置依赖与要点说明都已写在 HTML 里（无 JS 也可读）。
+   本脚本只做增强：从 book-data.js 取实测数据，补上「页码链接」与「节数／例题数」，
+   并为「我的进度」生成勾选项。若 book-data.js 不可用，静态内容仍然完整。 */
 (function () {
-  var PLAN = [
-    { n: 1,  deps: '无。但需自备：多元微积分（偏导、重积分）、矢量代数基础',
-      diff: '基础', hours: 24, level: 'basic',
-      note: '全书地基。§1.2.4 并矢、§1.6.2–1.6.3 δ 函数复合与傅里叶表示可延后到用时再回看。' },
-    { n: 2,  deps: '第 1 章（矢量分析、δ 函数、高斯定理）',
-      diff: '基础', hours: 16, level: 'basic',
-      note: '高斯定理的积分形式与微分形式必须都掌握；唯一性定理是第 4 章的理论前提。' },
-    { n: 3,  deps: '第 2 章（电场、电势、边界条件的雏形）',
-      diff: '提高', hours: 14, level: 'mid',
-      note: '核心是 D 场与束缚电荷。注意界面外法向的取向约定，这里最容易出错。' },
-    { n: 4,  deps: '第 1 章（曲线坐标系）+ 第 2–3 章（泊松方程与边界条件）',
-      diff: '提高', hours: 26, level: 'mid',
-      note: '全书数学密度最高的一章。分离变量与多极展开是第 8–9 章的必备工具。' },
-    { n: 5,  deps: '第 1 章（旋度、斯托克斯定理）',
-      diff: '基础', hours: 16, level: 'basic',
-      note: '与第 2 章结构对称：毕奥-萨伐尔↔库仑，安培环路↔高斯，矢势↔电势。' },
-    { n: 6,  deps: '第 5 章（H 场与磁化电流）',
-      diff: '提高', hours: 12, level: 'mid',
-      note: '与第 3 章（电介质）对照学习效率最高；超导体的完全抗磁性是重要特例。' },
-    { n: 7,  deps: '第 2–6 章全部（四个方程的每一项都来自前面的章节）',
-      diff: '提高', hours: 22, level: 'mid',
-      note: '全书枢纽。位移电流的引入动机、坡印廷定理的能量解释必须吃透。' },
-    { n: 8,  deps: '第 7 章（波动方程）+ 第 4 章（波导中的边值问题）',
-      diff: '挑战', hours: 24, level: 'hard',
-      note: '菲涅耳公式的符号约定与 TE/TM 模式的场分量是两大难点。' },
-    { n: 9,  deps: '第 7 章（推迟势）+ 第 5 章（磁偶极子）',
-      diff: '挑战', hours: 18, level: 'hard',
-      note: '李纳-维谢尔势属选学内容；电偶极辐射的角分布与功率公式是重点。' },
-    { n: 10, deps: '第 7 章（麦克斯韦方程组）+ 狭义相对论基础（需自备）',
-      diff: '挑战', hours: 26, level: 'hard',
-      note: '指标运算需从头适应。度规约定与张量符号务必先固定下来再往下读。' }
-  ];
+  if (!window.BOOK) return;
 
   var byNumber = {};
-  window.BOOK.chapters.forEach(function (c) { if (c.kind === 'chapter') byNumber[c.number] = c; });
+  window.BOOK.chapters.forEach(function (c) {
+    if (c.kind === 'chapter') byNumber[c.number] = c;
+  });
 
   var rmHost = document.getElementById('roadmap');
   var prHost = document.getElementById('progressList');
+  var items = rmHost ? rmHost.querySelectorAll('li[data-step]') : [];
 
-  PLAN.forEach(function (p, i) {
-    var c = byNumber[p.n] || { title: '?', page: '?', sections: [], counts: {} };
-    var badgeCls = p.level === 'basic' ? 'badge-basic' : p.level === 'mid' ? 'badge-mid' : 'badge-hard';
-    var nEx = (c.examples || []).length;
+  // 进度勾选（JS 才能持久化，故随增强一起生成）
+  if (prHost) {
+    Array.prototype.forEach.call(items, function (li) {
+      var n = parseInt(li.dataset.step, 10);
+      var c = byNumber[n];
+      var item = document.createElement('li');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.id = 'prog' + n;
+      cb.dataset.progress = String(n);
+      var lab = document.createElement('label');
+      lab.htmlFor = cb.id;
+      lab.textContent = '第 ' + n + ' 章 ' + (c ? c.title : '');
+      item.appendChild(cb);
+      item.appendChild(lab);
+      prHost.appendChild(item);
+    });
+  }
 
-    var li = document.createElement('li');
-    li.dataset.step = String(p.n);
-    li.innerHTML =
-      '<div class="r-head">' +
-        '<span class="r-title">' + c.title + '</span>' +
-        '<span class="badge ' + badgeCls + '">' + p.diff + '</span>' +
-        '<span class="badge badge-neutral">约 ' + p.hours + ' 学时</span>' +
-        '<a href="../electrodynamics_textbook_v2.pdf#page=' + c.page + '" ' +
-          'style="font-size:var(--step--1)">p.' + c.page + ' ↗</a>' +
-      '</div>' +
-      '<div class="r-desc">' + c.sections.length + ' 节 · ' +
-        (nEx ? nEx + ' 道例题' : '无例题') + '　' + p.note + '</div>' +
-      '<div class="r-deps">前置：' + p.deps + '</div>';
-    rmHost.appendChild(li);
+  // 逐项增强：补页码链接与规模数据
+  Array.prototype.forEach.call(items, function (li) {
+    var n = parseInt(li.dataset.step, 10);
+    var c = byNumber[n];
+    if (!c) return;
 
-    // 进度勾选
-    prHost.appendChild(
-      (function () {
-        var item = document.createElement('li');
-        var cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.id = 'prog' + p.n;
-        cb.dataset.progress = String(p.n);
-        var lab = document.createElement('label');
-        lab.htmlFor = cb.id;
-        lab.textContent = '第 ' + p.n + ' 章 ' + c.title;
-        item.appendChild(cb); item.appendChild(lab);
-        return item;
-      })()
-    );
+    var head = li.querySelector('.r-head');
+    if (head && c.page) {
+      var a = document.createElement('a');
+      a.href = '../electrodynamics_textbook_v2.pdf#page=' + c.page;
+      a.style.fontSize = 'var(--step--1)';
+      a.textContent = 'p.' + c.page + ' ↗';
+      head.appendChild(a);
+    }
+
+    var desc = li.querySelector('.r-desc');
+    if (desc) {
+      var nSec = (c.sections || []).length;
+      var nEx = (c.examples || []).length;
+      var scale = nSec + ' 节 · ' + (nEx ? nEx + ' 道例题' : '无例题') + '　';
+      desc.innerHTML = '<span class="r-scale">' + scale + '</span>' + desc.innerHTML;
+    }
   });
 
-  var total = PLAN.reduce(function (s, p) { return s + p.hours; }, 0);
-  var head = document.createElement('p');
-  head.className = 'note';
-  head.style.marginTop = '1.4rem';
-  head.innerHTML = '<strong>全程合计约 ' + total + ' 学时。</strong>' +
-    '按每周 10 学时计，约需 5–6 个月。若要压缩，优先砍掉第 8 章的波导细节与第 9 章的天线部分。';
-  rmHost.parentNode.insertBefore(head, rmHost.nextSibling);
+  // 合计学时：按静态内容求和，避免与 HTML 写死的数字脱节
+  var total = 0;
+  Array.prototype.forEach.call(items, function (li) {
+    var b = li.querySelector('.badge-neutral');
+    if (!b) return;
+    var m = b.textContent.match(/(\d+)/);
+    if (m) total += parseInt(m[1], 10);
+  });
+  var tot = document.getElementById('totalHours');
+  if (tot && total) {
+    tot.innerHTML = '<strong>全程合计约 ' + total + ' 学时。</strong>' +
+      '按每周 10 学时计，约需 5–6 个月。若要压缩，优先砍掉第 8 章的波导细节与第 9 章的天线部分。';
+  }
 })();
 </script>
 </body>

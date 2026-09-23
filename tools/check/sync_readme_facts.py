@@ -61,21 +61,37 @@ for b in re.findall(r"\\begin\{example\}(.*?)\\end\{example\}", src, re.S):
     if m:
         diffs[m.group(1)] = diffs.get(m.group(1), 0) + 1
 
+# 附录页码范围
+apps = [c for c in chapters if c[0] > 10]          # 11..19 = 附录 A..I
+app_lo = apps[0][2] if apps else None
+app_hi = apps[-1][2] if apps else None
+
 print("computed facts:")
 for k, v in facts.items():
     print(f"  {k:12} {v}")
 print(f"  difficulties {diffs}")
-print(f"  chapters     {[(c[0], c[2]) for c in chapters]}")
+print(f"  body pages   p.{chapters[0][2]}–{chapters[9][2]}" if len(chapters) >= 10 else "")
+print(f"  appendix     p.{app_lo}–{app_hi}")
 
 # ---- rewrite README ----
 p = "README.md"
 r = io.open(p, encoding="utf-8").read()
 orig = r
 
-r = r.replace("LaTeX 源文件（完整可编译，8918 行）",
-              f"LaTeX 源文件（完整可编译，{n_lines} 行）")
-r = r.replace("编译产物（XeLaTeX，172 页）",
-              f"编译产物（XeLaTeX，{n_pages} 页）")
+# 文件清单里的两处
+r = re.sub(r"(LaTeX 源文件（完整可编译，)\d+( 行）)",
+           lambda m: m.group(1) + str(n_lines) + m.group(2), r)
+r = re.sub(r"(编译产物（XeLaTeX，)\d+( 页）)",
+           lambda m: m.group(1) + str(n_pages) + m.group(2), r)
+
+# 顶部「项目信息」表的页数
+r = re.sub(r"(\|\s*\*\*页数\*\*\s*\|\s*)\d+(\s*页\s*\|)",
+           lambda m: m.group(1) + str(n_pages) + m.group(2), r, count=1)
+
+# 附录页码范围
+if app_lo and app_hi:
+    r = re.sub(r"(附录 A–I（p\.)[\d–\-]+(）)",
+               lambda m: m.group(1) + f"{app_lo}–{app_hi}" + m.group(2), r, count=1)
 
 # facts table rows
 def set_row(text, label, value):
