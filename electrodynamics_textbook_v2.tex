@@ -4570,6 +4570,25 @@ $q_1$ 对 $y=0$ 镜像：$q_3 = +q$ 在 $(-a,-b)$；$q_2$ 对 $x=0$ 镜像：$q_
 
 静磁学研究\textbf{恒定电流}产生的磁场。虽然静磁学在结构上与静电学有许多相似之处，但磁场的有旋性（$\curl\vecB \neq 0$）使其数学性质与静电场截然不同。
 
+在进入具体定律之前，先明确"磁场如何作用于电荷"——这是静磁学的出发点，也是后面所有磁场定义的依据。
+
+\begin{theorem}{洛伦兹力}{lorentz-force}
+处于电磁场中的点电荷 $q$ 所受的力为
+\begin{equation}
+\vect{F} = q\left(\vecE + \vect{v}\times\vecB\right)
+\label{eq:lorentz-force}
+\end{equation}
+其中 $\vect{v}$ 是电荷的瞬时速度。右端第一项 $q\vecE$ 是电场力（与速度无关），第二项 $q\vect{v}\times\vecB$ 是\textbf{磁场力}。
+
+\textbf{与本书其余部分的关系}：
+\begin{itemize}[nosep]
+\item 该式是 $\vecE$ 与 $\vecB$ 的\textbf{操作性定义}——"电场/磁场"正是通过试探电荷所受的力来定义的。
+\item 磁场力方向\textbf{同时垂直}于 $\vect{v}$ 与 $\vecB$，故磁场力\textbf{不做功}（$\vect{F}\cdot\vect{v} = 0$），它只改变速度方向、不改变动能。这一点是后续"磁场不改变粒子能量"的依据。
+\item 对电流元，由 $\vect{F} = q\vect{v}\times\vecB$ 可得安培力 $d\vect{F} = I\,d\vect{l}\times\vecB$，本节后面会用到。
+\item 式 \eqref{eq:lorentz-force} 在相对论中\textbf{仍然成立}——它正是四维形式 $\diff p^\mu/\diff\tau = qF^{\mu\nu}u_\nu$ 的空间分量（见第 10 章 §10.5）。
+\end{itemize}
+\end{theorem}
+
 \begin{tip}{本章新符号}{ch5-new-symbols}
 \begin{tabular}{@{}ll@{}}
 $\vecA$ & 磁矢势（$\vecB = \curl\vecA$，单位 \si{T.m} = \si{Wb/m}） \\

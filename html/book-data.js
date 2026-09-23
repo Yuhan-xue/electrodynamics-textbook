@@ -4,7 +4,7 @@
 window.BOOK = {
  "facts": {
   "pages": 179,
-  "texLines": 9274,
+  "texLines": 9293,
   "chapters": 10,
   "appendices": 9,
   "examples": 50,
@@ -13,7 +13,7 @@ window.BOOK = {
    "提高": 24,
    "挑战": 5
   },
-  "theorems": 65,
+  "theorems": 66,
   "definitions": 31,
   "insights": 80,
   "warnings": 18,
@@ -381,7 +381,7 @@ window.BOOK = {
    "sections": [
     {
      "title": "毕奥-萨伐尔定律",
-     "page": 84
+     "page": 85
     },
     {
      "title": "安培环路定理",
@@ -416,23 +416,23 @@ window.BOOK = {
    "number": 5,
    "examples": [
     {
-     "line": 4608,
+     "line": 4627,
      "difficulty": "基础"
     },
     {
-     "line": 4637,
+     "line": 4656,
      "difficulty": "提高"
     },
     {
-     "line": 4711,
+     "line": 4730,
      "difficulty": "基础"
     },
     {
-     "line": 4775,
+     "line": 4794,
      "difficulty": "提高"
     },
     {
-     "line": 4921,
+     "line": 4940,
      "difficulty": "提高"
     }
    ],
@@ -471,11 +471,11 @@ window.BOOK = {
    "number": 6,
    "examples": [
     {
-     "line": 5337,
+     "line": 5356,
      "difficulty": "提高"
     },
     {
-     "line": 5359,
+     "line": 5378,
      "difficulty": "提高"
     }
    ],
@@ -518,19 +518,19 @@ window.BOOK = {
    "number": 7,
    "examples": [
     {
-     "line": 5885,
+     "line": 5904,
      "difficulty": "基础"
     },
     {
-     "line": 6010,
+     "line": 6029,
      "difficulty": "基础"
     },
     {
-     "line": 6147,
+     "line": 6166,
      "difficulty": "提高"
     },
     {
-     "line": 6253,
+     "line": 6272,
      "difficulty": "提高"
     }
    ],
@@ -585,7 +585,7 @@ window.BOOK = {
    "number": 8,
    "examples": [
     {
-     "line": 6890,
+     "line": 6909,
      "difficulty": "提高"
     }
    ],
@@ -620,11 +620,11 @@ window.BOOK = {
    "number": 9,
    "examples": [
     {
-     "line": 7509,
+     "line": 7528,
      "difficulty": "挑战"
     },
     {
-     "line": 7547,
+     "line": 7566,
      "difficulty": "挑战"
     }
    ],
@@ -675,19 +675,19 @@ window.BOOK = {
    "number": 10,
    "examples": [
     {
-     "line": 7961,
+     "line": 7980,
      "difficulty": "基础"
     },
     {
-     "line": 8008,
+     "line": 8027,
      "difficulty": "提高"
     },
     {
-     "line": 8120,
+     "line": 8139,
      "difficulty": "提高"
     },
     {
-     "line": 8143,
+     "line": 8162,
      "difficulty": "基础"
     }
    ],
@@ -737,7 +737,7 @@ window.BOOK = {
    "letter": "D",
    "examples": [
     {
-     "line": 8785,
+     "line": 8804,
      "difficulty": "基础"
     }
    ],
