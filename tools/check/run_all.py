@@ -537,6 +537,16 @@ def check_hygiene():
         r"\.(aux|log|out|toc|xdv|fls|fdb_latexmk|upa|upb|synctex\.gz)$", f)]
     if bad:
         problems.append("编译中间产物入库: " + ", ".join(bad[:5]))
+    # Python 缓存
+    pyc = [f for f in tracked if "__pycache__" in f or f.endswith((".pyc", ".pyo"))]
+    if pyc:
+        problems.append("Python 缓存入库: " + ", ".join(pyc[:5]))
+    # 编辑器/系统杂项
+    junk = [f for f in tracked
+            if os.path.basename(f) in (".DS_Store", "Thumbs.db")
+            or f.endswith((".swp", ".orig", ".rej", "~"))]
+    if junk:
+        problems.append("编辑器/系统杂项入库: " + ", ".join(junk[:5]))
     if any(f.startswith(".build/") for f in tracked):
         problems.append(".build/ 入库")
     if any(f.startswith(".agent-teams/") for f in tracked):
