@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
+r"""
 Build a machine-readable structural index of the textbook.
 Robust approach: tokenize ALL \begin{env}/\end{env} pairs with a stack, then
 extract each block's title/label/difficulty and resolve its page from the .aux.
