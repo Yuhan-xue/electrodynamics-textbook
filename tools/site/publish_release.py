@@ -19,7 +19,10 @@ os.chdir(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 BASE = "http://zsyq.hxlab.tech:3000/api/v1"
 REPO = "yuhanxue/electrodynamics-textbook"
-USER, PASSWORD = "REDACTED_GITEA_USER", "REDACTED_GITEA_USER"
+USER = os.environ.get("GITEA_USER", "yuhanxue")
+PASSWORD = os.environ.get("GITEA_PASSWORD")
+if not PASSWORD:
+    sys.exit("缺少环境变量 GITEA_PASSWORD；不要在脚本中硬编码凭据。")
 TAG = "v2.16"
 NAME = "v2.16 独立复核与勘误：修正 55 项（含 2 blocker）"
 
