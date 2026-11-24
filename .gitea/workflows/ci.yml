@@ -1,0 +1,12 @@
+name: ci
+on: [push, workflow_dispatch]
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Python 语法检查（compileall）
+        run: python3 -m compileall -q . -x '(/\\.git/|node_modules|\\.venv|venv|site-packages)'
